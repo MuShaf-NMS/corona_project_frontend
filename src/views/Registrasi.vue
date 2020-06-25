@@ -1,87 +1,86 @@
 <template>
-    <div>
-        <b-row class="justify-content-center align-items-center">
-            <b-col md="6" sm="12">
-                <b-card>
-                    <b-form>
-                        <h3 class="text-center text-info">Registrasi</h3>
-                        <div class="form-group">
-                            <b-form-input type="text" v-model="form.nama" placeholder="Nama"></b-form-input>
-                        </div>
-                        <div class="form-group">
-                            <b-form-input type="text" v-model="form.username" placeholder="Username"></b-form-input>
-                        </div>
-                        <div class="form-group">
-                            <b-form-input type="text" v-model="form.alamat" placeholder="Alamat"></b-form-input>
-                        </div>
-                        <div class="form-group">
-                            <b-form-input type="text" v-model="form.tempat_lahir" placeholder="Tempat lahir"></b-form-input>
-                        </div>
-                        <div class="form-group">
-                            <label>Tanggal lahir</label>
-                            <span>
-                                <b-form-input type="date" v-model="form.tanggal_lahir"></b-form-input>
-                            </span>
-                        </div>
-                        <div class="form-group">
-                            <b-form-input type="text" v-model="form.hp" placeholder="Nomor Hp"></b-form-input>
-                        </div>
-                        <div class="form-group">
-                            <b-form-input type="email" v-model="form.email" placeholder="Email"></b-form-input>
-                        </div>
-                        <div class="form-group">
-                            <b-form-input type="password" v-model="form.password" placeholder="Password"></b-form-input>
-                        </div>
-                        <div class="form-group">
-                            <b-form-input type="password" v-model="confirm_password" placeholder="Confirm password"></b-form-input>
-                        </div>
-                        <div class="form-group">
-                            <b-form-checkbox v-model="form.superadmin">Super admin</b-form-checkbox>
-                        </div>
-                        <div class="form-group">
-                            <b-btn class="btn-info btn-md" @click="registration">Registrasi</b-btn>
-                        </div>
-                    </b-form>
-                </b-card>
-            </b-col>
-        </b-row>
-    </div>
+  <div>
+    <b-row>
+      <b-col md="3" sm="12"></b-col>  
+      <b-col md="6" sm="12">
+        <b-card-group deck>
+          <b-card header="Registrasi">
+            <b-card-text>
+              <b-form>
+                <b-col md="12" sm="12">
+                  <b-form-group label="Nama">
+                    <b-form-input type="text" placeholder="Nama" required></b-form-input>
+                  </b-form-group>
+                  <b-form-group label="Username">
+                    <b-form-input type="text" placeholder="Username" requierd></b-form-input>
+                  </b-form-group>
+                  <b-form-group label="Alamat">
+                    <b-form-input type="text" placeholder="Alamat" required></b-form-input>
+                  </b-form-group>
+                  <b-form-group label="Tempat lahir">
+                    <b-form-input type="text" placeholder="Tempat lahir" required></b-form-input>
+                  </b-form-group>
+                  <b-form-group label="Tanggal lahir">
+                    <b-form-input type="date" required></b-form-input>
+                  </b-form-group>
+                  <b-form-group label="Nomor Hp">
+                    <b-form-input type="text" placeholder="Nomor Hp" required></b-form-input>
+                  </b-form-group>
+                  <b-form-group label="Email">
+                    <b-form-input type="email" placeholder="Email" required></b-form-input>
+                  </b-form-group>
+                  <b-form-group label="Password">
+                    <b-form-input type="password" placeholder="Password" required></b-form-input>
+                  </b-form-group>
+                  <b-form-group label="Confirm password">
+                      <b-form-input type="password" placeholder="Confirm password" required></b-form-input>
+                  </b-form-group>
+                  <b-btn class="btn-info" @click="registration">Registrasi</b-btn>
+                </b-col>
+              </b-form>
+            </b-card-text>
+          </b-card>
+        </b-card-group>
+      </b-col>
+      <b-col md="6" sm="12"></b-col>
+    </b-row>
+  </div>
 </template>
 <script>
-import {user} from '../api'
+import { user } from "../api";
 export default {
-    name: "Registrasi",
-    data(){
-        return {
-            form:{
-                nama: "",
-                username: "",
-                alamat: "",
-                tempat_lahir: "",
-                tanggal_lahir: "",
-                hp: "",
-                email: "",
-                password: "",
-                superadmin: false
-            },
-            confirm_password: "",
-        }
+  name: "Registrasi",
+  data() {
+    return {
+      form: {
+        nama: "",
+        username: "",
+        alamat: "",
+        tempat_lahir: "",
+        tanggal_lahir: "",
+        hp: "",
+        email: "",
+        password: "",
+        superadmin: false
+      },
+      confirm_password: ""
+    };
+  },
+  methods: {
+    isConfirmed() {
+      if (this.form.password == this.confirm_password) {
+        return true;
+      }
+      return false;
     },
-    methods: {
-        isConfirmed(){
-            if (this.form.password == this.confirm_password){
-                return true
-            }
-            return false
-        },
-        async registration(){
-            if (this.isConfirmed()){
-                let data = await user.addUser(this.form)
-                console.log(data.status)
-            } else {
-                console.log("please confirm your password")
-            }
-        }
+    async registration() {
+      if (this.isConfirmed()) {
+        let data = await user.addUser(this.form);
+        console.log(data.status);
+      } else {
+        console.log("please confirm your password");
+      }
     }
-}
+  }
+};
 </script>
