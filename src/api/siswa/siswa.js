@@ -1,13 +1,13 @@
 import axios from 'axios'
 import {url} from '../index'
 
-const user = {
-    addUser: (data) => {
-        return axios.post(`${url}/tambahadmin`,data)
+const siswa = {
+    addSiswa: (data) => {
+        return axios.post(`${url}/tambahsiswa`,data)
     },
     login: (data) => {
         return axios.post(`${url}/login`,data)
     }
 }
 
-export default user
+export default siswa

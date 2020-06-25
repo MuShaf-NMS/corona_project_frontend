@@ -27,16 +27,13 @@
                             <b-form-input type="text" v-model="form.hp" placeholder="Nomor Hp"></b-form-input>
                         </div>
                         <div class="form-group">
-                            <b-form-input type="email" v-model="form.email" placeholder="Email"></b-form-input>
+                            <b-form-input type="text" v-model="form.email" placeholder="Email"></b-form-input>
                         </div>
                         <div class="form-group">
                             <b-form-input type="password" v-model="form.password" placeholder="Password"></b-form-input>
                         </div>
                         <div class="form-group">
                             <b-form-input type="password" v-model="confirm_password" placeholder="Confirm password"></b-form-input>
-                        </div>
-                        <div class="form-group">
-                            <b-form-checkbox v-model="form.superadmin">Super admin</b-form-checkbox>
                         </div>
                         <div class="form-group">
                             <b-btn class="btn-info btn-md" @click="registration">Registrasi</b-btn>
@@ -48,12 +45,12 @@
     </div>
 </template>
 <script>
-import {user} from '../api'
+import {siswa} from '../api'
 export default {
-    name: "Registrasi",
+    name : "RegistrasiSiswa",
     data(){
         return {
-            form:{
+            form: {
                 nama: "",
                 username: "",
                 alamat: "",
@@ -61,10 +58,9 @@ export default {
                 tanggal_lahir: "",
                 hp: "",
                 email: "",
-                password: "",
-                superadmin: false
+                password: ""
             },
-            confirm_password: "",
+            confirm_password: ""
         }
     },
     methods: {
@@ -76,11 +72,13 @@ export default {
         },
         async registration(){
             if (this.isConfirmed()){
-                let data = await user.addUser(this.form)
+                let data = await siswa.addSiswa(this.form)
                 console.log(data.status)
             } else {
-                console.log("please confirm your password")
+                console.log('please confirm your password')
             }
+            
+
         }
     }
 }
