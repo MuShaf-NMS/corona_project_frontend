@@ -1,24 +1,35 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Registrasi from '../views/Registrasi'
-import RegistrasiSiswa from '../views/RegistrasiSiswa'
+import Registrasi from '../views/admin/Registrasi'
+import TambahMateri from '../views/admin/TambahMateri'
+import RegistrasiSiswa from '../views/siswa/RegistrasiSiswa'
 import Login from '../views/Login'
-import LayoutAdmin from '../container-admin/LayoutAdmin'
-import LayoutSiswa from '../container-siswa/LayoutSiswa'
+import LayoutAdmin from '../container/admin/LayoutAdmin'
+import LayoutSiswa from '../container/siswa/LayoutSiswa'
 
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '/',
-    redirect: '/register',
+    redirect: '/register-admin',
     name: 'Home',
     component: LayoutAdmin,
     children: [
       {
-        path: '/register',
+        path: '/register-admin',
         name: 'Register',
         component: Registrasi
+      },
+      {
+        path: '/tambahmateri',
+        name: 'Tambah Materi',
+        component: TambahMateri
+      },
+      {
+        path: '/register-siswa',
+        name: 'Register Siswa',
+        component: RegistrasiSiswa
       }
     ]
   },
