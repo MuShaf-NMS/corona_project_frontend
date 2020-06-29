@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+//import store from '../store'
 import Registrasi from '../views/admin/Registrasi'
 import TambahMateri from '../views/admin/TambahMateri'
 import RegistrasiSiswa from '../views/siswa/RegistrasiSiswa'
@@ -9,7 +10,7 @@ import LayoutSiswa from '../container/siswa/LayoutSiswa'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     redirect: '/register-admin',
@@ -18,25 +19,28 @@ Vue.use(VueRouter)
     children: [
       {
         path: '/register-admin',
-        name: 'Register',
-        component: Registrasi
+        name: 'Register Admin',
+        component: Registrasi,
+        meta: {
+          authenticated: true
+        }
       },
       {
         path: '/tambahmateri',
         name: 'Tambah Materi',
-        component: TambahMateri
+        component: TambahMateri,
       },
       {
         path: '/register-siswa',
         name: 'Register Siswa',
-        component: RegistrasiSiswa
+        component: RegistrasiSiswa,
       }
     ]
   },
   {
     path: '/siswa',
     redirect: '/siswa/register',
-    name:'Siswa',
+    name: 'Siswa',
     component: LayoutSiswa,
     children: [
       {
@@ -49,7 +53,10 @@ Vue.use(VueRouter)
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta: {
+      guest: true
+    }
   }
 ]
 

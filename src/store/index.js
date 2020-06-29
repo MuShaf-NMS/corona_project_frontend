@@ -1,33 +1,35 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VuexPersist from 'vuex-persist'
 
 Vue.use(Vuex)
+const vuexLocalStorage = new VuexPersist({
+  key: 'vuex',
+  storage: window.localStorage
+})
 
 export default new Vuex.Store({
+  plugins: [vuexLocalStorage.plugin],
   state: {
-    user: {
-      name: "Saya",
-      address: "Lombok"
-    }
+    user: null
   },
   getters: {
-    getName: state => state.user.name,
-    getAddress: state => state.user.address
+    getUser: state => state.user
   },
   mutations: {
-    changeName: (state,newName) => {
-      state.user.name = newName
+    updateUser: (state,data) => {
+      state.user = data
     },
-    changeAddress: (state,newAddress) => {
-      state.user.address = newAddress
+    deleteUser: (state) => {
+      state.user = null
     }
   },
   actions: {
-    saveNewName: (contex,newName) => {
-      contex.commit("changeName",newName)
+    saveUser: (contex,data) => {
+      contex.commit("updateUser",data)
     },
-    saveNewAddress: (contex,newAddress) => {
-      contex.commit("changeAddress",newAddress)
+    logout: (contex) => {
+      contex.commit('deleteUser')
     }
   }
 })

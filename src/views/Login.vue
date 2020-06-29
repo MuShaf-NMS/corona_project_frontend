@@ -39,7 +39,9 @@ export default {
   methods: {
     async login() {
       let data = await user.login(this.form);
-      console.log(data.data)
+      this.$store.dispatch("saveUser",data.data)
+      console.log(this.$store.getters.getUser)
+      this.$router.push('/register-admin')
     }
   }
 };
