@@ -28,7 +28,6 @@ export default {
     async logout() {
       try {
         let data = await user.logout();
-        console.log(data)
         if (data.status == 200) {
           this.$store.dispatch("logout")
           this.$router.push('/login')

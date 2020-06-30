@@ -11,11 +11,18 @@ Vue.use(BootstrapVueIcons);
 
 Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.authenticated)) {
-    if (store.getters.getUser == null) {
-      next('/login')
-    } else {
+  if (to.matched.some(record => record.meta.adminAuthenticated)) {
+    if (store.getters.getUser != null && store.getters.getUser.status == 'admin') {
       next()
+    } else {
+      next('/login')
+    }
+  }
+  else if (to.matched.some(record => record.meta.siswaAuthenticated)) {
+    if (store.getters.getUser != null && store.getters.getUser.status == 'siswa') {
+      next()
+    } else {
+      next('/login')
     }
   }
   else if (to.matched.some(record => record.meta.guest)) {

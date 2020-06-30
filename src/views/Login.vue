@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="card-dest">
       <b-row class="justify-content-center align-items-center">
-          <b-col md="6" sm="12">
+          <b-col md="4" sm="12">
               <b-card>
                   <b-form>
                       <h3>Login</h3>
@@ -41,8 +41,17 @@ export default {
       let data = await user.login(this.form);
       this.$store.dispatch("saveUser",data.data)
       console.log(this.$store.getters.getUser)
-      this.$router.push('/register-admin')
+      if (this.$store.getters.getUser.status == 'admin'){
+        this.$router.push('/register-admin')
+      } else {
+        this.$router.push('/siswa/register')
+      }
     }
   }
 };
 </script>
+<style scoped>
+.card-dest {
+  padding-top: 150px;
+}
+</style>
