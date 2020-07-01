@@ -60,8 +60,7 @@
                 </b-col>
                 <b-col>
                   <b-form-group label="Super admin">
-                    <b-form-radio value="true" v-model="form.superadmin">Yes</b-form-radio>
-                    <b-form-radio value="false" v-model="form.superadmin">No</b-form-radio>
+                    <b-form-radio-group :options="options" required v-model="form.superadmin"></b-form-radio-group>
                   </b-form-group>
                 </b-col>
                 <b-col md="4" sm="12">
@@ -114,7 +113,11 @@ export default {
         password: "",
         superadmin: false
       },
-      confirm_password: ""
+      confirm_password: "",
+      options: [
+        {text: 'Yes', value: true},
+        {text: 'No', value: false}
+      ]
     };
   },
   methods: {
@@ -126,10 +129,11 @@ export default {
     },
     async registration() {
       if (this.isConfirmed()) {
-        let data = await user.addUser(this.form,this.$store.getters.getUser.accessToken);
-        console.log(data.status);
+        let data = await user.addUser(this.form)
+        console.log(this.form)
+        console.log(data.status)
       } else {
-        console.log("please confirm your password");
+        console.log("please confirm your password")
       }
     }
   },
