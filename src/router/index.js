@@ -4,8 +4,9 @@ import VueRouter from 'vue-router'
 import Registrasi from '../views/admin/Registrasi'
 import DaftarAdmin from '../views/admin/DaftarAdmin'
 import TambahMateri from '../views/admin/TambahMateri'
-import RegistrasiSiswa from '../views/siswa/RegistrasiSiswa'
+import RegistrasiSiswa from '../views/admin/RegistrasiSiswa'
 import Materi from '../views/siswa/Materi'
+import DetailMateri from '../views/siswa/DetailMateri'
 import Login from '../views/Login'
 import LayoutAdmin from '../container/admin/LayoutAdmin'
 import LayoutSiswa from '../container/siswa/LayoutSiswa'
@@ -55,22 +56,22 @@ const routes = [
   },
   {
     path: '/siswa',
-    redirect: '/siswa/register',
+    redirect: '/siswa/materi',
     name: 'Siswa',
     component: LayoutSiswa,
     children: [
       {
-        path: '/siswa/register',
-        name: 'Register',
-        component: RegistrasiSiswa,
+        path: '/siswa/materi',
+        name: 'Materi',
+        component: Materi,
         meta: {
           siswaAuthenticated: true
         }
       },
       {
-        path: '/siswa/materi',
-        name: 'Materi',
-        component: Materi,
+        path: '/siswa/materi/:id',
+        name: 'Detail Materi',
+        component: DetailMateri,
         meta: {
           siswaAuthenticated: true
         }

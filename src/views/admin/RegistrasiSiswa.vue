@@ -1,18 +1,18 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col md="3" sm="12"></b-col>
+      <b-col></b-col>
       <b-col md="6" sm="12">
         <b-card-group deck>
           <b-card header="Registrasi">
             <b-card-text>
               <b-form>
-                <b-col md="4" sm="12">
+                <b-col md="6" sm="12">
                   <b-form-group label="Nama">
                     <b-form-input type="text" placeholder="Nama" required v-model="form.nama"></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col md="4" sm="12">
+                <b-col md="6" sm="12">
                   <b-form-group label="Username">
                     <b-form-input
                       type="text"
@@ -28,12 +28,12 @@
                     <b-form-radio value="P" v-model="form.jk">Perempuan</b-form-radio>
                   </b-form-group>
                 </b-col>
-                <b-col md="8" sm="12">
+                <b-col md="10" sm="12">
                   <b-form-group label="Alamat">
                     <b-form-input type="text" placeholder="Alamat" required v-model="form.alamat"></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col md="8" sm="12">
+                <b-col md="10" sm="12">
                   <b-form-group label="Tempat lahir">
                     <b-form-input
                       type="text"
@@ -43,22 +43,22 @@
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col md="4" sm="12">
+                <b-col md="6" sm="12">
                   <b-form-group label="Tanggal lahir">
                     <b-form-input type="date" required v-model="form.tanggal_lahir"></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col md="4" sm="12">
+                <b-col md="6" sm="12">
                   <b-form-group label="Nomor Hp">
                     <b-form-input type="text" placeholder="Nomor Hp" required v-model="form.hp"></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col md="8" sm="12">
+                <b-col md="10" sm="12">
                   <b-form-group label="Email">
                     <b-form-input type="email" placeholder="Email" required v-model="form.email"></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col md="4" sm="12">
+                <b-col md="6" sm="12">
                   <b-form-group label="Password">
                     <b-form-input
                       type="password"
@@ -68,7 +68,7 @@
                     ></b-form-input>
                   </b-form-group>
                 </b-col>
-                <b-col md="4" sm="12">
+                <b-col md="6" sm="12">
                   <b-form-group label="Confirm password">
                     <b-form-input
                       type="password"
@@ -86,7 +86,7 @@
           </b-card>
         </b-card-group>
       </b-col>
-      <b-col md="6" sm="12"></b-col>
+      <b-col></b-col>
     </b-row>
   </div>
 </template>
@@ -117,12 +117,38 @@ export default {
       }
       return false;
     },
+    showMessage(){
+      this.$bvModal.msgBoxOk('Berhasil menambahkan siswa baru', {
+        title: 'Sukses',
+        size: 'sm',
+        buttonSize: 'sm',
+        okVariant: 'success',
+        headerClass: 'p-2 border-bottom-0',
+        footerClass: 'p-2 border-top-0',
+        centered: true
+      })
+    },
+    clearForm(){
+      this.form.nama = ""
+      this.form.username = ""
+      this.form.jk = ""
+      this.form.alamat = ""
+      this.form.tempat_lahir = ""
+      this.form.tanggal_lahir = ""
+      this.form.hp = ""
+      this.form.email = ""
+      this.form.password = ""
+      this.confirm_password = ""
+    },
     async registration() {
       if (this.isConfirmed()) {
-        let data = await siswa.addSiswa(this.form);
-        console.log(data.status);
+        let data = await siswa.addSiswa(this.form)
+        if (data.status == 200) {
+          this.showMessage()
+          this.clearForm()
+        }
       } else {
-        console.log("please confirm your password");
+        console.log("please confirm your password")
       }
     }
   }

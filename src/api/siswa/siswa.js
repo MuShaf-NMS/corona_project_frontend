@@ -7,7 +7,10 @@ const siswa = {
         return axios.post(`${url}/tambahsiswa`,data)
     },
     getMateri: () => {
-        return axios.get(`${url}/pelajaran`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+        return axios.get(`${url}/materi`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+    },
+    getDetailMateri: (uuid) => {
+        return axios.get(`${url}/materi/${uuid}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     }
 }
 
