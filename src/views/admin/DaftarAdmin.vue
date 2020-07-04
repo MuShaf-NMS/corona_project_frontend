@@ -32,12 +32,13 @@ export default {
   },
   methods: {
     async loadData() {
-      let data = await user.getUser();
+      let data = await user.getUser()
       this.items = data.data;
     }
   },
   mounted() {
-    this.loadData();
+    this.loadData()
+    console.log('masuk')
   }
 };
 </script>

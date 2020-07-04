@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-//import store from '../store'
 import Registrasi from '../views/admin/Registrasi'
 import DaftarAdmin from '../views/admin/DaftarAdmin'
+import ProfileAdmin from '../views/admin/ProfileAdmin'
 import TambahMateri from '../views/admin/TambahMateri'
 import RegistrasiSiswa from '../views/admin/RegistrasiSiswa'
+import ProfileSiswa from '../views/siswa/ProfileSiswa'
 import Materi from '../views/siswa/Materi'
 import DetailMateri from '../views/siswa/DetailMateri'
 import Login from '../views/Login'
@@ -16,7 +17,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/register-admin',
+    redirect: '/daftar-admin',
     name: 'Home',
     component: LayoutAdmin,
     children: [
@@ -32,6 +33,14 @@ const routes = [
         path: '/daftar-admin',
         name: 'Daftar Admin',
         component: DaftarAdmin,
+        meta: {
+          adminAuthenticated: true
+        }
+      },
+      {
+        path: '/profile-admin/:id',
+        name: 'Profile Admin',
+        component: ProfileAdmin,
         meta: {
           adminAuthenticated: true
         }
@@ -64,6 +73,14 @@ const routes = [
         path: '/siswa/materi',
         name: 'Materi',
         component: Materi,
+        meta: {
+          siswaAuthenticated: true
+        }
+      },
+      {
+        path: '/profile-siswa/:id',
+        name: 'Profile Siswa',
+        component: ProfileSiswa,
         meta: {
           siswaAuthenticated: true
         }

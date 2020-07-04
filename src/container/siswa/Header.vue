@@ -5,14 +5,13 @@
         <b-nav-item href="#">Home</b-nav-item>
         <b-nav-item-dropdown text="Menu siswa" right>
           <b-dropdown-item to="/siswa/materi">Materi</b-dropdown-item>
-          <b-dropdown-item to="/siswa/register">Registrasi</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
           <template v-slot:button-content>User</template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
+          <b-dropdown-item @click="toProfile">Profile</b-dropdown-item>
           <b-dropdown-item @click="logout">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
@@ -34,6 +33,9 @@ export default {
       } catch (error) {
           console.log(error)        
       }
+    },
+    toProfile(){
+      this.$router.push(`/profile-siswa/${this.$store.getters.getUser.uuid}`)
     }
   }
 }
