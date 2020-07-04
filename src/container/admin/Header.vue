@@ -3,11 +3,16 @@
     <b-navbar type="dark" variant="dark">
       <b-navbar-nav>
         <b-nav-item href="#">Home</b-nav-item>
-        <b-nav-item-dropdown text="Menu admin" right>
+        <b-nav-item-dropdown text="Admin">
           <b-dropdown-item to="/daftar-admin">Daftar Admin</b-dropdown-item>
           <b-dropdown-item to="/register-admin">Tambah Admin</b-dropdown-item>
-          <b-dropdown-item to="/tambahmateri">Tambah Materi</b-dropdown-item>
+        </b-nav-item-dropdown>
+        <b-nav-item-dropdown text="Siswa">
+          <b-dropdown-item to="/daftar-siswa">Daftar Siswa</b-dropdown-item>
           <b-dropdown-item to="/register-siswa">Tambah Siswa</b-dropdown-item>
+        </b-nav-item-dropdown>
+        <b-nav-item-dropdown text="Materi">
+          <b-dropdown-item to="/tambahmateri">Tambah Materi</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">

@@ -6,6 +6,9 @@ const user = {
     getUser: () => {
         return axios.get(`${url}/daftar-admin`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },
+    getSiswa: () => {
+        return axios.get(`${url}/daftar-siswa`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+    },
     getProfile: (uuid) => {
         return axios.get(`${url}/profile-admin/${uuid}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },

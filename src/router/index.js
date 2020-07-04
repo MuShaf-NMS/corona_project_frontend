@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Registrasi from '../views/admin/Registrasi'
 import DaftarAdmin from '../views/admin/DaftarAdmin'
+import DaftarSiswa from '../views/admin/DaftarSiswa'
 import ProfileAdmin from '../views/admin/ProfileAdmin'
 import TambahMateri from '../views/admin/TambahMateri'
 import RegistrasiSiswa from '../views/admin/RegistrasiSiswa'
@@ -33,6 +34,14 @@ const routes = [
         path: '/daftar-admin',
         name: 'Daftar Admin',
         component: DaftarAdmin,
+        meta: {
+          adminAuthenticated: true
+        }
+      },
+      {
+        path: '/daftar-siswa',
+        name: 'Daftar Siswa',
+        component: DaftarSiswa,
         meta: {
           adminAuthenticated: true
         }

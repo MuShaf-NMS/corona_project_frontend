@@ -3,7 +3,7 @@
     <b-navbar type="dark" variant="dark">
       <b-navbar-nav>
         <b-nav-item href="#">Home</b-nav-item>
-        <b-nav-item-dropdown text="Menu siswa" right>
+        <b-nav-item-dropdown text="Materi">
           <b-dropdown-item to="/siswa/materi">Materi</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
