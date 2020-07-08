@@ -16,6 +16,7 @@
   </div>
 </template>
 <script>
+import logout from "../logout";
 import { user } from "../../api";
 export default {
   name: "DaftarAdmin",
@@ -32,13 +33,16 @@ export default {
   },
   methods: {
     async loadData() {
-      let data = await user.getUser()
-      this.items = data.data;
+      try {
+        let data = await user.getUser();
+        this.items = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     }
   },
   mounted() {
-    this.loadData()
-    console.log('masuk')
+    this.loadData();
   }
 };
 </script>

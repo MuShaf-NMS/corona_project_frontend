@@ -1,11 +1,13 @@
 <template>
   <div>
-    <b-row class="card-dest">
+    <b-row>
       <b-col></b-col>
       <b-col md="6" sm="12">
         <b-card-group deck>
-          <b-card :header="materi.mapel" :title="materi.materi" :sub-title="materi.submateri">
-            <b-card-text>{{materi.isi}}</b-card-text>
+          <b-card title="Daftar Soal">
+            <b-card-text>
+              <b-table striped hover :items="items" :fields="fields"></b-table>
+            </b-card-text>
           </b-card>
         </b-card-group>
       </b-col>
@@ -15,19 +17,20 @@
 </template>
 <script>
 import logout from "../logout";
-import { siswa } from "../../api";
+import { user } from "../../api";
 export default {
-  name: "DetailMateri",
+  name: "DaftarSoal",
   data() {
     return {
-      materi: {}
+      items: [],
+      fields: [{ key: "mapel", label: "Mata Pelajaran" }, "soal"]
     };
   },
   methods: {
     async loadData() {
       try {
-        let data = await siswa.getDetailMateri(this.$route.params.id);
-        this.materi = data.data;
+        let data = await user.getSoal();
+        this.items = data.data;
       } catch (err) {
         logout.clear();
       }
@@ -38,8 +41,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.card-dest {
-  margin-top: 30px;
-}
-</style>

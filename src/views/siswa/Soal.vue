@@ -1,14 +1,14 @@
 <template>
   <div>
-    <b-row class="card-dest">
+    <b-row>
       <b-col></b-col>
       <b-col md="6" sm="12">
         <b-card-group deck>
-          <b-card title="Daftar Materi">
+          <b-card title="Daftar Soal">
             <b-card-text>
               <b-table striped hover :items="items" :fields="fields">
                 <template v-slot:cell(actions)="row">
-                  <b-btn @click="toDetail(row.item.uuid)">Baca</b-btn>
+                  <b-btn @click="toJawabSoal(row.item.uuid)">Jawab</b-btn>
                 </template>
               </b-table>
             </b-card-text>
@@ -23,30 +23,34 @@
 import logout from "../logout";
 import { siswa } from "../../api";
 export default {
-  name: "Materi",
+  name: "Soal",
   data() {
     return {
       items: [],
-      fields: [
-        { key: "mapel", label: "Mata Pelajaran" },
-        "materi",
-        "submateri",
-        { key: "guru", label: "Guru Bidang Studi" },
-        "actions"
-      ]
+      fields: [{ key: "mapel", label: "Mata Pelajaran" }, "soal", "actions"],
+      form: {}
     };
   },
   methods: {
     async loadData() {
       try {
-        let data = await siswa.getMateri();
+        let data = await siswa.getSoal();
         this.items = data.data;
       } catch (err) {
         logout.clear();
       }
     },
-    toDetail(uuid) {
-      this.$router.push(`/siswa/materi/${uuid}`);
+    toJawabSoal(uuid) {
+      this.$router.push(`/siswa/jawab-soal/${uuid}`);
+    }
+  },
+  computed: {
+    isTerjawab: (key) => {
+      if (key){
+        return "Terjawab"
+      } else {
+        return "Belum terjawab"
+      }
     }
   },
   mounted() {
@@ -54,8 +58,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.card-dest {
-  margin-top: 30px;
-}
-</style>

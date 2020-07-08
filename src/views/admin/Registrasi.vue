@@ -96,6 +96,7 @@
   </div>
 </template>
 <script>
+import logout from "../logout";
 import { user } from "../../api";
 export default {
   name: "Registrasi",
@@ -115,8 +116,8 @@ export default {
       },
       confirm_password: "",
       options: [
-        {text: 'Yes', value: true},
-        {text: 'No', value: false}
+        { text: "Yes", value: true },
+        { text: "No", value: false }
       ]
     };
   },
@@ -127,39 +128,43 @@ export default {
       }
       return false;
     },
-    clearForm(){
-      this.form.nama = ""
-      this.form.username = ""
-      this.form.jk = ""
-      this.form.alamat = ""
-      this.form.tempat_lahir = ""
-      this.form.tanggal_lahir = ""
-      this.form.hp = ""
-      this.form.email = ""
-      this.form.password = ""
-      this.form.superadmin = false
-      this.confirm_password = ""
+    clearForm() {
+      this.form.nama = "";
+      this.form.username = "";
+      this.form.jk = "";
+      this.form.alamat = "";
+      this.form.tempat_lahir = "";
+      this.form.tanggal_lahir = "";
+      this.form.hp = "";
+      this.form.email = "";
+      this.form.password = "";
+      this.form.superadmin = false;
+      this.confirm_password = "";
     },
-    showMessage(){
-      this.$bvModal.msgBoxOk('Berhasil menambahkan admin baru', {
-        title: 'Sukses',
-        size: 'sm',
-        buttonSize: 'sm',
-        okVariant: 'success',
-        headerClass: 'p-2 border-bottom-0',
-        footerClass: 'p-2 border-top-0',
+    showMessage() {
+      this.$bvModal.msgBoxOk("Berhasil menambahkan admin baru", {
+        title: "Sukses",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
         centered: true
-      })
+      });
     },
     async registration() {
       if (this.isConfirmed()) {
-        let data = await user.addUser(this.form)
-        if (data.status == 200) {
-          this.showMessage()
-          this.clearForm()
+        try {
+          let data = await user.addUser(this.form);
+          if (data.status == 200) {
+            this.showMessage();
+            this.clearForm();
+          }
+        } catch (err) {
+          logout.clear();
         }
       } else {
-        console.log("please confirm your password")
+        console.log("please confirm your password");
       }
     }
   }

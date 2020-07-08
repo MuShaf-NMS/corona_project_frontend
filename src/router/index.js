@@ -8,6 +8,10 @@ import TambahMateri from '../views/admin/TambahMateri'
 import RegistrasiSiswa from '../views/admin/RegistrasiSiswa'
 import ProfileSiswa from '../views/siswa/ProfileSiswa'
 import Materi from '../views/siswa/Materi'
+import BuatSoal from '../views/admin/BuatSoal'
+import Soal from '../views/siswa/Soal'
+import JawabSoal from '../views/siswa/JawabSoal'
+import DaftarSoal from '../views/admin/DaftarSoal'
 import DetailMateri from '../views/siswa/DetailMateri'
 import Login from '../views/Login'
 import LayoutAdmin from '../container/admin/LayoutAdmin'
@@ -17,8 +21,8 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    redirect: '/daftar-admin',
+    path: '/admin',
+    redirect: '/daftar-soal',
     name: 'Home',
     component: LayoutAdmin,
     children: [
@@ -47,7 +51,7 @@ const routes = [
         }
       },
       {
-        path: '/profile-admin/:id',
+        path: '/admin/profile/:id',
         name: 'Profile Admin',
         component: ProfileAdmin,
         meta: {
@@ -55,9 +59,25 @@ const routes = [
         }
       },
       {
-        path: '/tambahmateri',
+        path: '/tambah-materi',
         name: 'Tambah Materi',
         component: TambahMateri,
+        meta: {
+          adminAuthenticated: true
+        }
+      },
+      {
+        path: '/buat-soal',
+        name: 'Buat Soal',
+        component: BuatSoal,
+        meta: {
+          adminAuthenticated: true
+        }
+      },
+      {
+        path: '/daftar-soal',
+        name: 'Daftar Soal',
+        component: DaftarSoal,
         meta: {
           adminAuthenticated: true
         }
@@ -87,7 +107,7 @@ const routes = [
         }
       },
       {
-        path: '/profile-siswa/:id',
+        path: '/siswa/profile/:id',
         name: 'Profile Siswa',
         component: ProfileSiswa,
         meta: {
@@ -98,6 +118,22 @@ const routes = [
         path: '/siswa/materi/:id',
         name: 'Detail Materi',
         component: DetailMateri,
+        meta: {
+          siswaAuthenticated: true
+        }
+      },
+      {
+        path: '/siswa/daftar-soal',
+        name: 'Soal',
+        component: Soal,
+        meta: {
+          siswaAuthenticated: true
+        }
+      },
+      {
+        path: '/siswa/jawab-soal/:id',
+        name: 'Jawab Soal',
+        component: JawabSoal,
         meta: {
           siswaAuthenticated: true
         }

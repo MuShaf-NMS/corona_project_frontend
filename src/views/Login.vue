@@ -62,15 +62,12 @@ export default {
         let data = await user.login(this.form);
         this.$store.dispatch("saveUser", data.data);
         if (this.$store.getters.getUser.status == "admin") {
-          this.$router.push("/daftar-admin");
+          this.$router.push("/admin");
         } else {
-          this.$router.push("/siswa/materi");
+          this.$router.push("/siswa");
         }
       } catch {
         this.showMessage()
-        this.form.username = ""
-        this.form.password = ""
-        this.form.rememberMe = false
       }
     }
   }

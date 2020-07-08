@@ -91,7 +91,8 @@
   </div>
 </template>
 <script>
-import { siswa } from "../../api";
+import logout from "../logout";
+import { user } from "../../api";
 export default {
   name: "RegistrasiSiswa",
   data() {
@@ -117,38 +118,43 @@ export default {
       }
       return false;
     },
-    showMessage(){
-      this.$bvModal.msgBoxOk('Berhasil menambahkan siswa baru', {
-        title: 'Sukses',
-        size: 'sm',
-        buttonSize: 'sm',
-        okVariant: 'success',
-        headerClass: 'p-2 border-bottom-0',
-        footerClass: 'p-2 border-top-0',
+    showMessage() {
+      this.$bvModal.msgBoxOk("Berhasil menambahkan siswa baru", {
+        title: "Sukses",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
         centered: true
-      })
+      });
     },
-    clearForm(){
-      this.form.nama = ""
-      this.form.username = ""
-      this.form.jk = ""
-      this.form.alamat = ""
-      this.form.tempat_lahir = ""
-      this.form.tanggal_lahir = ""
-      this.form.hp = ""
-      this.form.email = ""
-      this.form.password = ""
-      this.confirm_password = ""
+    clearForm() {
+      this.form.nama = "";
+      this.form.username = "";
+      this.form.jk = "";
+      this.form.alamat = "";
+      this.form.tempat_lahir = "";
+      this.form.tanggal_lahir = "";
+      this.form.hp = "";
+      this.form.email = "";
+      this.form.password = "";
+      this.confirm_password = "";
     },
     async registration() {
       if (this.isConfirmed()) {
-        let data = await siswa.addSiswa(this.form)
-        if (data.status == 200) {
-          this.showMessage()
-          this.clearForm()
+        try {
+          let data = await user.addSiswa(this.form);
+          console.log(data)
+          if (data.status == 200) {
+            this.showMessage();
+            this.clearForm();
+          }
+        } catch (err) {
+          logout.clear();
         }
       } else {
-        console.log("please confirm your password")
+        console.log("please confirm your password");
       }
     }
   }

@@ -6,6 +6,9 @@
         <b-nav-item-dropdown text="Materi">
           <b-dropdown-item to="/siswa/materi">Materi</b-dropdown-item>
         </b-nav-item-dropdown>
+        <b-nav-item-dropdown text="Soal">
+          <b-dropdown-item to="/siswa/daftar-soal">Daftar Soal</b-dropdown-item>
+        </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
         <b-nav-item-dropdown right>
@@ -35,7 +38,7 @@ export default {
       }
     },
     toProfile(){
-      this.$router.push(`/profile-siswa/${this.$store.getters.getUser.uuid}`)
+      this.$router.push(`/siswa/profile/${this.$store.getters.getUser.uuid}`)
     }
   }
 }

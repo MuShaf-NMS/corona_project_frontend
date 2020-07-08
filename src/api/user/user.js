@@ -15,8 +15,17 @@ const user = {
     addUser: (data) => {
         return axios.post(`${url}/tambahadmin`,data,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },
+    addSiswa: (data) => {
+        return axios.post(`${url}/tambahsiswa`,data,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+    },
     addMateri: (data)=> {
         return axios.post(`${url}/tambahmateri`,data,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+    },
+    addSoal: (data) => {
+        return axios.post(`${url}/tambah-soal`,data,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+    },
+    getSoal: () => {
+        return axios.get(`${url}/daftar-soal`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },
     login: (data) => {
         return axios.post(`${url}/login`,data)

@@ -16,6 +16,7 @@
   </div>
 </template>
 <script>
+import logout from "../logout";
 import { user } from "../../api";
 export default {
   name: "DaftarSiswa",
@@ -31,8 +32,12 @@ export default {
   },
   methods: {
     async loadData() {
-      let data = await user.getSiswa();
-      this.items = data.data;
+      try {
+        let data = await user.getSiswa();
+        this.items = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     }
   },
   mounted() {
@@ -41,7 +46,7 @@ export default {
 };
 </script>
 <style scoped>
-.card-dest{
-    margin-top: 30px;
+.card-dest {
+  margin-top: 30px;
 }
 </style>

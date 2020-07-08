@@ -12,15 +12,23 @@ Vue.use(BootstrapVueIcons);
 Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.adminAuthenticated)) {
-    if (store.getters.getUser != null && store.getters.getUser.status == 'admin') {
-      next()
+    if (store.getters.getUser != null) {
+      if (store.getters.getUser.status == 'admin') {
+        next()
+      } else {
+        next('/siswa')
+      }
     } else {
       next('/login')
     }
   }
   else if (to.matched.some(record => record.meta.siswaAuthenticated)) {
-    if (store.getters.getUser != null && store.getters.getUser.status == 'siswa') {
-      next()
+    if (store.getters.getUser != null) {
+      if (store.getters.getUser.status == 'siswa') {
+        next()
+      } else {
+        next('/admin')
+      }
     } else {
       next('/login')
     }
