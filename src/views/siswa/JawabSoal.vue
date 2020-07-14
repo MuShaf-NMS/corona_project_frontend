@@ -3,23 +3,47 @@
     <b-row>
       <b-col></b-col>
       <b-col md="6" sm="12">
-        <b-card-group deck>
-          <b-card header="Jawab Soal">
-            <b-card-text>
-              <b-col>
-                <p>{{soal.soal}}</p>
-              </b-col>
-              <b-col md="6" sm="12">
-                <b-form-group label="Jawaban" :description="desc()">
-                  <b-form-input type="text" placeholder="Jawaban" required v-model="form.jawaban"></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col>
-                <b-btn @click="jawab" :disabled="disable()">Jawab</b-btn>
-              </b-col>
-            </b-card-text>
-          </b-card>
-        </b-card-group>
+        <b-card>
+          <b-row>
+            <b-col md="3" sm="12">Kelas</b-col>
+            <b-col md="1" sm="12">:</b-col>
+            <b-col md="8" sm="12">{{$route.params.kelas}}</b-col>
+          </b-row>
+          <b-row>
+            <b-col md="3" sm="12">Mata Pelajaran</b-col>
+            <b-col md="1" sm="12">:</b-col>
+            <b-col md="8" sm="12">{{$route.params.mapel}}</b-col>
+          </b-row>
+          <b-row>
+            <b-col md="3" sm="12">Materi</b-col>
+            <b-col md="1" sm="12">:</b-col>
+            <b-col md="8" sm="12">{{$route.params.materi}}</b-col>
+          </b-row>
+          <b-row>
+            <b-col md="3" sm="12">Siswa</b-col>
+            <b-col md="1" sm="12">:</b-col>
+            <b-col md="8" sm="12">{{$store.getters.getUser.username}}</b-col>
+          </b-row>
+        </b-card>
+        <b-card>
+          <b-row>
+            <b-col>
+              <b-card-text v-for="(i,index) in soal" :key="index">
+                <b-row>{{soal[idx].soal}}</b-row>
+                <b-row>
+                  <b-form-group>
+                    <b-form-radio-group v-model="jawaban" :options="soal[idx].pilihan" stacked></b-form-radio-group>
+                  </b-form-group>
+                </b-row>
+                <b-row>
+                  <b-btn @click="mundur" :disabled="idx == 0">mundur</b-btn>
+                  <b-btn @click="lanjut" :disabled="idx == soal.length - 1">lanjut</b-btn>
+                  <b-btn @click="jawab()">Simpan jawaban</b-btn>
+                </b-row>
+              </b-card-text>
+            </b-col>
+          </b-row>
+        </b-card>
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -32,74 +56,60 @@ export default {
   name: "jawabSoal",
   data() {
     return {
+      soal: [],
+      idx: 0,
       form: {
-        jawaban: "",
-        uuid_siswa: this.$store.getters.getUser.uuid
-      },
-      soal: {}
+        uuid_siswa: this.$store.getters.getUser.uuid,
+        hasil: []
+      }
     };
   },
-  methods: {
-    showMessageSuccess() {
-      this.$bvModal.msgBoxOk("Selamat jawaban kamu benar", {
-        title: "Sukses",
-        size: "sm",
-        buttonSize: "sm",
-        okVariant: "success",
-        headerClass: "p-2 border-bottom-0",
-        footerClass: "p-2 border-top-0",
-        centered: true
-      });
-    },
-    showMessageFailed() {
-      this.$bvModal.msgBoxOk("Jawaban kamu salah", {
-        title: "Maaf",
-        size: "sm",
-        buttonSize: "sm",
-        okVariant: "success",
-        headerClass: "p-2 border-bottom-0",
-        footerClass: "p-2 border-top-0",
-        centered: true
-      });
-    },
-    async jawab() {
-      try {
-        let data = await siswa.postJawaban(this.$route.params.id, this.form);
-        if (data.data.msg == "Benar") {
-          this.showMessageSuccess();
-        } else {
-          this.showMessageFailed();
-        }
-      } catch (err) {
-        logout.clear();
+  computed: {
+    jawaban: {
+      get() {
+        return this.$store.getters.getJawaban[this.idx].jawaban;
+      },
+      set(value) {
+        console.log(value);
+        this.$store.dispatch("jawab", this.idx, value);
       }
+    }
+  },
+  methods: {
+    jawab() {
+      this.$store.dispatch("jawab", this.idx, this.jwb[this.idx]);
+      console.log(this.$store.getters.getJawaban);
     },
     async loadData() {
       try {
-        let data = await siswa.getOneSoal(this.$route.params.id);
-        this.soal = data.data
+        let data = await siswa.getSoal(
+          this.$route.params.kelas,
+          this.$route.params.mapel,
+          this.$route.params.materi
+        );
+        this.$store.dispatch("saveSoal", data.data);
+        this.soal = this.$store.getters.getSoal(5);
       } catch (err) {
         logout.clear();
       }
     },
-    desc(){
-      if (this.soal.uuid_siswa == this.$store.getters.getUser.uuid){
-        return "Anda sudah menjawab soal ini"
-      } else if (this.soal.uuid_siswa != null) {
-        return ""
-      }
-      return ""
+    lanjut() {
+      this.idx += 1;
     },
-    disable(){
-      if (this.soal.uuid_siswa == this.$store.getters.getUser.uuid){
-        return true
+    mundur() {
+      this.idx -= 1;
+    },
+    submit() {},
+    disable() {
+      if (this.soal.uuid_siswa == this.$store.getters.getUser.uuid) {
+        return true;
       } else if (this.soal.uuid_siswa != null) {
-        return false
+        return false;
       }
-      return false
+      return false;
     }
   },
-  mounted() {
+  created() {
     this.loadData();
   }
 };

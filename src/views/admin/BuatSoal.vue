@@ -25,82 +25,70 @@
                 <b-form-group>
                   <b-form-input type="text" placeholder="Materi" required v-model="lists[0].materi"></b-form-input>
                 </b-form-group>
-              </b-col>-------------------------------------------------------------------------------------------------------------------------
+              </b-col>
             </b-row>
-            <b-card-text v-for="(list, index) in lists" :key="index">
-              <b-col>
-                <h3>soal ke-{{index + 1}}</h3>
-              </b-col>
-              <b-col>
-                <b-form-group label="Soal">
-                  <b-form-input type="text" placeholder="Soal" required v-model="list.soal"></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="12" sm="12">
-                <b-form-group
-                  label="Opsi"
-                  description="Opsi pertama yang anda masukkan dianggap sebagai kunci jawaban"
-                >
-                  <b-form-input
-                    type="text"
-                    placeholder="Opsi pertama (Kunci jawaban)"
-                    required
-                    v-model="list.opsi[0]"
-                  ></b-form-input>
-
-                  <b-row>
-                    <b-col>
-                      <b-form-input
-                        type="text"
-                        placeholder="Opsi kedua"
-                        required
-                        v-model="list.opsi[1]"
-                      ></b-form-input>
-                    </b-col>
-                    <b-col>
-                      <b-form-input
-                        type="text"
-                        placeholder="Opsi ketiga"
-                        required
-                        v-model="list.opsi[2]"
-                      ></b-form-input>
-                    </b-col>
-                  </b-row>
-                  <b-row>
-                    <b-col>
-                      <b-form-input
-                        type="text"
-                        placeholder="Opsi keempat"
-                        required
-                        v-model="list.opsi[3]"
-                      ></b-form-input>
-                    </b-col>
-                    <b-col>
-                      <b-form-input
-                        type="text"
-                        placeholder="Opsi kelima"
-                        required
-                        v-model="list.opsi[4]"
-                      ></b-form-input>
-                    </b-col>
-                  </b-row>
-                </b-form-group>
-              </b-col>
-              <b-col>
-                <b-row>
-                  <b-col>
-                    <b-btn class="btn-success" @click="tambahSoal">Tambah Soal</b-btn>
-                  </b-col>
-                  <b-col>
-                    <b-btn class="btn-danger" @click="hapusSoal">Hapus Soal</b-btn>
-                  </b-col>
-                </b-row>
-              </b-col>
-              <b-col></b-col>--------------------------------------------------------------------------------------------------------------------
-            </b-card-text>
-            <b-btn class="btn-info" @click="buatSoal">Simpan</b-btn>
           </b-card>
         </b-card-group>
+        <b-card v-for="(list, index) in lists" :key="index" class="card-dest">
+          <b-card-text>
+            <b-col class="text-center">
+              <h5>soal ke-{{index + 1}}</h5>
+            </b-col>
+            <b-col>
+              <b-form-group label="Soal">
+                <b-form-input type="text" placeholder="Soal" required v-model="list.soal"></b-form-input>
+              </b-form-group>
+            </b-col>
+            <b-col md="12" sm="12">
+              <b-form-group
+                label="Opsi"
+                description="Opsi pertama yang anda masukkan dianggap sebagai kunci jawaban"
+              >
+                <b-form-input
+                  type="text"
+                  placeholder="Opsi pertama (Kunci jawaban)"
+                  required
+                  v-model="list.opsi[0]"
+                ></b-form-input>
+                <b-input-group>
+                    <b-form-input
+                      type="text"
+                      placeholder="Opsi kedua"
+                      required
+                      v-model="list.opsi[1]"
+                    ></b-form-input>
+                    <b-form-input
+                      type="text"
+                      placeholder="Opsi ketiga"
+                      required
+                      v-model="list.opsi[2]"
+                    ></b-form-input>
+                </b-input-group>
+                <b-input-group>
+                    <b-form-input
+                      type="text"
+                      placeholder="Opsi keempat"
+                      required
+                      v-model="list.opsi[3]"
+                    ></b-form-input>
+                    <b-form-input
+                      type="text"
+                      placeholder="Opsi kelima"
+                      required
+                      v-model="list.opsi[4]"
+                    ></b-form-input>
+                </b-input-group>
+              </b-form-group>
+            </b-col>
+            <b-col class="text-center">
+              <b-btn-group>
+                <b-btn class="btn-danger" @click="hapusSoal(index)">Hapus Soal</b-btn>
+                <b-btn class="btn-info" @click="buatSoal">Simpan</b-btn>
+                <b-btn class="btn-success" @click="tambahSoal">Tambah Soal</b-btn>
+              </b-btn-group>
+            </b-col>
+          </b-card-text>
+        </b-card>
       </b-col>
       <b-col></b-col>
     </b-row>

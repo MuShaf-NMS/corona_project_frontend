@@ -10,6 +10,7 @@ import ProfileSiswa from '../views/siswa/ProfileSiswa'
 import Materi from '../views/siswa/Materi'
 import BuatSoal from '../views/admin/BuatSoal'
 import Soal from '../views/siswa/Soal'
+import DetailSoal from '../views/admin/DetailSoal'
 import JawabSoal from '../views/siswa/JawabSoal'
 import DaftarSoal from '../views/admin/DaftarSoal'
 import DetailMateri from '../views/siswa/DetailMateri'
@@ -83,6 +84,14 @@ const routes = [
         }
       },
       {
+        path: '/soal/:kelas/:mapel/:materi',
+        name: 'Detail Soal',
+        component: DetailSoal,
+        meta: {
+          adminAuthenticated: true
+        }
+      },
+      {
         path: '/register-siswa',
         name: 'Register Siswa',
         component: RegistrasiSiswa,
@@ -123,7 +132,7 @@ const routes = [
         }
       },
       {
-        path: '/siswa/daftar-soal',
+        path: '/siswa/daftar-soal/:kelas',
         name: 'Soal',
         component: Soal,
         meta: {
@@ -131,7 +140,7 @@ const routes = [
         }
       },
       {
-        path: '/siswa/jawab-soal/:id',
+        path: '/siswa/jawab-soal/:kelas/:mapel/:materi',
         name: 'Jawab Soal',
         component: JawabSoal,
         meta: {

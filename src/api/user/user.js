@@ -25,7 +25,13 @@ const user = {
         return axios.post(`${url}/tambah-soal`,data,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },
     getSoal: () => {
-        return axios.get(`${url}/daftar-soal`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+        return axios.get(`${url}/admin/daftar-soal`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+    },
+    getCekSoal: (kelas,mapel,materi) => {
+        return axios.get(`${url}/ceksoal/${kelas}/${mapel}/${materi}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+    },
+    updateSoal: (kelas,mapel,materi,data) => {
+        return axios.put(`${url}/ceksoal/${kelas}/${mapel}/${materi}`,data,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },
     login: (data) => {
         return axios.post(`${url}/login`,data)

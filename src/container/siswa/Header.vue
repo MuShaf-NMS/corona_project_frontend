@@ -7,7 +7,7 @@
           <b-dropdown-item to="/siswa/materi">Materi</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Soal">
-          <b-dropdown-item to="/siswa/daftar-soal">Daftar Soal</b-dropdown-item>
+          <b-dropdown-item @click="toSoal">Daftar Soal</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
@@ -31,11 +31,16 @@ export default {
         let data = await user.logout();
         if (data.status == 200) {
           this.$store.dispatch("logout")
+          this.$store.dispatch("clearSoal")
+          this.$store.dispatch("clearJawaban")
           this.$router.push('/login')
         }
       } catch (error) {
           console.log(error)        
       }
+    },
+    toSoal(){
+      this.$router.push(`/siswa/daftar-soal/${this.$store.getters.getUser.kelas}`)
     },
     toProfile(){
       this.$router.push(`/siswa/profile/${this.$store.getters.getUser.uuid}`)

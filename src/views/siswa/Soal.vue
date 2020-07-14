@@ -8,7 +8,7 @@
             <b-card-text>
               <b-table striped hover :items="items" :fields="fields">
                 <template v-slot:cell(actions)="row">
-                  <b-btn @click="toJawabSoal(row.item.uuid)">Jawab</b-btn>
+                  <b-btn @click="toJawabSoal($route.params.kelas,row.item.mapel,row.item.materi)">Jawab</b-btn>
                 </template>
               </b-table>
             </b-card-text>
@@ -27,21 +27,20 @@ export default {
   data() {
     return {
       items: [],
-      fields: [{ key: "mapel", label: "Mata Pelajaran" }, "soal", "actions"],
-      form: {}
+      fields: [{ key: "mapel", label: "Mata Pelajaran" }, "materi", "jumlah_soal", "actions"]
     };
   },
   methods: {
     async loadData() {
       try {
-        let data = await siswa.getSoal();
+        let data = await siswa.getDaftarSoal(this.$route.params.kelas);
         this.items = data.data;
       } catch (err) {
         logout.clear();
       }
     },
-    toJawabSoal(uuid) {
-      this.$router.push(`/siswa/jawab-soal/${uuid}`);
+    toJawabSoal(kelas,mapel,materi) {
+      this.$router.push(`/siswa/jawab-soal/${kelas}/${mapel}/${materi}`);
     }
   },
   computed: {
@@ -53,7 +52,7 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.loadData();
   }
 };
