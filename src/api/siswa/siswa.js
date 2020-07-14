@@ -18,6 +18,9 @@ const siswa = {
     getSoal: (kelas,mapel,materi) => {
         return axios.get(`${url}/jawab-soal/${kelas}/${mapel}/${materi}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },
+    getOneSoal: (uuid) => {
+        return axios.get(`${url}/get-soal/${uuid}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+    },
     postJawaban: (uuid,data) => {
         return axios.post(`${url}/jawab-soal/${uuid}`,data,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     }

@@ -17,9 +17,7 @@ export default new Vuex.Store({
   },
   getters: {
     getUser: state => state.user,
-    getSoal: (state,index) => {
-      state.soal.filter(e => state.soal.indexOf(e) < index)
-    },
+    getSoal: state => state.soal,
     getJawaban: state => state.jawaban
   },
   mutations: {
@@ -31,14 +29,12 @@ export default new Vuex.Store({
     },
     updateSoal: (state,data) => {
       state.soal = data
-      state.jawaban = state.soal.map(() => Object())
     },
     deleteSoal: (state) => {
       state.soal = null
     },
-    updateJawaban: (state,idx,data) => {
-      state.jawaban[idx].uuid_soal = state.soal[idx].uuid
-      state.jawaban[idx].jawaban = data
+    updateJawaban: (state,data) => {
+      state.jawaban.push(data)
     },
     deleteJawaban: (state) => {
       state.jawaban = []

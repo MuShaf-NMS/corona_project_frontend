@@ -29,19 +29,12 @@
           <b-row>
             <b-col>
               <b-card-text v-for="(i,index) in soal" :key="index">
-                <b-row>{{soal[idx].soal}}</b-row>
-                <b-row>
-                  <b-form-group>
-                    <b-form-radio-group v-model="jawaban" :options="soal[idx].pilihan" stacked></b-form-radio-group>
-                  </b-form-group>
-                </b-row>
-                <b-row>
-                  <b-btn @click="mundur" :disabled="idx == 0">mundur</b-btn>
-                  <b-btn @click="lanjut" :disabled="idx == soal.length - 1">lanjut</b-btn>
-                  <b-btn @click="jawab()">Simpan jawaban</b-btn>
-                </b-row>
+                <load-soal :uuid="i.uuid" />
               </b-card-text>
             </b-col>
+          </b-row>
+          <b-row>
+            <b-btn @click="lanjut">Selanjutnya</b-btn>
           </b-row>
         </b-card>
       </b-col>
@@ -51,62 +44,49 @@
 </template>
 <script>
 import logout from "../logout";
+import LoadSoal from "./LoadSoal";
 import { siswa } from "../../api";
 export default {
   name: "jawabSoal",
+  components: {
+    LoadSoal
+  },
   data() {
     return {
       soal: [],
-      idx: 0,
       form: {
         uuid_siswa: this.$store.getters.getUser.uuid,
         hasil: []
-      }
+      },
+      jawaban: [],
+      batas: 5
     };
   },
-  computed: {
-    jawaban: {
-      get() {
-        return this.$store.getters.getJawaban[this.idx].jawaban;
-      },
-      set(value) {
-        console.log(value);
-        this.$store.dispatch("jawab", this.idx, value);
-      }
-    }
-  },
   methods: {
-    jawab() {
-      this.$store.dispatch("jawab", this.idx, this.jwb[this.idx]);
-      console.log(this.$store.getters.getJawaban);
-    },
     async loadData() {
       try {
-        let data = await siswa.getSoal(
-          this.$route.params.kelas,
-          this.$route.params.mapel,
-          this.$route.params.materi
+        if (this.$store.getters.getSoal == null) {
+          let data = await siswa.getSoal(
+            this.$route.params.kelas,
+            this.$route.params.mapel,
+            this.$route.params.materi
+          );
+          this.$store.dispatch("saveSoal", data.data);
+        }
+        this.soal = this.$store.getters.getSoal.filter(
+          e => this.$store.getters.getSoal.indexOf(e) < this.batas && this.$store.getters.getSoal.indexOf(e) >= this.batas - 5
         );
-        this.$store.dispatch("saveSoal", data.data);
-        this.soal = this.$store.getters.getSoal(5);
+        this.jawaban = this.soal.map(() => Object())
       } catch (err) {
         logout.clear();
       }
     },
     lanjut() {
-      this.idx += 1;
-    },
-    mundur() {
-      this.idx -= 1;
-    },
-    submit() {},
-    disable() {
-      if (this.soal.uuid_siswa == this.$store.getters.getUser.uuid) {
-        return true;
-      } else if (this.soal.uuid_siswa != null) {
-        return false;
-      }
-      return false;
+      this.batas += 5;
+      this.soal = this.$store.getters.getSoal.filter(
+        e => this.$store.getters.getSoal.indexOf(e) < this.batas && this.$store.getters.getSoal.indexOf(e) >= this.batas - 5
+      );
+      console.log(this.soal)
     }
   },
   created() {
