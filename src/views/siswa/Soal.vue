@@ -1,19 +1,19 @@
 <template>
   <div>
-    <b-row>
+    <b-row class="card-dest">
       <b-col></b-col>
       <b-col md="6" sm="12">
-        <b-card-group deck>
-          <b-card title="Daftar Soal">
-            <b-card-text>
-              <b-table striped hover :items="items" :fields="fields">
-                <template v-slot:cell(actions)="row">
-                  <b-btn @click="toJawabSoal($route.params.kelas,row.item.mapel,row.item.materi)">Jawab</b-btn>
-                </template>
-              </b-table>
-            </b-card-text>
-          </b-card>
-        </b-card-group>
+        <b-card title="Daftar Soal">
+          <b-card-text>
+            <b-table striped hover :items="items" :fields="fields">
+              <template v-slot:cell(actions)="row">
+                <b-btn
+                  @click="toJawabSoal($route.params.kelas,row.item.mapel,row.item.materi)"
+                >Jawab</b-btn>
+              </template>
+            </b-table>
+          </b-card-text>
+        </b-card>
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -27,7 +27,12 @@ export default {
   data() {
     return {
       items: [],
-      fields: [{ key: "mapel", label: "Mata Pelajaran" }, "materi", "jumlah_soal", "actions"]
+      fields: [
+        { key: "mapel", label: "Mata Pelajaran" },
+        "materi",
+        "jumlah_soal",
+        "actions"
+      ]
     };
   },
   methods: {
@@ -39,16 +44,16 @@ export default {
         logout.clear();
       }
     },
-    toJawabSoal(kelas,mapel,materi) {
+    toJawabSoal(kelas, mapel, materi) {
       this.$router.push(`/siswa/jawab-soal/${kelas}/${mapel}/${materi}`);
     }
   },
   computed: {
-    isTerjawab: (key) => {
-      if (key){
-        return "Terjawab"
+    isTerjawab: key => {
+      if (key) {
+        return "Terjawab";
       } else {
-        return "Belum terjawab"
+        return "Belum terjawab";
       }
     }
   },
@@ -57,3 +62,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.card-dest {
+  margin-top: 30px;
+}
+</style>

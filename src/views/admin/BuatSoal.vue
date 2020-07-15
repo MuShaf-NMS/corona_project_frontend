@@ -3,32 +3,30 @@
     <b-row class="card-dest">
       <b-col></b-col>
       <b-col md="6" sm="12">
-        <b-card-group deck>
-          <b-card header="Soal Baru">
-            <b-row>
-              <b-col md="2" sm="12">
-                <b-form-group>
-                  <b-form-input type="text" placeholder="Kelas" required v-model="lists[0].kelas"></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="5" sm="12">
-                <b-form-group>
-                  <b-form-input
-                    type="text"
-                    placeholder="Mata Pelajaran"
-                    required
-                    v-model="lists[0].mapel"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="5" sm="12">
-                <b-form-group>
-                  <b-form-input type="text" placeholder="Materi" required v-model="lists[0].materi"></b-form-input>
-                </b-form-group>
-              </b-col>
-            </b-row>
-          </b-card>
-        </b-card-group>
+        <b-card header="Soal Baru">
+          <b-row>
+            <b-col md="2" sm="12">
+              <b-form-group>
+                <b-form-input type="text" placeholder="Kelas" required v-model="lists[0].kelas"></b-form-input>
+              </b-form-group>
+            </b-col>
+            <b-col md="5" sm="12">
+              <b-form-group>
+                <b-form-input
+                  type="text"
+                  placeholder="Mata Pelajaran"
+                  required
+                  v-model="lists[0].mapel"
+                ></b-form-input>
+              </b-form-group>
+            </b-col>
+            <b-col md="5" sm="12">
+              <b-form-group>
+                <b-form-input type="text" placeholder="Materi" required v-model="lists[0].materi"></b-form-input>
+              </b-form-group>
+            </b-col>
+          </b-row>
+        </b-card>
         <b-card v-for="(list, index) in lists" :key="index" class="card-dest">
           <b-card-text>
             <b-col class="text-center">
@@ -51,32 +49,32 @@
                   v-model="list.opsi[0]"
                 ></b-form-input>
                 <b-input-group>
-                    <b-form-input
-                      type="text"
-                      placeholder="Opsi kedua"
-                      required
-                      v-model="list.opsi[1]"
-                    ></b-form-input>
-                    <b-form-input
-                      type="text"
-                      placeholder="Opsi ketiga"
-                      required
-                      v-model="list.opsi[2]"
-                    ></b-form-input>
+                  <b-form-input
+                    type="text"
+                    placeholder="Opsi kedua"
+                    required
+                    v-model="list.opsi[1]"
+                  ></b-form-input>
+                  <b-form-input
+                    type="text"
+                    placeholder="Opsi ketiga"
+                    required
+                    v-model="list.opsi[2]"
+                  ></b-form-input>
                 </b-input-group>
                 <b-input-group>
-                    <b-form-input
-                      type="text"
-                      placeholder="Opsi keempat"
-                      required
-                      v-model="list.opsi[3]"
-                    ></b-form-input>
-                    <b-form-input
-                      type="text"
-                      placeholder="Opsi kelima"
-                      required
-                      v-model="list.opsi[4]"
-                    ></b-form-input>
+                  <b-form-input
+                    type="text"
+                    placeholder="Opsi keempat"
+                    required
+                    v-model="list.opsi[3]"
+                  ></b-form-input>
+                  <b-form-input
+                    type="text"
+                    placeholder="Opsi kelima"
+                    required
+                    v-model="list.opsi[4]"
+                  ></b-form-input>
                 </b-input-group>
               </b-form-group>
             </b-col>

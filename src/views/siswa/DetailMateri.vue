@@ -3,11 +3,9 @@
     <b-row class="card-dest">
       <b-col></b-col>
       <b-col md="6" sm="12">
-        <b-card-group deck>
-          <b-card :header="materi.mapel" :title="materi.materi" :sub-title="materi.submateri">
-            <b-card-text>{{materi.isi}}</b-card-text>
-          </b-card>
-        </b-card-group>
+        <b-card :header="materi.mapel" :title="materi.materi" :sub-title="materi.submateri">
+          <b-card-text>{{materi.isi}}</b-card-text>
+        </b-card>
       </b-col>
       <b-col></b-col>
     </b-row>

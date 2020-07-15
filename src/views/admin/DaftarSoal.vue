@@ -3,17 +3,15 @@
     <b-row class="card-dest">
       <b-col></b-col>
       <b-col md="6" sm="12">
-        <b-card-group deck>
-          <b-card title="Daftar Soal">
-            <b-card-text>
-              <b-table striped hover :items="items" :fields="fields">
-                <template v-slot:cell(actions)="row">
-                  <b-btn @click="toSoal(row.item.kelas,row.item.mapel,row.item.materi)">Detail</b-btn>
-                </template>
-              </b-table>
-            </b-card-text>
-          </b-card>
-        </b-card-group>
+        <b-card title="Daftar Soal">
+          <b-card-text>
+            <b-table striped hover :items="items" :fields="fields">
+              <template v-slot:cell(actions)="row">
+                <b-btn @click="toSoal(row.item.kelas,row.item.mapel,row.item.materi)">Detail</b-btn>
+              </template>
+            </b-table>
+          </b-card-text>
+        </b-card>
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -27,7 +25,13 @@ export default {
   data() {
     return {
       items: [],
-      fields: ["kelas",{ key: "mapel", label: "Mata Pelajaran" },"materi","jumlah_soal","actions"]
+      fields: [
+        "kelas",
+        { key: "mapel", label: "Mata Pelajaran" },
+        "materi",
+        "jumlah_soal",
+        "actions"
+      ]
     };
   },
   methods: {
@@ -39,8 +43,8 @@ export default {
         logout.clear();
       }
     },
-    toSoal(kelas,mapel,materi){
-      this.$router.push(`/soal/${kelas}/${mapel}/${materi}`)
+    toSoal(kelas, mapel, materi) {
+      this.$router.push(`/soal/${kelas}/${mapel}/${materi}`);
     }
   },
   mounted() {
@@ -49,7 +53,7 @@ export default {
 };
 </script>
 <style scoped>
-.card-dest{
+.card-dest {
   margin-top: 30px;
 }
 </style>

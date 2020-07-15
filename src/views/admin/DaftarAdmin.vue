@@ -3,13 +3,15 @@
     <b-row class="card-dest">
       <b-col></b-col>
       <b-col md="6" sm="12">
-        <b-card-group deck>
-          <b-card title="Daftar Admin">
-            <b-card-text>
-              <b-table striped hover :items="items" :fields="fields"></b-table>
-            </b-card-text>
-          </b-card>
-        </b-card-group>
+        <b-card title="Daftar Admin">
+          <b-card-text>
+            <b-table striped hover :items="items" :fields="fields">
+              <template v-slot:cell(actions)="row">
+                <b-btn @click="update(row.item.uuid)">Update</b-btn>
+              </template>
+            </b-table>
+          </b-card-text>
+        </b-card>
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -27,7 +29,8 @@ export default {
         "username",
         "superadmin",
         { key: "created_at", label: "Dibuat" },
-        { key: "updated_at", label: "Update Terakhir" }
+        { key: "updated_at", label: "Update Terakhir" },
+        "actions"
       ]
     };
   },
@@ -39,6 +42,9 @@ export default {
       } catch (err) {
         logout.clear();
       }
+    },
+    update(uuid){
+      this.$router.push(`/update-admin/${uuid}`)
     }
   },
   mounted() {

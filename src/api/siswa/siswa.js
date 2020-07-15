@@ -6,6 +6,15 @@ const siswa = {
     getProfile: (uuid) => {
         return axios.get(`${url}/profile-siswa/${uuid}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },
+    getUsername: (uuid) => {
+        return axios.get(`${url}/update-username-siswa/${uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    updateUsername: (uuid, data) => {
+        return axios.put(`${url}/update-username-siswa/${uuid}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    updatePassword: (uuid, data) => {
+        return axios.put(`${url}/update-password-siswa/${uuid}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
     getMateri: () => {
         return axios.get(`${url}/materi`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },

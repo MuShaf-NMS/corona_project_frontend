@@ -1,12 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Registrasi from '../views/admin/Registrasi'
+import UpdateAdmin from '../views/admin/UpdateAdmin'
 import DaftarAdmin from '../views/admin/DaftarAdmin'
 import DaftarSiswa from '../views/admin/DaftarSiswa'
 import ProfileAdmin from '../views/admin/ProfileAdmin'
+import UpdateUsernameAdmin from '../views/admin/UpdateUsernameAdmin'
+import UpdatePasswordAdmin from '../views/admin/UpdatePasswordAdmin'
 import TambahMateri from '../views/admin/TambahMateri'
 import RegistrasiSiswa from '../views/admin/RegistrasiSiswa'
+import UpdateSiswa from '../views/admin/UpdateSiswa'
 import ProfileSiswa from '../views/siswa/ProfileSiswa'
+import UpdateUsernameSiswa from '../views/siswa/UpdateUsernameSiswa'
+import UpdatePasswordSiswa from '../views/siswa/UpdatePasswordSiswa'
 import Materi from '../views/siswa/Materi'
 import BuatSoal from '../views/admin/BuatSoal'
 import Soal from '../views/siswa/Soal'
@@ -36,6 +42,14 @@ const routes = [
         }
       },
       {
+        path: '/update-admin/:id',
+        name: 'Update Admin',
+        component: UpdateAdmin,
+        meta: {
+          adminAuthenticated: true
+        }
+      },
+      {
         path: '/daftar-admin',
         name: 'Daftar Admin',
         component: DaftarAdmin,
@@ -55,6 +69,22 @@ const routes = [
         path: '/admin/profile/:id',
         name: 'Profile Admin',
         component: ProfileAdmin,
+        meta: {
+          adminAuthenticated: true
+        }
+      },
+      {
+        path: '/admin/update-username/:id',
+        name: 'Update Username Admin',
+        component: UpdateUsernameAdmin,
+        meta: {
+          adminAuthenticated: true
+        }
+      },
+      {
+        path: '/admin/update-password/:id',
+        name: 'Update Password Admin',
+        component: UpdatePasswordAdmin,
         meta: {
           adminAuthenticated: true
         }
@@ -98,6 +128,14 @@ const routes = [
         meta: {
           adminAuthenticated: true
         }
+      },
+      {
+        path: '/update-siswa/:id',
+        name: 'Update Siswa',
+        component: UpdateSiswa,
+        meta: {
+          adminAuthenticated: true
+        }
       }
     ]
   },
@@ -119,6 +157,22 @@ const routes = [
         path: '/siswa/profile/:id',
         name: 'Profile Siswa',
         component: ProfileSiswa,
+        meta: {
+          siswaAuthenticated: true
+        }
+      },
+      {
+        path: '/siswa/update-username/:id',
+        name: 'Update Username Siswa',
+        component: UpdateUsernameSiswa,
+        meta: {
+          siswaAuthenticated: true
+        }
+      },
+      {
+        path: '/siswa/update-password/:id',
+        name: 'Update Password Siswa',
+        component: UpdatePasswordSiswa,
         meta: {
           siswaAuthenticated: true
         }

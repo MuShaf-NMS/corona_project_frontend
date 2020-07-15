@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-row>
+    <b-row class="card-dest">
       <b-col></b-col>
       <b-col md="6" sm="12">
         <b-card>
@@ -94,3 +94,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.card-dest {
+  margin-top: 30px;
+}
+</style>

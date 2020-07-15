@@ -3,13 +3,15 @@
     <b-row class="card-dest">
       <b-col></b-col>
       <b-col md="6" sm="12">
-        <b-card-group deck>
-          <b-card title="Daftar Siswa">
-            <b-card-text>
-              <b-table striped hover :items="items" :fields="fields"></b-table>
-            </b-card-text>
-          </b-card>
-        </b-card-group>
+        <b-card title="Daftar Siswa">
+          <b-card-text>
+            <b-table striped hover :items="items" :fields="fields">
+              <template v-slot:cell(actions)="row">
+                <b-btn @click="update(row.item.uuid)">Update</b-btn>
+              </template>
+            </b-table>
+          </b-card-text>
+        </b-card>
       </b-col>
       <b-col></b-col>
     </b-row>
@@ -24,9 +26,10 @@ export default {
     return {
       items: [],
       fields: [
-        "username",
+        "nama",
         { key: "created_at", label: "Dibuat" },
-        { key: "updated_at", label: "Update terakhir" }
+        { key: "updated_at", label: "Update terakhir" },
+        "actions"
       ]
     };
   },
@@ -38,6 +41,9 @@ export default {
       } catch (err) {
         logout.clear();
       }
+    },
+    update(uuid){
+      this.$router.push(`/update-siswa/${uuid}`)
     }
   },
   mounted() {

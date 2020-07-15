@@ -46,6 +46,14 @@
                 <b-col md="1" sm="12">:</b-col>
                 <b-col md="8" sm="12">{{profile.email}}</b-col>
               </b-row>
+              <b-row class="text-center">
+                <b-col>
+                  <b-btn-group>
+                    <b-btn @click="updateUsername">Ganti username</b-btn>
+                    <b-btn @click="updatePassword">Ganti password</b-btn>
+                  </b-btn-group>
+                </b-col>
+              </b-row>
             </b-card-text>
           </b-card>
         </b-card-group>
@@ -72,6 +80,16 @@ export default {
       } catch (err) {
         logout.clear();
       }
+    },
+    updateUsername() {
+      this.$router.push(
+        `/admin/update-username/${this.$store.getters.getUser.uuid}`
+      );
+    },
+    updatePassword() {
+      this.$router.push(
+        `/admin/update-password/${this.$store.getters.getUser.uuid}`
+      );
     }
   },
   mounted() {

@@ -24,6 +24,9 @@ export default new Vuex.Store({
     updateUser: (state,data) => {
       state.user = data
     },
+    updateUsername: (state,data) => {
+      state.user.username = data
+    },
     deleteUser: (state) => {
       state.user = null
     },
@@ -43,6 +46,9 @@ export default new Vuex.Store({
   actions: {
     saveUser: (contex,data) => {
       contex.commit("updateUser",data)
+    },
+    saveUsername: (contex,data) => {
+      contex.commit("updateUsername",data)
     },
     logout: (contex) => {
       contex.commit('deleteUser')

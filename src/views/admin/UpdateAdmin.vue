@@ -3,17 +3,12 @@
     <b-row class="card-dest">
       <b-col></b-col>
       <b-col md="6" sm="12">
-        <b-card header="Registrasi Siswa">
+        <b-card header="Update admin">
           <b-card-text>
             <b-form>
               <b-col md="6" sm="12">
                 <b-form-group label="Nama">
                   <b-form-input type="text" placeholder="Nama" required v-model="form.nama"></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="6" sm="12">
-                <b-form-group label="Username">
-                  <b-form-input type="text" placeholder="Username" requierd v-model="form.username"></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col>
@@ -52,28 +47,8 @@
                   <b-form-input type="email" placeholder="Email" required v-model="form.email"></b-form-input>
                 </b-form-group>
               </b-col>
-              <b-col md="6" sm="12">
-                <b-form-group label="Password">
-                  <b-form-input
-                    type="password"
-                    placeholder="Password"
-                    required
-                    v-model="form.password"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="6" sm="12">
-                <b-form-group label="Confirm password">
-                  <b-form-input
-                    type="password"
-                    placeholder="Confirm password"
-                    required
-                    v-model="confirm_password"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
               <b-col>
-                <b-btn class="btn-info" @click="registration">Registrasi</b-btn>
+                <b-btn class="btn-info" @click="update">Simpan</b-btn>
               </b-col>
             </b-form>
           </b-card-text>
@@ -84,35 +59,27 @@
   </div>
 </template>
 <script>
-import logout from "../logout";
 import { user } from "../../api";
 export default {
-  name: "RegistrasiSiswa",
+  name: "UpdateSiswa",
   data() {
     return {
-      form: {
-        nama: "",
-        username: "",
-        jk: "",
-        alamat: "",
-        tempat_lahir: "",
-        tanggal_lahir: "",
-        hp: "",
-        email: "",
-        password: ""
-      },
-      confirm_password: ""
+      form: {}
     };
   },
   methods: {
-    isConfirmed() {
-      if (this.form.password == this.confirm_password) {
-        return true;
+    async loadData() {
+      let data = await user.getOneUser(this.$route.params.id);
+      this.form = data.data;
+    },
+    async update() {
+      let data = await user.updateUser(this.$route.params.id,this.form);
+      if (data.status == 200) {
+        this.showMessage();
       }
-      return false;
     },
     showMessage() {
-      this.$bvModal.msgBoxOk("Berhasil menambahkan siswa baru", {
+      this.$bvModal.msgBoxOk("Berhasil mengupdate admin", {
         title: "Sukses",
         size: "sm",
         buttonSize: "sm",
@@ -121,35 +88,10 @@ export default {
         footerClass: "p-2 border-top-0",
         centered: true
       });
-    },
-    clearForm() {
-      this.form.nama = "";
-      this.form.username = "";
-      this.form.jk = "";
-      this.form.alamat = "";
-      this.form.tempat_lahir = "";
-      this.form.tanggal_lahir = "";
-      this.form.hp = "";
-      this.form.email = "";
-      this.form.password = "";
-      this.confirm_password = "";
-    },
-    async registration() {
-      if (this.isConfirmed()) {
-        try {
-          let data = await user.addSiswa(this.form);
-          console.log(data);
-          if (data.status == 200) {
-            this.showMessage();
-            this.clearForm();
-          }
-        } catch (err) {
-          logout.clear();
-        }
-      } else {
-        console.log("please confirm your password");
-      }
     }
+  },
+  created() {
+    this.loadData();
   }
 };
 </script>
