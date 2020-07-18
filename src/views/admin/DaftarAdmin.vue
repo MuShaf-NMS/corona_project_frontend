@@ -26,7 +26,7 @@ export default {
     return {
       items: [],
       fields: [
-        "username",
+        "nama",
         "superadmin",
         { key: "created_at", label: "Dibuat" },
         { key: "updated_at", label: "Update Terakhir" },
@@ -39,6 +39,7 @@ export default {
       try {
         let data = await user.getUser();
         this.items = data.data;
+        console.log(this.items)
       } catch (err) {
         logout.clear();
       }

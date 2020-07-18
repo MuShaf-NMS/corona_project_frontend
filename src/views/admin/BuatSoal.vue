@@ -34,7 +34,18 @@
             </b-col>
             <b-col>
               <b-form-group label="Soal">
-                <b-form-input type="text" placeholder="Soal" required v-model="list.soal"></b-form-input>
+                <b-form-textarea
+                  placeholder="Soal"
+                  rows="3"
+                  max-rows="5"
+                  required
+                  v-model="list.soal"
+                ></b-form-textarea>
+              </b-form-group>
+            </b-col>
+            <b-col>
+              <b-form-group label="Skor">
+                <b-form-input type="number" placeholder="Skor" required v-model="list.skor"></b-form-input>
               </b-form-group>
             </b-col>
             <b-col md="12" sm="12">
@@ -78,6 +89,11 @@
                 </b-input-group>
               </b-form-group>
             </b-col>
+            <b-col>
+              <b-form-group label="Tampilkan soal ini?">
+                <b-form-radio-group :options="options" required v-model="list.tampil"></b-form-radio-group>
+              </b-form-group>
+            </b-col>
             <b-col class="text-center">
               <b-btn-group>
                 <b-btn class="btn-danger" @click="hapusSoal(index)">Hapus Soal</b-btn>
@@ -104,8 +120,14 @@ export default {
           mapel: "",
           materi: "",
           soal: "",
-          opsi: ["", "", "", "", ""]
+          skor: "",
+          opsi: ["", "", "", "", ""],
+          tampil: false
         }
+      ],
+      options: [
+        { text: "Ya", value: true },
+        { text: "Tidak", value: false }
       ]
     };
   },
@@ -133,7 +155,9 @@ export default {
         mapel: this.lists[0].mapel,
         materi: this.lists[0].materi,
         soal: "",
-        opsi: ["", "", "", "", ""]
+        skor: "",
+        opsi: ["", "", "", "", ""],
+        tampil: false
       });
     },
     hapusSoal(index) {

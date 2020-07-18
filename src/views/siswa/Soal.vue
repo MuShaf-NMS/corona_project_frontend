@@ -48,15 +48,6 @@ export default {
       this.$router.push(`/siswa/jawab-soal/${kelas}/${mapel}/${materi}`);
     }
   },
-  computed: {
-    isTerjawab: key => {
-      if (key) {
-        return "Terjawab";
-      } else {
-        return "Belum terjawab";
-      }
-    }
-  },
   created() {
     this.loadData();
   }

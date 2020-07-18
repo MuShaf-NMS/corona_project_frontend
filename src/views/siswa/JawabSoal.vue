@@ -25,16 +25,22 @@
             <b-col md="8" sm="12">{{$store.getters.getUser.username}}</b-col>
           </b-row>
         </b-card>
-        <b-card>
+        <b-card class="card-dest">
           <b-row>
             <b-col>
               <b-card-text v-for="(i,index) in soal" :key="index">
-                <load-soal :uuid="i.uuid" />
+                <b-row v-if="index < batas && index >= batas-5">
+                  <b-col md="1" sm="12">{{index+1+"."}}</b-col>
+                  <b-col md="11" sm="12">
+                    <load-soal :uuid="i.uuid" :idx="index" />
+                  </b-col>
+                </b-row>
               </b-card-text>
             </b-col>
           </b-row>
           <b-row>
-            <b-btn @click="lanjut">Selanjutnya</b-btn>
+            <b-btn @click="lanjut" :disabled="batas >=soal.length">Selanjutnya</b-btn>
+            <b-btn @click="showMessageWarning" v-if="batas >=soal.length">Kumpulkan</b-btn>
           </b-row>
         </b-card>
       </b-col>
@@ -54,39 +60,78 @@ export default {
   data() {
     return {
       soal: [],
-      form: {
-        uuid_siswa: this.$store.getters.getUser.uuid,
-        hasil: []
-      },
-      jawaban: [],
       batas: 5
     };
   },
   methods: {
     async loadData() {
       try {
-        if (this.$store.getters.getSoal == null) {
-          let data = await siswa.getSoal(
-            this.$route.params.kelas,
-            this.$route.params.mapel,
-            this.$route.params.materi
-          );
-          this.$store.dispatch("saveSoal", data.data);
-        }
-        this.soal = this.$store.getters.getSoal.filter(
-          e => this.$store.getters.getSoal.indexOf(e) < this.batas && this.$store.getters.getSoal.indexOf(e) >= this.batas - 5
+        let data = await siswa.getSoal(
+          this.$route.params.kelas,
+          this.$route.params.mapel,
+          this.$route.params.materi
         );
-        this.jawaban = this.soal.map(() => Object())
+        this.$store.dispatch("saveSoal", data.data);
+        this.soal = this.$store.getters.getSoal;
       } catch (err) {
         logout.clear();
       }
     },
     lanjut() {
       this.batas += 5;
-      this.soal = this.$store.getters.getSoal.filter(
-        e => this.$store.getters.getSoal.indexOf(e) < this.batas && this.$store.getters.getSoal.indexOf(e) >= this.batas - 5
+    },
+    showMessageWarning() {
+      this.$bvModal.msgBoxConfirm("Apakah anda yakin untuk mungumpulkan jawaban anda?", {
+        title: "Sukses",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        cancelVariant: "danger",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      })
+      .then((value) => {
+        if (value) {
+          this.submit()
+        }
+      })
+      .catch(err => console.log(err));
+    },
+    showMessageMaaf() {
+      this.$bvModal.msgBoxOk("Anda sudah menjawab soal ini", {
+        title: "Maaf",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      })
+      .then((value) => {
+        if (value) {
+          this.$router.push(`/siswa/daftar-soal/${this.$store.getters.getUser.kelas}`)
+        }
+      });
+    },
+    async submit() {
+      let data = await siswa.postJawaban(
+        this.$route.params.kelas,
+        this.$route.params.mapel,
+        this.$route.params.materi,
+        {
+          uuid_siswa: this.$store.getters.getUser.uuid,
+          hasil: this.$store.getters.getJawaban
+        }
       );
-      console.log(this.soal)
+      this.$store.dispatch("clearSoal");
+      this.$store.dispatch("clearJawaban");
+      if (data.data != null) {
+        this.showMessageMaaf()
+      } else {
+        this.$router.push(`/siswa/daftar-soal/${this.$store.getters.getUser.kelas}`)
+      }
+      
     }
   },
   created() {

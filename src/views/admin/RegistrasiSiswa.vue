@@ -16,6 +16,11 @@
                   <b-form-input type="text" placeholder="Username" requierd v-model="form.username"></b-form-input>
                 </b-form-group>
               </b-col>
+              <b-col md="6" sm="12">
+                <b-form-group label="Kelas">
+                  <b-form-input type="text" placeholder="Kelas" required v-model="form.kelas"></b-form-input>
+                </b-form-group>
+              </b-col>
               <b-col>
                 <b-form-group label="Jenis kelamin">
                   <b-form-radio value="L" v-model="form.jk">Laki-laki</b-form-radio>
@@ -93,6 +98,7 @@ export default {
       form: {
         nama: "",
         username: "",
+        kelas: "",
         jk: "",
         alamat: "",
         tempat_lahir: "",
@@ -111,9 +117,20 @@ export default {
       }
       return false;
     },
-    showMessage() {
+    showMessageSukses() {
       this.$bvModal.msgBoxOk("Berhasil menambahkan siswa baru", {
         title: "Sukses",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      });
+    },
+    showMessageKonfir() {
+      this.$bvModal.msgBoxOk("Tolong konfirmasi password anda", {
+        title: "Maaf",
         size: "sm",
         buttonSize: "sm",
         okVariant: "success",
@@ -125,6 +142,7 @@ export default {
     clearForm() {
       this.form.nama = "";
       this.form.username = "";
+      this.form.kelas = ""
       this.form.jk = "";
       this.form.alamat = "";
       this.form.tempat_lahir = "";
@@ -138,16 +156,15 @@ export default {
       if (this.isConfirmed()) {
         try {
           let data = await user.addSiswa(this.form);
-          console.log(data);
           if (data.status == 200) {
-            this.showMessage();
+            this.showMessageSukses();
             this.clearForm();
           }
         } catch (err) {
           logout.clear();
         }
       } else {
-        console.log("please confirm your password");
+        this.showMessageKonfir()
       }
     }
   }

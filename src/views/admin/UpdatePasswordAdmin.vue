@@ -65,11 +65,13 @@ export default {
     async updatePassword() {
       if (this.isConfirmed()) {
         let data = await user.updatePassword(this.$route.params.id, this.form);
-        if (data.status == 200) {
+        if (data.data.msg == "Sukses") {
           this.showMessageSukses();
+        } else {
+          this.showMessageMaaf()
         }
       } else {
-        this.showMessageMaaf()
+        this.showMessageKonfir()
       }
     },
     showMessageSukses() {
@@ -84,7 +86,21 @@ export default {
       });
     },
     showMessageMaaf() {
-      this.$bvModal.msgBoxOk("Tolong konfirmasi password anda", {
+      this.$bvModal.msgBoxOk(
+        "Password lama yang anda masukkan salah. Tolong masukkan password yang benar",
+        {
+          title: "Maaf",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "success",
+          headerClass: "p-2 border-bottom-0",
+          footerClass: "p-2 border-top-0",
+          centered: true
+        }
+      );
+    },
+    showMessageKonfir() {
+      this.$bvModal.msgBoxOk("Tolong konfirmasi password baru anda", {
         title: "Maaf",
         size: "sm",
         buttonSize: "sm",

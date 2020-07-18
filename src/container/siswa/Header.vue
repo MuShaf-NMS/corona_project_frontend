@@ -13,7 +13,7 @@
       <b-navbar-nav class="ml-auto">
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
-          <template v-slot:button-content>User</template>
+          <template v-slot:button-content>{{$store.getters.getUser.username}}</template>
           <b-dropdown-item @click="toProfile">Profile</b-dropdown-item>
           <b-dropdown-item @click="logout">Logout</b-dropdown-item>
         </b-nav-item-dropdown>

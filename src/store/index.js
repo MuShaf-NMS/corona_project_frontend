@@ -32,12 +32,13 @@ export default new Vuex.Store({
     },
     updateSoal: (state,data) => {
       state.soal = data
+      state.jawaban = data
     },
     deleteSoal: (state) => {
       state.soal = null
     },
     updateJawaban: (state,data) => {
-      state.jawaban.push(data)
+      state.jawaban[data.idx].jawaban = data.jawaban
     },
     deleteJawaban: (state) => {
       state.jawaban = []
@@ -59,8 +60,8 @@ export default new Vuex.Store({
     clearSoal: (contex) => {
       contex.commit("deleteSoal")
     },
-    jawab: (contex,idx, data) => {
-      contex.commit("updateJawaban",idx,data)
+    jawab: (contex,data) => {
+      contex.commit("updateJawaban",data)
     },
     clearJawaban: (contex) => {
       contex.commit("deleteJawaban")

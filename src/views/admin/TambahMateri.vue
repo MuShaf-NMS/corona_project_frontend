@@ -12,6 +12,11 @@
                 </b-form-group>
               </b-col>
               <b-col md="6" sm="12">
+                <b-form-group label="Kelas">
+                  <b-form-input type="text" placeholder="Kelas" required v-model="form.kelas"></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col md="6" sm="12">
                 <b-form-group label="Mata Pelajaran">
                   <b-form-input
                     type="text"
@@ -38,7 +43,7 @@
               </b-col>
               <b-col>
                 <b-form-group label="Isi">
-                  <b-form-input type="text" placeholder="Isi" required v-model="form.isi"></b-form-input>
+                  <b-form-textarea placeholder="Isi" rows="3" max-rows="5" v-model="form.isi"></b-form-textarea>
                 </b-form-group>
               </b-col>
               <b-col>
@@ -62,6 +67,7 @@ export default {
   data() {
     return {
       form: {
+        kelas: "",
         mapel: "",
         guru: "",
         materi: "",

@@ -16,7 +16,7 @@ const siswa = {
         return axios.put(`${url}/update-password-siswa/${uuid}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getMateri: () => {
-        return axios.get(`${url}/materi`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+        return axios.get(`${url}/daftar-materi/${store.getters.getUser.kelas}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },
     getDetailMateri: (uuid) => {
         return axios.get(`${url}/materi/${uuid}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
@@ -30,8 +30,8 @@ const siswa = {
     getOneSoal: (uuid) => {
         return axios.get(`${url}/get-soal/${uuid}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },
-    postJawaban: (uuid,data) => {
-        return axios.post(`${url}/jawab-soal/${uuid}`,data,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+    postJawaban: (kelas,mapel,materi,data) => {
+        return axios.post(`${url}/jawab-soal/${kelas}/${mapel}/${materi}`,data,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     }
 }
 

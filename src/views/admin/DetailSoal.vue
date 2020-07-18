@@ -24,10 +24,15 @@
           <b-row>
             <b-col md="1" sm="12">{{idx + 1}}.</b-col>
             <b-col>
-              <b-card-text>
+              <b-card-text v-if="loaded">
                 <b-row>{{soalke.soal}}</b-row>
                 <b-row v-for="(i,index) in soalke.opsi" :key="index">{{i.nilai}}</b-row>
                 <b-row>Kunci jawaban: {{soalke.kunci_jawaban}}</b-row>
+                <b-row>Skor: {{soalke.skor}}</b-row>
+                <b-row>Tampilkan soal ini?</b-row>
+                <b-row>
+                  <b-form-radio-group :options="options" v-model="soal[idx].tampil"></b-form-radio-group>
+                </b-row>
                 <b-row>
                   <b-btn @click="mundur" :disabled="idx == 0">mundur</b-btn>
                   <b-btn @click="lanjut" :disabled="idx == soal.length - 1">lanjut</b-btn>
@@ -39,6 +44,11 @@
                 <b-row>
                   <b-form-group label="Soal">
                     <b-form-input type="text" placeholder="Soal" required v-model="soal[idx].soal"></b-form-input>
+                  </b-form-group>
+                </b-row>
+                <b-row>
+                  <b-form-group label="Skor">
+                    <b-form-input type="number" placeholder="Skor" required v-model="soal[idx].skor"></b-form-input>
                   </b-form-group>
                 </b-row>
                 <b-row md="12" sm="12">
@@ -75,7 +85,12 @@ export default {
       soal: [],
       soalke: {},
       idx: 0,
-      edit: false
+      loaded: false,
+      edit: false,
+      options: [
+        { text: "Ya", value: 1 },
+        { text: "Tidak", value: 0 }
+      ]
     };
   },
   methods: {
@@ -85,6 +100,7 @@ export default {
         this.$route.params.mapel,
         this.$route.params.materi
       );
+      this.loaded = true
       this.soal = data.data;
       this.soalke = this.soal[this.idx];
     },

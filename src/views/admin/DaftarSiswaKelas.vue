@@ -7,7 +7,7 @@
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
               <template v-slot:cell(actions)="row">
-                <b-btn @click="Detail(row.item.kelas)">Detail</b-btn>
+                <b-btn @click="update(row.item.uuid)">Update</b-btn>
               </template>
             </b-table>
           </b-card-text>
@@ -21,13 +21,14 @@
 import logout from "../logout";
 import { user } from "../../api";
 export default {
-  name: "DaftarSiswa",
+  name: "DaftarSiswaKelas",
   data() {
     return {
       items: [],
       fields: [
-        "kelas",
-        "jumlah_siswa",
+        "nama",
+        { key: "created_at", label: "Dibuat" },
+        { key: "updated_at", label: "Update terakhir" },
         "actions"
       ]
     };
@@ -35,14 +36,14 @@ export default {
   methods: {
     async loadData() {
       try {
-        let data = await user.getSiswa();
+        let data = await user.getSiswaKelas(this.$route.params.kelas);
         this.items = data.data;
       } catch (err) {
         logout.clear();
       }
     },
-    Detail(kelas){
-      this.$router.push(`/daftar-siswa/${kelas}`)
+    update(uuid){
+      this.$router.push(`/update-siswa/${uuid}`)
     }
   },
   mounted() {

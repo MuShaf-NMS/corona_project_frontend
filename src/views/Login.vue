@@ -16,11 +16,6 @@
                 </b-form-group>
               </b-col>
               <b-col>
-                <b-form-group>
-                  <b-form-checkbox v-model="form.rememberMe">Ingat saya</b-form-checkbox>
-                </b-form-group>
-              </b-col>
-              <b-col>
                 <b-btn class="btn-info" @click="login">Login</b-btn>
               </b-col>
             </b-form>

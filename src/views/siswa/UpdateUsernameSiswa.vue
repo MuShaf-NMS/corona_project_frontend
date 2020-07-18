@@ -53,6 +53,8 @@ export default {
       if (data.data.msg == "Sukses") {
         this.$store.dispatch("saveUsername", this.form.username);
         this.showMessageSukses();
+      } else if (data.data.msg == "Salah") {
+        this.showMessageSalah()
       } else {
         this.showMessageMaaf();
       }
@@ -81,6 +83,17 @@ export default {
           centered: true
         }
       );
+    },
+    showMessageSalah() {
+      this.$bvModal.msgBoxOk("Password yang anda masukkan salah", {
+        title: "Maaf",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      });
     }
   },
   mounted() {

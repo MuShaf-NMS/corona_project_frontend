@@ -11,6 +11,11 @@
                   <b-form-input type="text" placeholder="Nama" required v-model="form.nama"></b-form-input>
                 </b-form-group>
               </b-col>
+              <b-col md="6" sm="12">
+                <b-form-group label="Kelas">
+                  <b-form-input type="text" placeholder="Kelas" required v-model="form.kelas"></b-form-input>
+                </b-form-group>
+              </b-col>
               <b-col>
                 <b-form-group label="Jenis kelamin">
                   <b-form-radio value="L" v-model="form.jk">Laki-laki</b-form-radio>

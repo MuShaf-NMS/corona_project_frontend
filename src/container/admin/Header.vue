@@ -13,16 +13,18 @@
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Materi">
           <b-dropdown-item to="/tambah-materi">Tambah Materi</b-dropdown-item>
+          <b-dropdown-item to="/daftar-materi">Daftar Materi</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Soal">
           <b-dropdown-item to="/buat-soal">Tambah Soal</b-dropdown-item>
           <b-dropdown-item to="/daftar-soal">Daftar Soal</b-dropdown-item>
+          <b-dropdown-item to="/skor">Skor</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
-          <template v-slot:button-content>User</template>
+          <template v-slot:button-content>{{$store.getters.getUser.username}}</template>
           <b-dropdown-item @click="toProfile">Profile</b-dropdown-item>
           <b-dropdown-item @click="logout">Logout</b-dropdown-item>
         </b-nav-item-dropdown>

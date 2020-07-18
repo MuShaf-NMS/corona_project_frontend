@@ -57,6 +57,24 @@
                   <b-form-radio-group :options="options" required v-model="form.superadmin"></b-form-radio-group>
                 </b-form-group>
               </b-col>
+              <b-col v-if="!form.superadmin">
+                <b-form-group label="Bidang studi / Kelas yang diampu">
+                  <b-input-group>
+                    <b-form-input
+                      type="text"
+                      placeholder="Bidang studi"
+                      required
+                      v-model="form.bidang_studi"
+                    ></b-form-input>
+                    <b-form-input
+                      type="text"
+                      placeholder="Kelas yang diampu"
+                      required
+                      v-model="form.kelas_ampu"
+                    ></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
               <b-col md="6" sm="12">
                 <b-form-group label="Password">
                   <b-form-input
@@ -105,12 +123,14 @@ export default {
         hp: "",
         email: "",
         password: "",
-        superadmin: false
+        superadmin: false,
+        bidang_studi: "",
+        kelas_ampu: ""
       },
       confirm_password: "",
       options: [
-        { text: "Yes", value: true },
-        { text: "No", value: false }
+        { text: "Ya", value: true },
+        { text: "Tidak", value: false }
       ]
     };
   },
@@ -133,10 +153,23 @@ export default {
       this.form.password = "";
       this.form.superadmin = false;
       this.confirm_password = "";
+      this.bidang_studi = "";
+      this.kelas_ampu = "";
     },
-    showMessage() {
+    showMessageSukses() {
       this.$bvModal.msgBoxOk("Berhasil menambahkan admin baru", {
         title: "Sukses",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      });
+    },
+    showMessageKonfir() {
+      this.$bvModal.msgBoxOk("Tolong konfirmasi password anda", {
+        title: "Maaf",
         size: "sm",
         buttonSize: "sm",
         okVariant: "success",
@@ -150,14 +183,14 @@ export default {
         try {
           let data = await user.addUser(this.form);
           if (data.status == 200) {
-            this.showMessage();
+            this.showMessageSukses();
             this.clearForm();
           }
         } catch (err) {
           logout.clear();
         }
       } else {
-        console.log("please confirm your password");
+        this.showMessageKonfir();
       }
     }
   }
