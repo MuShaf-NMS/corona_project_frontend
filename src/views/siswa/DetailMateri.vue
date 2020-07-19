@@ -4,7 +4,10 @@
       <b-col></b-col>
       <b-col md="6" sm="12">
         <b-card :header="materi.mapel" :title="materi.materi" :sub-title="materi.submateri">
-          <b-card-text>{{materi.isi}}</b-card-text>
+          <b-card-text>
+            {{materi.isi}}
+            <iframe width="560" height="315" :src="materi.link" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </b-card-text>
         </b-card>
       </b-col>
       <b-col></b-col>
@@ -31,7 +34,7 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.loadData();
   }
 };

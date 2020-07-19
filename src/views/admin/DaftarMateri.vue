@@ -7,7 +7,7 @@
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
               <template v-slot:cell(actions)="row">
-                <b-btn @click="toDetail(row.item.uuid)">Baca</b-btn>
+                <b-btn @click="toDetail(row.item.uuid)">Detail</b-btn>
               </template>
             </b-table>
           </b-card-text>
@@ -42,8 +42,8 @@ export default {
         logout.clear();
       }
     },
-    toDetail() {
-      this.$router.push(``);
+    toDetail(uuid) {
+      this.$router.push(`/detail-materi/${uuid}`);
     }
   },
   mounted() {

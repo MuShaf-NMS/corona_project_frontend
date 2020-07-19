@@ -8,6 +8,7 @@ import UpdateUsernameAdmin from '../views/admin/UpdateUsernameAdmin'
 import UpdatePasswordAdmin from '../views/admin/UpdatePasswordAdmin'
 import TambahMateri from '../views/admin/TambahMateri'
 import DaftarMateri from '../views/admin/DaftarMateri'
+import UpdateMateri from '../views/admin/UpdateMateri'
 import RegistrasiSiswa from '../views/admin/RegistrasiSiswa'
 import UpdateSiswa from '../views/admin/UpdateSiswa'
 import BuatSoal from '../views/admin/BuatSoal'
@@ -99,6 +100,14 @@ const admin = {
             path: '/daftar-materi',
             name: 'Daftar Materi',
             component: DaftarMateri,
+            meta: {
+                adminAuthenticated: true
+            }
+        },
+        {
+            path: '/detail-materi/:id',
+            name: 'Update Materi',
+            component: UpdateMateri,
             meta: {
                 adminAuthenticated: true
             }
