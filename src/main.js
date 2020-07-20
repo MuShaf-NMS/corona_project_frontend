@@ -35,7 +35,7 @@ router.beforeEach((to, from, next) => {
   }
   else if (to.matched.some(record => record.meta.guest)) {
     if (store.getters.getUser != null) {
-      if (store.getters.getUser.status == 'admin'){
+      if (store.getters.getUser.status == 'admin') {
         next('admin')
       } else {
         next('/siswa')

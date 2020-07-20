@@ -26,6 +26,7 @@ export default {
     return {
       items: [],
       fields: [
+        "kelas",
         { key: "mapel", label: "Mata Pelajaran" },
         "materi",
         "submateri",

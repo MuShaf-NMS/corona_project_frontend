@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-row>
+    <b-row class="card-dest">
       <b-col></b-col>
       <b-col md="6" sm="12">
         <b-card>
@@ -20,7 +20,7 @@
             <b-col md="8" sm="12">{{$route.params.materi}}</b-col>
           </b-row>
         </b-card>
-        <b-card>
+        <b-card class="card-dest">
           <b-row>
             <b-col md="1" sm="12">{{idx + 1}}.</b-col>
             <b-col>
@@ -33,11 +33,19 @@
                 <b-row>
                   <b-form-radio-group :options="options" v-model="soal[idx].tampil"></b-form-radio-group>
                 </b-row>
-                <b-row>
-                  <b-btn @click="mundur" :disabled="idx == 0">mundur</b-btn>
-                  <b-btn @click="lanjut" :disabled="idx == soal.length - 1">lanjut</b-btn>
-                  <b-btn @click="toEdit">Edit</b-btn>
-                  <b-btn @click="updateSoal">Simpan perubahan</b-btn>
+                <b-row class="card-dest">
+                  <b-col>
+                    <b-btn-group>
+                      <b-btn @click="mundur" :disabled="idx == 0">mundur</b-btn>
+                      <b-btn @click="lanjut" :disabled="idx == soal.length - 1">lanjut</b-btn>
+                    </b-btn-group>
+                  </b-col>
+                  <b-col>
+                    <b-btn-group>
+                      <b-btn @click="toEdit">Edit</b-btn>
+                      <b-btn @click="updateSoal">Simpan perubahan</b-btn>
+                    </b-btn-group>
+                  </b-col>
                 </b-row>
               </b-card-text>
               <b-card-text v-if="edit">
@@ -48,7 +56,12 @@
                 </b-row>
                 <b-row>
                   <b-form-group label="Skor">
-                    <b-form-input type="number" placeholder="Skor" required v-model="soal[idx].skor"></b-form-input>
+                    <b-form-input
+                      type="number"
+                      placeholder="Skor"
+                      required
+                      v-model="soal[idx].skor"
+                    ></b-form-input>
                   </b-form-group>
                 </b-row>
                 <b-row md="12" sm="12">
@@ -56,14 +69,39 @@
                     label="Opsi"
                     description="Opsi pertama yang anda masukkan dianggap sebagai kunci jawaban"
                   >
-                    <b-form-input type="text" placeholder="Opsi pertama (Kunci jawaban)" required v-model="soal[idx].opsi[0].nilai"></b-form-input>
+                    <b-form-input
+                      type="text"
+                      placeholder="Opsi pertama (Kunci jawaban)"
+                      required
+                      v-model="soal[idx].opsi[0].nilai"
+                    ></b-form-input>
                     <b-input-group>
-                      <b-form-input type="text" placeholder="Opsi kedua" required v-model="soal[idx].opsi[1].nilai"></b-form-input>
-                      <b-form-input type="text" placeholder="Opsi ketiga" required v-model="soal[idx].opsi[2].nilai"></b-form-input>
+                      <b-form-input
+                        type="text"
+                        placeholder="Opsi kedua"
+                        required
+                        v-model="soal[idx].opsi[1].nilai"
+                      ></b-form-input>
+                      <b-form-input
+                        type="text"
+                        placeholder="Opsi ketiga"
+                        required
+                        v-model="soal[idx].opsi[2].nilai"
+                      ></b-form-input>
                     </b-input-group>
                     <b-input-group>
-                      <b-form-input type="text" placeholder="Opsi keempat" required v-model="soal[idx].opsi[3].nilai"></b-form-input>
-                      <b-form-input type="text" placeholder="Opsi kelima" required v-model="soal[idx].opsi[4].nilai"></b-form-input>
+                      <b-form-input
+                        type="text"
+                        placeholder="Opsi keempat"
+                        required
+                        v-model="soal[idx].opsi[3].nilai"
+                      ></b-form-input>
+                      <b-form-input
+                        type="text"
+                        placeholder="Opsi kelima"
+                        required
+                        v-model="soal[idx].opsi[4].nilai"
+                      ></b-form-input>
                     </b-input-group>
                   </b-form-group>
                 </b-row>
@@ -100,16 +138,19 @@ export default {
         this.$route.params.mapel,
         this.$route.params.materi
       );
-      this.loaded = true
+      this.loaded = true;
       this.soal = data.data;
       this.soalke = this.soal[this.idx];
     },
-    async updateSoal(){
-      let data = await user.updateSoal(this.$route.params.kelas,
+    async updateSoal() {
+      let data = await user.updateSoal(
+        this.$route.params.kelas,
         this.$route.params.mapel,
-        this.$route.params.materi,this.soal)
-      if (data.status == 200){
-        this.showMessage()
+        this.$route.params.materi,
+        this.soal
+      );
+      if (data.status == 200) {
+        this.showMessage();
       }
     },
     showMessage() {
@@ -131,8 +172,8 @@ export default {
       this.idx -= 1;
       this.soalke = this.soal[this.idx];
     },
-    toEdit(){
-      return this.edit = !this.edit
+    toEdit() {
+      return (this.edit = !this.edit);
     }
   },
   created() {
@@ -140,3 +181,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.card-dest {
+  margin-top: 30px;
+}
+</style>

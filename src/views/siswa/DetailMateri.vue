@@ -5,8 +5,19 @@
       <b-col md="6" sm="12">
         <b-card :header="materi.mapel" :title="materi.materi" :sub-title="materi.submateri">
           <b-card-text>
-            {{materi.isi}}
-            <iframe width="560" height="315" :src="materi.link" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <b-row>
+              <b-col>{{materi.isi}}</b-col>
+            </b-row>
+            <b-row class="card-dest">
+              <b-col>
+                <b-embed
+                  type="iframe"
+                  aspect="16by9"
+                  :src="materi.link"
+                  allowfullscreen
+                ></b-embed>
+              </b-col>
+            </b-row>
           </b-card-text>
         </b-card>
       </b-col>

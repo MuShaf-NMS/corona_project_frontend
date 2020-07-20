@@ -16,7 +16,7 @@ const siswa = {
         return axios.put(`${url}/update-password-siswa/${uuid}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getMateri: () => {
-        return axios.get(`${url}/daftar-materi/${store.getters.getUser.kelas}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+        return axios.get(`${url}/daftar-materi-siswa/${store.getters.getUser.kelas}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     },
     getDetailMateri: (uuid) => {
         return axios.get(`${url}/materi/${uuid}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})

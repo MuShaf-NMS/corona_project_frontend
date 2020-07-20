@@ -8,15 +8,21 @@ const user = {
     },
     getMateri: () => {
         if (store.getters.getUser.superadmin) {
-            return axios.get(`${url}/daftar-materi/admin/admin`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+            return axios.get(`${url}/daftar-materi/admin`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
         }
-        return axios.get(`${url}/daftar-materi/${store.getters.getUser.bidang_studi}/${store.getters.getUser.kelas_ampu}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        return axios.get(`${url}/daftar-materi/${store.getters.getUser.uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getDaftarSkor: () => {
-        return axios.get(`${url}/skor/${store.getters.getUser.bidang_studi}/${store.getters.getUser.kelas_ampu}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        if (store.getters.getUser.superadmin) {
+            return axios.get(`${url}/skor/admin`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        }
+        return axios.get(`${url}/skor/${store.getters.getUser.uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getSkor: (materi) => {
-        return axios.get(`${url}/skor/${store.getters.getUser.bidang_studi}/${store.getters.getUser.kelas_ampu}/${materi}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        if (store.getters.getUser.superadmin) {
+            return axios.get(`${url}/skor/admin/${materi}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        }
+        return axios.get(`${url}/skor/${store.getters.getUser.uuid}/${materi}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getSiswa: () => {
         return axios.get(`${url}/daftar-siswa`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
@@ -55,7 +61,7 @@ const user = {
         return axios.put(`${url}/update-siswa/${uuid}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     addMateri: (data) => {
-        return axios.post(`${url}/tambahmateri`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        return axios.post(`${url}/tambahmateri/${store.getters.getUser.uuid}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getDetailMateri: (uuid) => {
         return axios.get(`${url}/materi/${uuid}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
@@ -64,13 +70,13 @@ const user = {
         return axios.put(`${url}/update-materi/${uuid}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     addSoal: (data) => {
-        return axios.post(`${url}/tambah-soal`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        return axios.post(`${url}/tambah-soal/${store.getters.getUser.uuid}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getSoal: () => {
         if (store.getters.getUser.superadmin) {
-            return axios.get(`${url}/admin/daftar-soal/admin/admin`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+            return axios.get(`${url}/admin/daftar-soal/admin`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
         }
-        return axios.get(`${url}/admin/daftar-soal/${store.getters.getUser.bidang_studi}/${store.getters.getUser.kelas_ampu}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        return axios.get(`${url}/admin/daftar-soal/${store.getters.getUser.uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getCekSoal: (kelas, mapel, materi) => {
         return axios.get(`${url}/ceksoal/${kelas}/${mapel}/${materi}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })

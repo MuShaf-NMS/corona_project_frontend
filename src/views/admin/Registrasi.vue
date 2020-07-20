@@ -57,22 +57,24 @@
                   <b-form-radio-group :options="options" required v-model="form.superadmin"></b-form-radio-group>
                 </b-form-group>
               </b-col>
-              <b-col v-if="!form.superadmin">
+              <b-col>
                 <b-form-group label="Bidang studi / Kelas yang diampu">
-                  <b-input-group>
+                  <b-input-group v-for="(i,index) in form.ampu" :key="index">
                     <b-form-input
                       type="text"
                       placeholder="Bidang studi"
                       required
-                      v-model="form.bidang_studi"
+                      v-model="i.bidang_studi"
                     ></b-form-input>
                     <b-form-input
                       type="text"
                       placeholder="Kelas yang diampu"
                       required
-                      v-model="form.kelas_ampu"
+                      v-model="i.kelas_ampu"
                     ></b-form-input>
+                    <b-btn @click="hapusAmpu(index)">-</b-btn>
                   </b-input-group>
+                  <b-btn @click="tambahAmpu">+</b-btn>
                 </b-form-group>
               </b-col>
               <b-col md="6" sm="12">
@@ -124,8 +126,7 @@ export default {
         email: "",
         password: "",
         superadmin: false,
-        bidang_studi: "",
-        kelas_ampu: ""
+        ampu: [{ bidang_studi: "", kelas_ampu: "" }]
       },
       confirm_password: "",
       options: [
@@ -191,6 +192,14 @@ export default {
         }
       } else {
         this.showMessageKonfir();
+      }
+    },
+    tambahAmpu() {
+      this.form.ampu.push({ bidang_studi: "", kelas_ampu: "" });
+    },
+    hapusAmpu(index) {
+      if (this.form.ampu.length) {
+        this.form.ampu.splice(index, 1);
       }
     }
   }

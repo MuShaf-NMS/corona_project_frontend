@@ -5,9 +5,24 @@
       <b-col md="6" sm="12">
         <b-card :header="materi.mapel" :title="materi.materi" :sub-title="materi.submateri">
           <b-card-text>
-            {{materi.isi}}
-            <iframe width="560" height="315" :src="materi.link" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <div><b-btn @click="toEdit">Update</b-btn></div>
+            <b-row>
+              <b-col>{{materi.isi}}</b-col>
+            </b-row>
+            <b-row class="card-dest">
+              <b-col>
+                <b-embed
+                  type="iframe"
+                  aspect="16by9"
+                  :src="materi.link"
+                  allowfullscreen
+                ></b-embed>
+              </b-col>
+            </b-row>
+            <b-row class="card-dest">
+              <b-col>
+                <b-btn @click="toEdit">Update</b-btn>
+              </b-col>
+            </b-row>
           </b-card-text>
         </b-card>
         <b-card header="Update Materi" class="card-dest" v-if="edit">
@@ -54,9 +69,14 @@
                 </b-form-group>
               </b-col>
               <b-col>
-                  <b-form-group label="Link video youtube">
-                      <b-form-input type="text" placeholder="Link vide youtube" required v-model="materi.link"></b-form-input>
-                  </b-form-group>
+                <b-form-group label="Link video youtube">
+                  <b-form-input
+                    type="text"
+                    placeholder="Link video youtube"
+                    required
+                    v-model="materi.link"
+                  ></b-form-input>
+                </b-form-group>
               </b-col>
               <b-col>
                 <b-form-group>
@@ -94,11 +114,11 @@ export default {
     toEdit() {
       this.edit = !this.edit;
     },
-    async updateMateri(){
-        let data = await user.updateMateri(this.$route.params.id,this.materi)
-        if (data.status == 200) {
-            this.showMessageSukses()
-        }
+    async updateMateri() {
+      let data = await user.updateMateri(this.$route.params.id, this.materi);
+      if (data.status == 200) {
+        this.showMessageSukses();
+      }
     },
     showMessageSukses() {
       this.$bvModal.msgBoxOk("Berhasil mengupdate materi", {

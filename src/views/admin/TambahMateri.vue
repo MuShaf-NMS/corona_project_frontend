@@ -47,6 +47,16 @@
                 </b-form-group>
               </b-col>
               <b-col>
+                <b-form-group label="Link video youtube">
+                  <b-form-input
+                    type="text"
+                    placeholder="Link video youtube"
+                    required
+                    v-model="form.link"
+                  ></b-form-input>
+                </b-form-group>
+              </b-col>
+              <b-col>
                 <b-form-group>
                   <b-btn class="btn-info" @click="tambahMateri">Simpan</b-btn>
                 </b-form-group>
@@ -72,7 +82,8 @@ export default {
         guru: "",
         materi: "",
         submateri: "",
-        isi: ""
+        isi: "",
+        link: ""
       }
     };
   },

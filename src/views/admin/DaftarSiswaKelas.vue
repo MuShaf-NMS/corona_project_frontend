@@ -3,7 +3,7 @@
     <b-row class="card-dest">
       <b-col></b-col>
       <b-col md="6" sm="12">
-        <b-card title="Daftar Siswa">
+        <b-card :title="title">
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
               <template v-slot:cell(actions)="row">
@@ -24,6 +24,7 @@ export default {
   name: "DaftarSiswaKelas",
   data() {
     return {
+      title: "Daftar Siswa Kelas "+this.$route.params.kelas,
       items: [],
       fields: [
         "nama",

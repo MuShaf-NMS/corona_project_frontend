@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       items: [],
-      fields: ["materi", "siswa", "actions"]
+      fields: ["kelas", "mapel", "materi", "siswa", "actions"]
     };
   },
   methods: {

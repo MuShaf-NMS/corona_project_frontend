@@ -46,7 +46,7 @@
                 <b-col md="1" sm="12">:</b-col>
                 <b-col md="8" sm="12">{{profile.email}}</b-col>
               </b-row>
-              <b-row class="text-center">
+              <b-row class="text-center card-dest">
                 <b-col>
                   <b-btn-group>
                     <b-btn @click="updateUsername">Ganti username</b-btn>
