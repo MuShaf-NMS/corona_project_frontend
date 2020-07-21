@@ -107,8 +107,7 @@ export default {
           if (value) {
             this.submit();
           }
-        })
-        .catch(err => console.log(err));
+        });
     },
     async submit() {
       await siswa.postJawaban(

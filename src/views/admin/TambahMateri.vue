@@ -15,7 +15,7 @@
                 <b-form-group label="Kelas">
                   <b-form-select v-model="form.kelas" :options="kelas" v-if="kelas.length != 0">
                     <template v-slot:first>
-                      <b-form-select-option value="" disabled>-- Kelas --</b-form-select-option>
+                      <b-form-select-option value disabled>-- Kelas --</b-form-select-option>
                     </template>
                   </b-form-select>
                   <b-form-input
@@ -31,7 +31,7 @@
                 <b-form-group label="Mata Pelajaran">
                   <b-form-select v-model="form.mapel" :options="studi" v-if="studi.length != 0">
                     <template v-slot:first>
-                      <b-form-select-option value="" disabled>-- Mata Pelajaran --</b-form-select-option>
+                      <b-form-select-option value disabled>-- Mata Pelajaran --</b-form-select-option>
                     </template>
                   </b-form-select>
                   <b-form-input

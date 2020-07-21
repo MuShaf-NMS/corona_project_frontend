@@ -43,6 +43,6 @@ export default {
 </script>
 <style scoped>
 .card-dest {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 </style>

@@ -25,11 +25,7 @@ export default {
   data() {
     return {
       items: [],
-      fields: [
-        "kelas",
-        "jumlah_siswa",
-        "actions"
-      ]
+      fields: ["kelas", "jumlah_siswa", "actions"]
     };
   },
   methods: {
@@ -41,8 +37,8 @@ export default {
         logout.clear();
       }
     },
-    Detail(kelas){
-      this.$router.push(`/daftar-siswa/${kelas}`)
+    Detail(kelas) {
+      this.$router.push(`/daftar-siswa/${kelas}`);
     }
   },
   mounted() {

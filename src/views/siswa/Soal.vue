@@ -7,7 +7,8 @@
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
               <template v-slot:cell(actions)="row">
-                <b-btn size="sm"
+                <b-btn
+                  size="sm"
                   @click="toJawabSoal($route.params.kelas,row.item.mapel,row.item.materi)"
                 >Jawab</b-btn>
               </template>
@@ -45,13 +46,12 @@ export default {
       }
     },
     async toJawabSoal(kelas, mapel, materi) {
-      let cek = await siswa.cekSiswa(kelas,mapel,materi)
+      let cek = await siswa.cekSiswa(kelas, mapel, materi);
       if (cek.data == null) {
         this.$router.push(`/siswa/jawab-soal/${kelas}/${mapel}/${materi}`);
       } else {
-        this.showMessageMaaf()
+        this.showMessageMaaf();
       }
-      
     },
     showMessageMaaf() {
       this.$bvModal.msgBoxOk("Anda sudah menjawab soal ini", {
@@ -62,8 +62,7 @@ export default {
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
         centered: true
-      })
-      ;
+      });
     }
   },
   created() {

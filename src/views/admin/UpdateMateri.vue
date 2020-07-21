@@ -10,12 +10,7 @@
             </b-row>
             <b-row class="card-dest">
               <b-col>
-                <b-embed
-                  type="iframe"
-                  aspect="16by9"
-                  :src="materi.link"
-                  allowfullscreen
-                ></b-embed>
+                <b-embed type="iframe" aspect="16by9" :src="materi.link" allowfullscreen></b-embed>
               </b-col>
             </b-row>
             <b-row class="card-dest">

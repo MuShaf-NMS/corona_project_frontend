@@ -76,7 +76,7 @@ const user = {
         return axios.post(`${url}/tambahmateri/${store.getters.getUser.uuid}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getDetailMateri: (uuid) => {
-        return axios.get(`${url}/materi/${uuid}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+        return axios.get(`${url}/materi/${uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     updateMateri: (uuid, data) => {
         return axios.put(`${url}/update-materi/${uuid}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })

@@ -27,7 +27,7 @@ export default {
   name: "DaftarSiswaKelas",
   data() {
     return {
-      title: "Daftar Siswa Kelas "+this.$route.params.kelas,
+      title: "Daftar Siswa Kelas " + this.$route.params.kelas,
       items: [],
       fields: [
         "nama",
@@ -48,30 +48,33 @@ export default {
         logout.clear();
       }
     },
-    update(uuid){
-      this.$router.push(`/update-siswa/${uuid}`)
+    update(uuid) {
+      this.$router.push(`/update-siswa/${uuid}`);
     },
-    showMessageWarning(uuid,nama) {
-      this.$bvModal.msgBoxConfirm(`Apakah anda yakin untuk menghapus siswa dengan nama ${nama}?`, {
-        title: "Perhatian!!!",
-        size: "sm",
-        buttonSize: "sm",
-        okVariant: "success",
-        cancelVariant: "danger",
-        headerClass: "p-2 border-bottom-0",
-        footerClass: "p-2 border-top-0",
-        centered: true
-      })
-      .then((value) => {
-        if (value) {
-          user.deleteSiswa(uuid)
-          this.loadData()
-        }
-      })
-      .catch(err => console.log(err));
+    showMessageWarning(uuid, nama) {
+      this.$bvModal
+        .msgBoxConfirm(
+          `Apakah anda yakin untuk menghapus siswa dengan nama ${nama}?`,
+          {
+            title: "Perhatian!!!",
+            size: "sm",
+            buttonSize: "sm",
+            okVariant: "success",
+            cancelVariant: "danger",
+            headerClass: "p-2 border-bottom-0",
+            footerClass: "p-2 border-top-0",
+            centered: true
+          }
+        )
+        .then(value => {
+          if (value) {
+            user.deleteSiswa(uuid);
+            this.loadData();
+          }
+        });
     },
-    async deleteSiswa(uuid,nama){
-      this.showMessageWarning(uuid,nama)
+    async deleteSiswa(uuid, nama) {
+      this.showMessageWarning(uuid, nama);
     }
   },
   created() {

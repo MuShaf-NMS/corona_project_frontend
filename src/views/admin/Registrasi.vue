@@ -180,15 +180,18 @@ export default {
       });
     },
     showMessageMaaf() {
-      this.$bvModal.msgBoxOk("Username ini sudah ada, silahkan gunakan username yang lain", {
-        title: "Maaf",
-        size: "sm",
-        buttonSize: "sm",
-        okVariant: "success",
-        headerClass: "p-2 border-bottom-0",
-        footerClass: "p-2 border-top-0",
-        centered: true
-      });
+      this.$bvModal.msgBoxOk(
+        "Username ini sudah ada, silahkan gunakan username yang lain",
+        {
+          title: "Maaf",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "success",
+          headerClass: "p-2 border-bottom-0",
+          footerClass: "p-2 border-top-0",
+          centered: true
+        }
+      );
     },
     async registration() {
       if (this.isConfirmed()) {
@@ -198,7 +201,7 @@ export default {
             this.showMessageSukses();
             this.clearForm();
           } else {
-            this.showMessageMaaf()
+            this.showMessageMaaf();
           }
         } catch (err) {
           logout.clear();

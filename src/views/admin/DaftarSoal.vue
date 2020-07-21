@@ -7,7 +7,10 @@
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
               <template v-slot:cell(actions)="row">
-                <b-btn size="sm" @click="toSoal(row.item.kelas,row.item.mapel,row.item.materi)">Detail</b-btn>
+                <b-btn
+                  size="sm"
+                  @click="toSoal(row.item.kelas,row.item.mapel,row.item.materi)"
+                >Detail</b-btn>
               </template>
             </b-table>
           </b-card-text>
@@ -26,8 +29,8 @@ export default {
     return {
       items: [],
       fields: [
-        {key: "kelas", label: "Kelas", sortable: true},
-        { key: "mapel", label: "Mata Pelajaran", sortable: true},
+        { key: "kelas", label: "Kelas", sortable: true },
+        { key: "mapel", label: "Mata Pelajaran", sortable: true },
         "materi",
         "jumlah_soal",
         "actions"

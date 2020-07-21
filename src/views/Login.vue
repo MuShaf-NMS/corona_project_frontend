@@ -67,7 +67,6 @@ export default {
       try {
         let data = await user.login(this.form);
         this.$store.dispatch("saveUser", data.data);
-        console.log(data.data);
         if (this.$store.getters.getUser.status == "admin") {
           this.$router.push("/admin");
         } else {

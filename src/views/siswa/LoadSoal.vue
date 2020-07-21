@@ -16,17 +16,17 @@ export default {
   data() {
     return {
       soal: {},
-      pil: this.$store.getters.getJawaban[this.idx].jawaban,
+      pil: this.$store.getters.getJawaban[this.idx].jawaban
     };
   },
   methods: {
     async loadData() {
       let data = await siswa.getOneSoal(this.uuid);
       this.soal = data.data;
-      this.$store.dispatch("jawab",{idx: this.idx, jawaban: ""});
+      this.$store.dispatch("jawab", { idx: this.idx, jawaban: "" });
     },
     jawab(e) {
-      this.$store.dispatch("jawab",{idx: this.idx, jawaban: e});
+      this.$store.dispatch("jawab", { idx: this.idx, jawaban: e });
     }
   },
   mounted() {

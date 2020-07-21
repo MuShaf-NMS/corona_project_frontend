@@ -51,26 +51,26 @@ export default {
       this.$router.push(`/detail-materi/${uuid}`);
     },
     showMessageWarning(uuid) {
-      this.$bvModal.msgBoxConfirm(`Apakah anda yakin untuk menghapus materi ini?`, {
-        title: "Perhatian!!!",
-        size: "sm",
-        buttonSize: "sm",
-        okVariant: "success",
-        cancelVariant: "danger",
-        headerClass: "p-2 border-bottom-0",
-        footerClass: "p-2 border-top-0",
-        centered: true
-      })
-      .then((value) => {
-        if (value) {
-          user.deleteMateri(uuid)
-          this.loadData()
-        }
-      })
-      .catch(err => console.log(err));
+      this.$bvModal
+        .msgBoxConfirm(`Apakah anda yakin untuk menghapus materi ini?`, {
+          title: "Perhatian!!!",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "success",
+          cancelVariant: "danger",
+          headerClass: "p-2 border-bottom-0",
+          footerClass: "p-2 border-top-0",
+          centered: true
+        })
+        .then(value => {
+          if (value) {
+            user.deleteMateri(uuid);
+            this.loadData();
+          }
+        });
     },
-    async deleteMateri(uuid){
-      this.showMessageWarning(uuid)
+    async deleteMateri(uuid) {
+      this.showMessageWarning(uuid);
     }
   },
   mounted() {

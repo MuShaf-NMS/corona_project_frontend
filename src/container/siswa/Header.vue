@@ -12,7 +12,10 @@
       <b-navbar-nav class="ml-auto">
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
-          <template v-slot:button-content>{{$store.getters.getUser.username}} <b-icon icon="person-circle"></b-icon></template>
+          <template v-slot:button-content>
+            {{$store.getters.getUser.username}}
+            <b-icon icon="person-circle"></b-icon>
+          </template>
           <b-dropdown-item @click="toProfile">Profile</b-dropdown-item>
           <b-dropdown-item @click="logout">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
@@ -21,29 +24,26 @@
   </div>
 </template>
 <script>
-import {user} from '../../api'
+import { user } from "../../api";
 export default {
-    name:"Header",
-    methods: {
+  name: "Header",
+  methods: {
     async logout() {
-      try {
-        let data = await user.logout();
-        if (data.status == 200) {
-          this.$store.dispatch("logout")
-          this.$store.dispatch("clearSoal")
-          this.$store.dispatch("clearJawaban")
-          this.$router.push('/login')
-        }
-      } catch (error) {
-          console.log(error)        
-      }
+      let data = await user.logout();
+      data.status == 200;
+      this.$store.dispatch("logout");
+      this.$store.dispatch("clearSoal");
+      this.$store.dispatch("clearJawaban");
+      this.$router.push("/login");
     },
-    toSoal(){
-      this.$router.push(`/siswa/daftar-soal/${this.$store.getters.getUser.kelas}`)
+    toSoal() {
+      this.$router.push(
+        `/siswa/daftar-soal/${this.$store.getters.getUser.kelas}`
+      );
     },
-    toProfile(){
-      this.$router.push(`/siswa/profile/${this.$store.getters.getUser.uuid}`)
+    toProfile() {
+      this.$router.push(`/siswa/profile/${this.$store.getters.getUser.uuid}`);
     }
   }
-}
+};
 </script>

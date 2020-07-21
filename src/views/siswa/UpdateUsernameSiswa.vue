@@ -54,7 +54,7 @@ export default {
         this.$store.dispatch("saveUsername", this.form.username);
         this.showMessageSukses();
       } else if (data.data.msg == "Salah") {
-        this.showMessageSalah()
+        this.showMessageSalah();
       } else {
         this.showMessageMaaf();
       }

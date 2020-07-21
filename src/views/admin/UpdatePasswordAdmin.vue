@@ -68,10 +68,10 @@ export default {
         if (data.data.msg == "Sukses") {
           this.showMessageSukses();
         } else {
-          this.showMessageMaaf()
+          this.showMessageMaaf();
         }
       } else {
-        this.showMessageKonfir()
+        this.showMessageKonfir();
       }
     },
     showMessageSukses() {

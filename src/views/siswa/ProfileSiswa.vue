@@ -46,13 +46,13 @@
               <b-col md="8">{{profile.email}}</b-col>
             </b-row>
             <b-row class="text-center card-dest">
-                <b-col>
-                  <b-btn-group>
-                    <b-btn size="sm" @click="updateUsername">Ganti username</b-btn>
-                    <b-btn size="sm" @click="updatePassword">Ganti password</b-btn>
-                  </b-btn-group>
-                </b-col>
-              </b-row>
+              <b-col>
+                <b-btn-group>
+                  <b-btn size="sm" @click="updateUsername">Ganti username</b-btn>
+                  <b-btn size="sm" @click="updatePassword">Ganti password</b-btn>
+                </b-btn-group>
+              </b-col>
+            </b-row>
           </b-card-text>
         </b-card>
       </b-col>
@@ -79,8 +79,10 @@ export default {
         logout.clear();
       }
     },
-    updateUsername(){
-      this.$router.push(`/siswa/update-username/${this.$store.getters.getUser.uuid}`)
+    updateUsername() {
+      this.$router.push(
+        `/siswa/update-username/${this.$store.getters.getUser.uuid}`
+      );
     },
     updatePassword() {
       this.$router.push(

@@ -102,7 +102,7 @@ export default {
       this.form = data.data;
     },
     async update() {
-      let data = await user.updateUser(this.$route.params.id,this.form);
+      let data = await user.updateUser(this.$route.params.id, this.form);
       if (data.status == 200) {
         this.showMessage();
       }

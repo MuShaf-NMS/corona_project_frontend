@@ -43,36 +43,37 @@ export default {
       try {
         let data = await user.getUser();
         this.items = data.data;
-        console.log(this.items)
       } catch (err) {
         logout.clear();
       }
     },
-    update(uuid){
-      this.$router.push(`/update-admin/${uuid}`)
+    update(uuid) {
+      this.$router.push(`/update-admin/${uuid}`);
     },
-    showMessageWarning(uuid,nama) {
-      this.$bvModal.msgBoxConfirm(`Apakah anda yakin untuk menghapus admin dengan nama ${nama}?`, {
-        title: "Perhatian!!!",
-        size: "sm",
-        buttonSize: "sm",
-        okVariant: "success",
-        cancelVariant: "danger",
-        headerClass: "p-2 border-bottom-0",
-        footerClass: "p-2 border-top-0",
-        centered: true
-      })
-      .then((value) => {
-        if (value) {
-          user.deleteAdmin(uuid)
-          this.loadData()
-        }
-      })
-      .catch(err => console.log(err));
+    showMessageWarning(uuid, nama) {
+      this.$bvModal
+        .msgBoxConfirm(
+          `Apakah anda yakin untuk menghapus admin dengan nama ${nama}?`,
+          {
+            title: "Perhatian!!!",
+            size: "sm",
+            buttonSize: "sm",
+            okVariant: "success",
+            cancelVariant: "danger",
+            headerClass: "p-2 border-bottom-0",
+            footerClass: "p-2 border-top-0",
+            centered: true
+          }
+        )
+        .then(value => {
+          if (value) {
+            user.deleteAdmin(uuid);
+            this.loadData();
+          }
+        });
     },
-    async deleteAdmin(uuid,nama){
-      this.showMessageWarning(uuid,nama)
-      
+    async deleteAdmin(uuid, nama) {
+      this.showMessageWarning(uuid, nama);
     }
   },
   mounted() {

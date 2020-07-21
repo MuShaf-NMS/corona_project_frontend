@@ -142,7 +142,7 @@ export default {
     clearForm() {
       this.form.nama = "";
       this.form.username = "";
-      this.form.kelas = ""
+      this.form.kelas = "";
       this.form.jk = "";
       this.form.alamat = "";
       this.form.tempat_lahir = "";
@@ -164,7 +164,7 @@ export default {
           logout.clear();
         }
       } else {
-        this.showMessageKonfir()
+        this.showMessageKonfir();
       }
     }
   }
