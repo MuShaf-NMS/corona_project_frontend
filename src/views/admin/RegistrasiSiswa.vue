@@ -78,7 +78,7 @@
                 </b-form-group>
               </b-col>
               <b-col>
-                <b-btn class="btn-info" @click="registration">Registrasi</b-btn>
+                <b-btn size="sm" class="btn-info" @click="registration">Registrasi</b-btn>
               </b-col>
             </b-form>
           </b-card-text>

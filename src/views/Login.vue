@@ -7,16 +7,30 @@
             <b-form>
               <b-col>
                 <b-form-group>
-                  <b-form-input type="text" v-model="form.username" placeholder="Username"></b-form-input>
+                  <b-input-group>
+                    <template v-slot:prepend>
+                      <b-input-group-text>
+                        <b-icon icon="person-fill" shift-v scale="1"></b-icon>
+                      </b-input-group-text>
+                    </template>
+                    <b-form-input type="text" v-model="form.username" placeholder="Username"></b-form-input>
+                  </b-input-group>
                 </b-form-group>
               </b-col>
               <b-col>
                 <b-form-group>
-                  <b-form-input type="password" v-model="form.password" placeholder="Password"></b-form-input>
+                  <b-input-group>
+                    <template v-slot:prepend>
+                      <b-input-group-text>
+                        <b-icon icon="lock-fill" shift-v scale="1"></b-icon>
+                      </b-input-group-text>
+                    </template>
+                    <b-form-input type="password" v-model="form.password" placeholder="Password"></b-form-input>
+                  </b-input-group>
                 </b-form-group>
               </b-col>
               <b-col>
-                <b-btn class="btn-info" @click="login">Login</b-btn>
+                <b-btn size="sm" class="btn-info" @click="login">Login</b-btn>
               </b-col>
             </b-form>
           </b-card-text>
@@ -33,7 +47,8 @@ export default {
     return {
       form: {
         username: "",
-        password: ""      }
+        password: ""
+      }
     };
   },
   methods: {
@@ -52,7 +67,7 @@ export default {
       try {
         let data = await user.login(this.form);
         this.$store.dispatch("saveUser", data.data);
-        console.log(data.data)
+        console.log(data.data);
         if (this.$store.getters.getUser.status == "admin") {
           this.$router.push("/admin");
         } else {

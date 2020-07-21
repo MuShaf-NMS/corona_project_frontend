@@ -49,8 +49,8 @@
               <b-row class="text-center card-dest">
                 <b-col>
                   <b-btn-group>
-                    <b-btn @click="updateUsername">Ganti username</b-btn>
-                    <b-btn @click="updatePassword">Ganti password</b-btn>
+                    <b-btn size="sm" @click="updateUsername">Ganti username</b-btn>
+                    <b-btn size="sm" @click="updatePassword">Ganti password</b-btn>
                   </b-btn-group>
                 </b-col>
               </b-row>

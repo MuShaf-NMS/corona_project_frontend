@@ -7,7 +7,10 @@
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
               <template v-slot:cell(actions)="row">
-                <b-btn @click="toDetail(row.item.uuid)">Detail</b-btn>
+                <b-btn size="sm" @click="toDetail(row.item.uuid)">Detail</b-btn>
+              </template>
+              <template v-slot:cell(#)="row">
+                <b-btn size="sm" @click="deleteMateri(row.item.uuid)">Hapus</b-btn>
               </template>
             </b-table>
           </b-card-text>
@@ -30,7 +33,8 @@ export default {
         { key: "mapel", label: "Mata Pelajaran" },
         "materi",
         "submateri",
-        "actions"
+        "actions",
+        "#"
       ]
     };
   },
@@ -45,6 +49,28 @@ export default {
     },
     toDetail(uuid) {
       this.$router.push(`/detail-materi/${uuid}`);
+    },
+    showMessageWarning(uuid) {
+      this.$bvModal.msgBoxConfirm(`Apakah anda yakin untuk menghapus materi ini?`, {
+        title: "Perhatian!!!",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        cancelVariant: "danger",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      })
+      .then((value) => {
+        if (value) {
+          user.deleteMateri(uuid)
+          this.loadData()
+        }
+      })
+      .catch(err => console.log(err));
+    },
+    async deleteMateri(uuid){
+      this.showMessageWarning(uuid)
     }
   },
   mounted() {

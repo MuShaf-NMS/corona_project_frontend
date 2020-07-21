@@ -36,14 +36,15 @@
                 <b-row class="card-dest">
                   <b-col>
                     <b-btn-group>
-                      <b-btn @click="mundur" :disabled="idx == 0">mundur</b-btn>
-                      <b-btn @click="lanjut" :disabled="idx == soal.length - 1">lanjut</b-btn>
+                      <b-btn size="sm" @click="mundur" :disabled="idx == 0">mundur</b-btn>
+                      <b-btn size="sm" @click="lanjut" :disabled="idx == soal.length - 1">lanjut</b-btn>
                     </b-btn-group>
                   </b-col>
                   <b-col>
                     <b-btn-group>
-                      <b-btn @click="toEdit">Edit</b-btn>
-                      <b-btn @click="updateSoal">Simpan perubahan</b-btn>
+                      <b-btn size="sm" @click="toEdit">Edit</b-btn>
+                      <b-btn size="sm" @click="updateSoal">Simpan</b-btn>
+                      <b-btn size="sm" @click="deleteSoal(soal[idx].uuid)">Hapus</b-btn>
                     </b-btn-group>
                   </b-col>
                 </b-row>
@@ -140,6 +141,9 @@ export default {
       );
       this.loaded = true;
       this.soal = data.data;
+      if (this.soal.length == 0) {
+        this.$router.push("/daftar-soal")
+      }
       this.soalke = this.soal[this.idx];
     },
     async updateSoal() {
@@ -167,13 +171,37 @@ export default {
     lanjut() {
       this.idx += 1;
       this.soalke = this.soal[this.idx];
+      console.log(this.soalke)
     },
     mundur() {
       this.idx -= 1;
       this.soalke = this.soal[this.idx];
+      console.log(this.soalke)
     },
     toEdit() {
       return (this.edit = !this.edit);
+    },
+    showMessageWarning(uuid) {
+      this.$bvModal.msgBoxConfirm(`Apakah anda yakin untuk menghapus soal ini?`, {
+        title: "Perhatian!!!",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        cancelVariant: "danger",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      })
+      .then((value) => {
+        if (value) {
+          user.deleteSoal(uuid)
+          this.loadData()
+        }
+      })
+      .catch(err => console.log(err));
+    },
+    async deleteSoal(uuid){
+      this.showMessageWarning(uuid)
     }
   },
   created() {

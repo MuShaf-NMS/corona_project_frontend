@@ -3,6 +3,18 @@ import { url } from '../index'
 import store from '../../store'
 
 const user = {
+    deleteAdmin: (uuid) => {
+        return axios.delete(`${url}/delete-admin/${uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    deleteSiswa: (uuid) => {
+        return axios.delete(`${url}/delete-siswa/${uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    deleteSoal: (uuid) => {
+        return axios.delete(`${url}/delete-soal/${uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    deleteMateri: (uuid) => {
+        return axios.delete(`${url}/delete-materi/${uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
     getUser: () => {
         return axios.get(`${url}/daftar-admin`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
@@ -28,7 +40,7 @@ const user = {
         return axios.get(`${url}/daftar-siswa`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getSiswaKelas: (kelas) => {
-        return axios.get(`${url}/daftar-siswa/${kelas}`)
+        return axios.get(`${url}/daftar-siswa/${kelas}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getProfile: (uuid) => {
         return axios.get(`${url}/profile-admin/${uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })

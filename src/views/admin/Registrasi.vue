@@ -72,9 +72,9 @@
                       required
                       v-model="i.kelas_ampu"
                     ></b-form-input>
-                    <b-btn @click="hapusAmpu(index)">-</b-btn>
+                    <b-btn size="sm" @click="hapusAmpu(index)">-</b-btn>
                   </b-input-group>
-                  <b-btn @click="tambahAmpu">+</b-btn>
+                  <b-btn size="sm" @click="tambahAmpu">+</b-btn>
                 </b-form-group>
               </b-col>
               <b-col md="6" sm="12">
@@ -98,7 +98,7 @@
                 </b-form-group>
               </b-col>
               <b-col>
-                <b-btn class="btn-info" @click="registration">Registrasi</b-btn>
+                <b-btn size="sm" class="btn-info" @click="registration">Registrasi</b-btn>
               </b-col>
             </b-form>
           </b-card-text>
@@ -126,7 +126,7 @@ export default {
         email: "",
         password: "",
         superadmin: false,
-        ampu: [{ bidang_studi: "", kelas_ampu: "" }]
+        ampu: []
       },
       confirm_password: "",
       options: [
@@ -179,13 +179,26 @@ export default {
         centered: true
       });
     },
+    showMessageMaaf() {
+      this.$bvModal.msgBoxOk("Username ini sudah ada, silahkan gunakan username yang lain", {
+        title: "Maaf",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      });
+    },
     async registration() {
       if (this.isConfirmed()) {
         try {
           let data = await user.addUser(this.form);
-          if (data.status == 200) {
+          if (data.data.msg == "Sukses") {
             this.showMessageSukses();
             this.clearForm();
+          } else {
+            this.showMessageMaaf()
           }
         } catch (err) {
           logout.clear();

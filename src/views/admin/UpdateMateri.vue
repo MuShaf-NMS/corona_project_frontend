@@ -20,7 +20,7 @@
             </b-row>
             <b-row class="card-dest">
               <b-col>
-                <b-btn @click="toEdit">Update</b-btn>
+                <b-btn size="sm" @click="toEdit">Update</b-btn>
               </b-col>
             </b-row>
           </b-card-text>
@@ -80,7 +80,7 @@
               </b-col>
               <b-col>
                 <b-form-group>
-                  <b-btn class="btn-info" @click="updateMateri">Simpan</b-btn>
+                  <b-btn size="sm" class="btn-info" @click="updateMateri">Simpan</b-btn>
                 </b-form-group>
               </b-col>
             </b-form>

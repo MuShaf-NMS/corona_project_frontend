@@ -13,16 +13,33 @@
               </b-col>
               <b-col md="6" sm="12">
                 <b-form-group label="Kelas">
-                  <b-form-input type="text" placeholder="Kelas" required v-model="form.kelas"></b-form-input>
+                  <b-form-select v-model="form.kelas" :options="kelas" v-if="kelas.length != 0">
+                    <template v-slot:first>
+                      <b-form-select-option value="" disabled>-- Kelas --</b-form-select-option>
+                    </template>
+                  </b-form-select>
+                  <b-form-input
+                    type="text"
+                    placeholder="Kelas"
+                    required
+                    v-model="form.kelas"
+                    v-if="kelas.length == 0"
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col md="6" sm="12">
                 <b-form-group label="Mata Pelajaran">
+                  <b-form-select v-model="form.mapel" :options="studi" v-if="studi.length != 0">
+                    <template v-slot:first>
+                      <b-form-select-option value="" disabled>-- Mata Pelajaran --</b-form-select-option>
+                    </template>
+                  </b-form-select>
                   <b-form-input
                     type="text"
                     placeholder="Mata Pelajaran"
                     required
                     v-model="form.mapel"
+                    v-if="studi.length == 0"
                   ></b-form-input>
                 </b-form-group>
               </b-col>
@@ -58,7 +75,7 @@
               </b-col>
               <b-col>
                 <b-form-group>
-                  <b-btn class="btn-info" @click="tambahMateri">Simpan</b-btn>
+                  <b-btn size="sm" class="btn-info" @click="tambahMateri">Simpan</b-btn>
                 </b-form-group>
               </b-col>
             </b-form>
@@ -79,12 +96,13 @@ export default {
       form: {
         kelas: "",
         mapel: "",
-        guru: "",
         materi: "",
         submateri: "",
         isi: "",
         link: ""
-      }
+      },
+      kelas: this.$store.getters.getUser.kelas_ampu,
+      studi: this.$store.getters.getUser.bidang_studi
     };
   },
   methods: {

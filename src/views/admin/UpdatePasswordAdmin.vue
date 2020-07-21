@@ -33,7 +33,7 @@
               </b-form-group>
             </b-col>
             <b-col>
-              <b-btn @click="updatePassword">Update</b-btn>
+              <b-btn size="sm" @click="updatePassword">Update</b-btn>
             </b-col>
           </b-card-text>
         </b-card>

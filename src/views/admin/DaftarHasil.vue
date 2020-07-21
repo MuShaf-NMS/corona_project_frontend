@@ -7,7 +7,7 @@
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
               <template v-slot:cell(actions)="row">
-                <b-btn @click="toDetail(row.item.materi)">Detail</b-btn>
+                <b-btn size="sm" @click="toDetail(row.item.materi)">Detail</b-btn>
               </template>
             </b-table>
           </b-card-text>

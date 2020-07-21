@@ -39,8 +39,8 @@
             </b-col>
           </b-row>
           <b-row>
-            <b-btn @click="lanjut" :disabled="batas >=soal.length">Selanjutnya</b-btn>
-            <b-btn @click="showMessageWarning" v-if="batas >=soal.length">Kumpulkan</b-btn>
+            <b-btn size="sm" @click="lanjut" :disabled="batas >=soal.length">Selanjutnya</b-btn>
+            <b-btn size="sm" @click="showMessageWarning" v-if="batas >=soal.length">Kumpulkan</b-btn>
           </b-row>
         </b-card>
       </b-col>
@@ -66,13 +66,24 @@ export default {
   methods: {
     async loadData() {
       try {
-        let data = await siswa.getSoal(
+        let cek = await siswa.cekSiswa(
           this.$route.params.kelas,
           this.$route.params.mapel,
           this.$route.params.materi
         );
-        this.$store.dispatch("saveSoal", data.data);
-        this.soal = this.$store.getters.getSoal;
+        if (cek.data != null) {
+          this.$router.push(
+            `/siswa/daftar-soal/${this.$store.getters.getUser.kelas}`
+          );
+        } else {
+          let data = await siswa.getSoal(
+            this.$route.params.kelas,
+            this.$route.params.mapel,
+            this.$route.params.materi
+          );
+          this.$store.dispatch("saveSoal", data.data);
+          this.soal = this.$store.getters.getSoal;
+        }
       } catch (err) {
         logout.clear();
       }
@@ -81,41 +92,26 @@ export default {
       this.batas += 5;
     },
     showMessageWarning() {
-      this.$bvModal.msgBoxConfirm("Apakah anda yakin untuk mungumpulkan jawaban anda?", {
-        title: "Sukses",
-        size: "sm",
-        buttonSize: "sm",
-        okVariant: "success",
-        cancelVariant: "danger",
-        headerClass: "p-2 border-bottom-0",
-        footerClass: "p-2 border-top-0",
-        centered: true
-      })
-      .then((value) => {
-        if (value) {
-          this.submit()
-        }
-      })
-      .catch(err => console.log(err));
-    },
-    showMessageMaaf() {
-      this.$bvModal.msgBoxOk("Anda sudah menjawab soal ini", {
-        title: "Maaf",
-        size: "sm",
-        buttonSize: "sm",
-        okVariant: "success",
-        headerClass: "p-2 border-bottom-0",
-        footerClass: "p-2 border-top-0",
-        centered: true
-      })
-      .then((value) => {
-        if (value) {
-          this.$router.push(`/siswa/daftar-soal/${this.$store.getters.getUser.kelas}`)
-        }
-      });
+      this.$bvModal
+        .msgBoxConfirm("Apakah anda yakin untuk mungumpulkan jawaban anda?", {
+          title: "Perhatian!!!",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "success",
+          cancelVariant: "danger",
+          headerClass: "p-2 border-bottom-0",
+          footerClass: "p-2 border-top-0",
+          centered: true
+        })
+        .then(value => {
+          if (value) {
+            this.submit();
+          }
+        })
+        .catch(err => console.log(err));
     },
     async submit() {
-      let data = await siswa.postJawaban(
+      await siswa.postJawaban(
         this.$route.params.kelas,
         this.$route.params.mapel,
         this.$route.params.materi,
@@ -126,12 +122,9 @@ export default {
       );
       this.$store.dispatch("clearSoal");
       this.$store.dispatch("clearJawaban");
-      if (data.data != null) {
-        this.showMessageMaaf()
-      } else {
-        this.$router.push(`/siswa/daftar-soal/${this.$store.getters.getUser.kelas}`)
-      }
-      
+      this.$router.push(
+        `/siswa/daftar-soal/${this.$store.getters.getUser.kelas}`
+      );
     }
   },
   created() {

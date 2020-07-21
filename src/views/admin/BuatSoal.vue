@@ -96,9 +96,9 @@
             </b-col>
             <b-col class="text-center">
               <b-btn-group>
-                <b-btn class="btn-danger" @click="hapusSoal(index)">Hapus Soal</b-btn>
-                <b-btn class="btn-info" @click="buatSoal">Simpan</b-btn>
-                <b-btn class="btn-success" @click="tambahSoal">Tambah Soal</b-btn>
+                <b-btn size="sm" class="btn-danger" @click="hapusSoal(index)">Hapus Soal</b-btn>
+                <b-btn size="sm" class="btn-info" @click="buatSoal">Simpan</b-btn>
+                <b-btn size="sm" class="btn-success" @click="tambahSoal">Tambah Soal</b-btn>
               </b-btn-group>
             </b-col>
           </b-card-text>

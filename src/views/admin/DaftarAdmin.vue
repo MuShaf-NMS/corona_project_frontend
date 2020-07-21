@@ -7,7 +7,10 @@
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
               <template v-slot:cell(actions)="row">
-                <b-btn @click="update(row.item.uuid)">Update</b-btn>
+                <b-btn size="sm" @click="update(row.item.uuid)">Update</b-btn>
+              </template>
+              <template v-slot:cell(#)="row">
+                <b-btn size="sm" @click="deleteAdmin(row.item.uuid,row.item.nama)">Hapus</b-btn>
               </template>
             </b-table>
           </b-card-text>
@@ -30,7 +33,8 @@ export default {
         "superadmin",
         { key: "created_at", label: "Dibuat" },
         { key: "updated_at", label: "Update Terakhir" },
-        "actions"
+        "actions",
+        "#"
       ]
     };
   },
@@ -46,6 +50,29 @@ export default {
     },
     update(uuid){
       this.$router.push(`/update-admin/${uuid}`)
+    },
+    showMessageWarning(uuid,nama) {
+      this.$bvModal.msgBoxConfirm(`Apakah anda yakin untuk menghapus admin dengan nama ${nama}?`, {
+        title: "Perhatian!!!",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        cancelVariant: "danger",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      })
+      .then((value) => {
+        if (value) {
+          user.deleteAdmin(uuid)
+          this.loadData()
+        }
+      })
+      .catch(err => console.log(err));
+    },
+    async deleteAdmin(uuid,nama){
+      this.showMessageWarning(uuid,nama)
+      
     }
   },
   mounted() {

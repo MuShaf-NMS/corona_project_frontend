@@ -32,6 +32,9 @@ const siswa = {
     },
     postJawaban: (kelas,mapel,materi,data) => {
         return axios.post(`${url}/jawab-soal/${kelas}/${mapel}/${materi}`,data,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
+    },
+    cekSiswa: (kelas,mapel,materi) => {
+        return axios.get(`${url}/cek-siswa/${kelas}/${mapel}/${materi}`,{headers: {Authorization: `Bearer ${store.getters.getUser.accessToken}`}})
     }
 }
 

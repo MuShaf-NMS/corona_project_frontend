@@ -53,7 +53,7 @@
                 </b-form-group>
               </b-col>
               <b-col>
-                <b-btn class="btn-info" @click="update">Simpan</b-btn>
+                <b-btn size="sm" class="btn-info" @click="update">Simpan</b-btn>
               </b-col>
             </b-form>
           </b-card-text>

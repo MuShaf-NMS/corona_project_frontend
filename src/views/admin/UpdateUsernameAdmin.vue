@@ -21,7 +21,7 @@
                 </b-form-group>
               </b-col>
               <b-col>
-                <b-btn @click="updateUsername">Update</b-btn>
+                <b-btn size="sm" @click="updateUsername">Update</b-btn>
               </b-col>
             </b-form>
           </b-card-text>

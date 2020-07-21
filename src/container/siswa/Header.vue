@@ -2,7 +2,6 @@
   <div>
     <b-navbar type="dark" variant="dark">
       <b-navbar-nav>
-        <b-nav-item href="#">Home</b-nav-item>
         <b-nav-item-dropdown text="Materi">
           <b-dropdown-item to="/siswa/materi">Materi</b-dropdown-item>
         </b-nav-item-dropdown>
@@ -13,7 +12,7 @@
       <b-navbar-nav class="ml-auto">
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
-          <template v-slot:button-content>{{$store.getters.getUser.username}}</template>
+          <template v-slot:button-content>{{$store.getters.getUser.username}} <b-icon icon="person-circle"></b-icon></template>
           <b-dropdown-item @click="toProfile">Profile</b-dropdown-item>
           <b-dropdown-item @click="logout">Logout</b-dropdown-item>
         </b-nav-item-dropdown>

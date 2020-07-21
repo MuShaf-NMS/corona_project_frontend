@@ -48,7 +48,32 @@
                 </b-form-group>
               </b-col>
               <b-col>
-                <b-btn class="btn-info" @click="update">Simpan</b-btn>
+                <b-form-group label="Super admin">
+                  <b-form-radio-group :options="options" required v-model="form.superadmin"></b-form-radio-group>
+                </b-form-group>
+              </b-col>
+              <b-col>
+                <b-form-group label="Bidang studi / Kelas yang diampu">
+                  <b-input-group v-for="(i,index) in form.ampu" :key="index">
+                    <b-form-input
+                      type="text"
+                      placeholder="Bidang studi"
+                      required
+                      v-model="i.bidang_studi"
+                    ></b-form-input>
+                    <b-form-input
+                      type="text"
+                      placeholder="Kelas yang diampu"
+                      required
+                      v-model="i.kelas_ampu"
+                    ></b-form-input>
+                    <b-btn size="sm" @click="hapusAmpu(index)">-</b-btn>
+                  </b-input-group>
+                  <b-btn size="sm" @click="tambahAmpu">+</b-btn>
+                </b-form-group>
+              </b-col>
+              <b-col>
+                <b-btn size="sm" class="btn-info" @click="update">Simpan</b-btn>
               </b-col>
             </b-form>
           </b-card-text>
@@ -64,7 +89,11 @@ export default {
   name: "UpdateSiswa",
   data() {
     return {
-      form: {}
+      form: {},
+      options: [
+        { text: "Ya", value: 1 },
+        { text: "Tidak", value: 0 }
+      ]
     };
   },
   methods: {
@@ -88,6 +117,14 @@ export default {
         footerClass: "p-2 border-top-0",
         centered: true
       });
+    },
+    tambahAmpu() {
+      this.form.ampu.push({ bidang_studi: "", kelas_ampu: "" });
+    },
+    hapusAmpu(index) {
+      if (this.form.ampu.length) {
+        this.form.ampu.splice(index, 1);
+      }
     }
   },
   created() {
