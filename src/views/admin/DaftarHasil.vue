@@ -1,19 +1,17 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card title="Skor">
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
-              <template v-slot:cell(actions)="row">
+              <template v-slot:cell(detail)="row">
                 <b-btn size="sm" @click="toDetail(row.item.materi)">Detail</b-btn>
               </template>
             </b-table>
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
@@ -24,7 +22,7 @@ export default {
   data() {
     return {
       items: [],
-      fields: ["kelas", "mapel", "materi", "siswa", "actions"]
+      fields: ["kelas", "mapel", "materi", "siswa", "detail"]
     };
   },
   methods: {

@@ -1,8 +1,7 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card header="Registrasi admin">
           <b-card-text>
             <b-form>
@@ -44,7 +43,7 @@
               </b-col>
               <b-col md="6" sm="12">
                 <b-form-group label="Nomor Hp">
-                  <b-form-input type="text" placeholder="Nomor Hp" required v-model="form.hp"></b-form-input>
+                  <b-form-input type="number" placeholder="Nomor Hp" required v-model="form.hp"></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col md="10" sm="12">
@@ -66,15 +65,14 @@
                       required
                       v-model="i.bidang_studi"
                     ></b-form-input>
-                    <b-form-input
-                      type="text"
-                      placeholder="Kelas yang diampu"
-                      required
-                      v-model="i.kelas_ampu"
-                    ></b-form-input>
-                    <b-btn size="sm" @click="hapusAmpu(index)">-</b-btn>
+                    <b-form-select v-model="i.uuid_kelas" :options="kelas">
+                      <template v-slot:first>
+                        <b-form-select-option value="" disabled> --Kelas-- </b-form-select-option>
+                      </template>
+                    </b-form-select>
+                    <b-btn size="sm" @click="hapusAmpu(index)"><b-icon icon="dash"></b-icon></b-btn>
                   </b-input-group>
-                  <b-btn size="sm" @click="tambahAmpu">+</b-btn>
+                  <b-btn size="sm" @click="tambahAmpu"><b-icon icon="plus"></b-icon></b-btn>
                 </b-form-group>
               </b-col>
               <b-col md="6" sm="12">
@@ -104,13 +102,12 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
 <script>
-import logout from "../logout";
-import { user } from "../../api";
+import logout from "../../logout";
+import { user } from "../../../api";
 export default {
   name: "Registrasi",
   data() {
@@ -132,10 +129,15 @@ export default {
       options: [
         { text: "Ya", value: true },
         { text: "Tidak", value: false }
-      ]
+      ],
+      kelas: []
     };
   },
   methods: {
+    async loadKelas(){
+      let data = await user.getKelas()
+      this.kelas = data.data
+    },
     isConfirmed() {
       if (this.form.password == this.confirm_password) {
         return true;
@@ -211,13 +213,17 @@ export default {
       }
     },
     tambahAmpu() {
-      this.form.ampu.push({ bidang_studi: "", kelas_ampu: "" });
+      this.form.ampu.push({ bidang_studi: "", uuid_kelas: "" });
+      console.log(this.form.ampu)
     },
     hapusAmpu(index) {
       if (this.form.ampu.length) {
         this.form.ampu.splice(index, 1);
       }
     }
+  },
+  mounted(){
+    this.loadKelas()
   }
 };
 </script>

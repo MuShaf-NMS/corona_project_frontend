@@ -1,20 +1,25 @@
-import Registrasi from '../views/admin/Registrasi'
-import UpdateAdmin from '../views/admin/UpdateAdmin'
-import DaftarAdmin from '../views/admin/DaftarAdmin'
-import DaftarSiswa from '../views/admin/DaftarSiswa'
-import DaftarSiswaKelas from '../views/admin/DaftarSiswaKelas'
-import ProfileAdmin from '../views/admin/ProfileAdmin'
-import UpdateUsernameAdmin from '../views/admin/UpdateUsernameAdmin'
-import UpdatePasswordAdmin from '../views/admin/UpdatePasswordAdmin'
-import TambahMateri from '../views/admin/TambahMateri'
-import DaftarMateri from '../views/admin/DaftarMateri'
-import UpdateMateri from '../views/admin/UpdateMateri'
-import RegistrasiSiswa from '../views/admin/RegistrasiSiswa'
-import UpdateSiswa from '../views/admin/UpdateSiswa'
-import BuatSoal from '../views/admin/BuatSoal'
-import DetailSoal from '../views/admin/DetailSoal'
-import DaftarSoal from '../views/admin/DaftarSoal'
+import Registrasi from '../views/admin/admin/Registrasi'
+import UpdateAdmin from '../views/admin/admin/UpdateAdmin'
+import DaftarAdmin from '../views/admin/admin/DaftarAdmin'
+import DaftarSiswa from '../views/admin/siswa/DaftarSiswa'
+import DaftarSiswaKelas from '../views/admin/siswa/DaftarSiswaKelas'
+import ProfileAdmin from '../views/admin/admin/ProfileAdmin'
+import UpdateUsernameAdmin from '../views/admin/admin/UpdateUsernameAdmin'
+import UpdatePasswordAdmin from '../views/admin/admin/UpdatePasswordAdmin'
+import TambahMateri from '../views/admin/materi/TambahMateri'
+import DaftarMateriKelas from '../views/admin/materi/DaftarMateriKelas'
+import DaftarMateriMapel from '../views/admin/materi/DaftarMateriMapel'
+import UpdateMateri from '../views/admin/materi/UpdateMateri'
+import RegistrasiSiswa from '../views/admin/siswa/RegistrasiSiswa'
+import UpdateSiswa from '../views/admin/siswa/UpdateSiswa'
+import BuatSoal from '../views/admin/soal/BuatSoal'
+import DetailSoal from '../views/admin/soal/DetailSoal'
+import DaftarSoal from '../views/admin/soal/DaftarSoal'
 import DaftarHasil from '../views/admin/DaftarHasil'
+import DaftarKelas from '../views/admin/kelas/DaftarKelas'
+import DaftarKelasCabang from '../views/admin/kelas/DaftarKelasCabang'
+import TambahKelas from '../views/admin/kelas/TambahKelas'
+import UpdateKelas from '../views/admin/kelas/UpdateKelas'
 import Hasil from '../views/admin/Hasil'
 import LayoutAdmin from '../container/admin/LayoutAdmin'
 
@@ -99,7 +104,15 @@ const admin = {
         {
             path: '/daftar-materi',
             name: 'Daftar Materi',
-            component: DaftarMateri,
+            component: DaftarMateriKelas,
+            meta: {
+                adminAuthenticated: true
+            }
+        },
+        {
+            path: '/daftar-materi/:kelas',
+            name: 'Daftar Materi Kelas',
+            component: DaftarMateriMapel,
             meta: {
                 adminAuthenticated: true
             }
@@ -164,6 +177,38 @@ const admin = {
             path: '/skor/:materi',
             name: 'Skor',
             component: Hasil,
+            meta: {
+                adminAuthenticated: true
+            }
+        },
+        {
+            path: '/kelas',
+            name: 'Daftar Kelas',
+            component: DaftarKelas,
+            meta: {
+                adminAuthenticated: true
+            }
+        },
+        {
+            path: '/kelas/:kelas',
+            name: 'Daftar Kelas Cabang',
+            component: DaftarKelasCabang,
+            meta: {
+                adminAuthenticated: true
+            }
+        },
+        {
+            path: '/tambah-kelas',
+            name: 'Tambah Kelas',
+            component: TambahKelas,
+            meta: {
+                adminAuthenticated: true
+            }
+        },
+        {
+            path: '/update-kelas/:uuid',
+            name: 'Update Kelas',
+            component: UpdateKelas,
             meta: {
                 adminAuthenticated: true
             }

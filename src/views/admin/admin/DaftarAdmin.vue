@@ -1,28 +1,33 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card title="Daftar Admin">
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
-              <template v-slot:cell(actions)="row">
-                <b-btn size="sm" @click="update(row.item.uuid)">Update</b-btn>
+              <template v-slot:cell(created_at)="row">
+                {{dateIna(row.item.created_at)}}
               </template>
-              <template v-slot:cell(#)="row">
-                <b-btn size="sm" @click="deleteAdmin(row.item.uuid,row.item.nama)">Hapus</b-btn>
+              <template v-slot:cell(updated_at)="row">
+                {{dateIna(row.item.updated_at)}}
+              </template>
+              <template v-slot:cell(Update)="row">
+                <b-btn size="sm" @click="update(row.item.uuid)"><b-icon icon="pencil-square"></b-icon></b-btn>
+              </template>
+              <template v-slot:cell(Hapus)="row">
+                <b-btn size="sm" @click="deleteAdmin(row.item.uuid,row.item.nama)"><b-icon icon="trash"></b-icon></b-btn>
               </template>
             </b-table>
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
 <script>
-import logout from "../logout";
-import { user } from "../../api";
+import moment from 'moment'
+import logout from "../../logout";
+import { user } from "../../../api";
 export default {
   name: "DaftarAdmin",
   data() {
@@ -33,8 +38,8 @@ export default {
         "superadmin",
         { key: "created_at", label: "Dibuat" },
         { key: "updated_at", label: "Update Terakhir" },
-        "actions",
-        "#"
+        "Update",
+        "Hapus"
       ]
     };
   },
@@ -46,6 +51,9 @@ export default {
       } catch (err) {
         logout.clear();
       }
+    },
+    dateIna(value){
+      return moment(value).format('DD-MM-Y hh:mm:ss')
     },
     update(uuid) {
       this.$router.push(`/update-admin/${uuid}`);

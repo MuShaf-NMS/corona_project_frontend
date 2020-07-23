@@ -1,8 +1,7 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card header="Tambah Materi">
           <b-card-text>
             <b-form>
@@ -48,16 +47,6 @@
                   <b-form-input type="text" placeholder="Materi" required v-model="form.materi"></b-form-input>
                 </b-form-group>
               </b-col>
-              <b-col md="6" sm="12">
-                <b-form-group label="Submateri">
-                  <b-form-input
-                    type="text"
-                    placeholder="Submateri"
-                    required
-                    v-model="form.submateri"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
               <b-col>
                 <b-form-group label="Isi">
                   <b-form-textarea placeholder="Isi" rows="3" max-rows="5" v-model="form.isi"></b-form-textarea>
@@ -82,13 +71,12 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
 <script>
-import logout from "../logout";
-import { user } from "../../api";
+import logout from "../../logout";
+import { user } from "../../../api";
 export default {
   name: "TambahMateri",
   data() {
@@ -97,7 +85,6 @@ export default {
         kelas: "",
         mapel: "",
         materi: "",
-        submateri: "",
         isi: "",
         link: ""
       },
@@ -120,9 +107,10 @@ export default {
     clearForm() {
       this.form.mapel = "";
       this.form.guru = "";
+      this.form.kelas = ""
       this.form.materi = "";
-      this.form.submateri = "";
       this.form.isi = "";
+      this.form.link = ""
     },
     async tambahMateri() {
       try {

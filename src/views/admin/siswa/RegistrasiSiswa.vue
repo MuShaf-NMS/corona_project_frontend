@@ -1,8 +1,7 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card header="Registrasi Siswa">
           <b-card-text>
             <b-form>
@@ -18,7 +17,11 @@
               </b-col>
               <b-col md="6" sm="12">
                 <b-form-group label="Kelas">
-                  <b-form-input type="text" placeholder="Kelas" required v-model="form.kelas"></b-form-input>
+                  <b-form-select v-model="form.uuid_kelas" :options="kelas">
+                    <template v-slot:first>
+                      <b-form-select-option value disabled>--Kelas--</b-form-select-option>
+                    </template>
+                  </b-form-select>
                 </b-form-group>
               </b-col>
               <b-col>
@@ -49,7 +52,7 @@
               </b-col>
               <b-col md="6" sm="12">
                 <b-form-group label="Nomor Hp">
-                  <b-form-input type="text" placeholder="Nomor Hp" required v-model="form.hp"></b-form-input>
+                  <b-form-input type="number" placeholder="Nomor Hp" required v-model="form.hp"></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col md="10" sm="12">
@@ -84,13 +87,12 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
 <script>
-import logout from "../logout";
-import { user } from "../../api";
+import logout from "../../logout";
+import { user } from "../../../api";
 export default {
   name: "RegistrasiSiswa",
   data() {
@@ -98,19 +100,24 @@ export default {
       form: {
         nama: "",
         username: "",
-        kelas: "",
+        uuid_kelas: "",
         jk: "",
         alamat: "",
         tempat_lahir: "",
         tanggal_lahir: "",
         hp: "",
         email: "",
-        password: ""
+        password: "",
       },
-      confirm_password: ""
+      confirm_password: "",
+      kelas: [],
     };
   },
   methods: {
+    async loadKelas() {
+      let data = await user.getKelas();
+      this.kelas = data.data;
+    },
     isConfirmed() {
       if (this.form.password == this.confirm_password) {
         return true;
@@ -125,7 +132,7 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     showMessageKonfir() {
@@ -136,7 +143,7 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     clearForm() {
@@ -166,8 +173,11 @@ export default {
       } else {
         this.showMessageKonfir();
       }
-    }
-  }
+    },
+  },
+  mounted() {
+    this.loadKelas();
+  },
 };
 </script>
 <style scoped>

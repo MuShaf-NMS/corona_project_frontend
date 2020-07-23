@@ -1,8 +1,7 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card>
           <b-row>
             <b-col md="3" sm="12">Kelas</b-col>
@@ -36,15 +35,15 @@
                 <b-row class="card-dest">
                   <b-col>
                     <b-btn-group>
-                      <b-btn size="sm" @click="mundur" :disabled="idx == 0">mundur</b-btn>
-                      <b-btn size="sm" @click="lanjut" :disabled="idx == soal.length - 1">lanjut</b-btn>
+                      <b-btn size="sm" @click="mundur" :disabled="idx == 0"><b-icon icon="chevron-double-left"></b-icon>sebelumnya</b-btn>
+                      <b-btn size="sm" @click="lanjut" :disabled="idx == soal.length - 1">selanjutnya<b-icon icon="chevron-double-right"></b-icon></b-btn>
                     </b-btn-group>
                   </b-col>
                   <b-col>
                     <b-btn-group>
-                      <b-btn size="sm" @click="toEdit">Edit</b-btn>
-                      <b-btn size="sm" @click="updateSoal">Simpan</b-btn>
-                      <b-btn size="sm" @click="deleteSoal(soal[idx].uuid)">Hapus</b-btn>
+                      <b-btn size="sm" @click="toEdit"><b-icon icon="pencil-square"></b-icon> Edit</b-btn>
+                      <b-btn size="sm" @click="updateSoal"><b-icon icon="file-check"></b-icon> Simpan</b-btn>
+                      <b-btn size="sm" @click="deleteSoal(soal[idx].uuid)"><b-icon icon="trash"></b-icon> Hapus</b-btn>
                     </b-btn-group>
                   </b-col>
                 </b-row>
@@ -111,12 +110,11 @@
           </b-row>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
 <script>
-import { user } from "../../api";
+import { user } from "../../../api";
 export default {
   name: "DetailSoal",
   data() {

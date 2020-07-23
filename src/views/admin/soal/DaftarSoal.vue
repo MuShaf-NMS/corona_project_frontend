@@ -1,12 +1,11 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card title="Daftar Soal">
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
-              <template v-slot:cell(actions)="row">
+              <template v-slot:cell(detail)="row">
                 <b-btn
                   size="sm"
                   @click="toSoal(row.item.kelas,row.item.mapel,row.item.materi)"
@@ -16,13 +15,12 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
 <script>
-import logout from "../logout";
-import { user } from "../../api";
+import logout from "../../logout";
+import { user } from "../../../api";
 export default {
   name: "DaftarSoal",
   data() {
@@ -33,7 +31,7 @@ export default {
         { key: "mapel", label: "Mata Pelajaran", sortable: true },
         "materi",
         "jumlah_soal",
-        "actions"
+        "detail"
       ]
     };
   },

@@ -1,31 +1,29 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card title="Daftar Siswa">
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
-              <template v-slot:cell(actions)="row">
+              <template v-slot:cell(detail)="row">
                 <b-btn size="sm" @click="Detail(row.item.kelas)">Detail</b-btn>
               </template>
             </b-table>
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
 <script>
-import logout from "../logout";
-import { user } from "../../api";
+import logout from "../../logout";
+import { user } from "../../../api";
 export default {
   name: "DaftarSiswa",
   data() {
     return {
       items: [],
-      fields: ["kelas", "jumlah_siswa", "actions"]
+      fields: ["kelas", "jumlah_siswa", "detail"]
     };
   },
   methods: {

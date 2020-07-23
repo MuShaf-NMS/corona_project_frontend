@@ -10,6 +10,10 @@
           <b-dropdown-item to="/daftar-siswa">Daftar Siswa</b-dropdown-item>
           <b-dropdown-item to="/register-siswa">Tambah Siswa</b-dropdown-item>
         </b-nav-item-dropdown>
+        <b-nav-item-dropdown text="Kelas" v-if="this.$store.getters.getUser.superadmin">
+          <b-dropdown-item to="/kelas">Daftar Kelas</b-dropdown-item>
+          <b-dropdown-item to="/tambah-kelas">Tambah Kelas</b-dropdown-item>
+        </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Materi">
           <b-dropdown-item to="/tambah-materi">Tambah Materi</b-dropdown-item>
           <b-dropdown-item to="/daftar-materi">Daftar Materi</b-dropdown-item>

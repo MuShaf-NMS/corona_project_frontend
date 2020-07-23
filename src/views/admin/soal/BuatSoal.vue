@@ -1,8 +1,7 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card header="Soal Baru">
           <b-row>
             <b-col md="2" sm="12">
@@ -104,12 +103,11 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
 <script>
-import { user } from "../../api";
+import { user } from "../../../api";
 export default {
   name: "BuatSoal",
   data() {

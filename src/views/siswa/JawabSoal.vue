@@ -50,7 +50,7 @@
 </template>
 <script>
 import logout from "../logout";
-import LoadSoal from "./LoadSoal";
+import LoadSoal from "../../components/siswa/LoadSoal";
 import { siswa } from "../../api";
 export default {
   name: "jawabSoal",

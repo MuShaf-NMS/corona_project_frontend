@@ -1,28 +1,26 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card :title="title">
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
-              <template v-slot:cell(actions)="row">
+              <template v-slot:cell(update)="row">
                 <b-btn size="sm" @click="update(row.item.uuid)">Update</b-btn>
               </template>
-              <template v-slot:cell(#)="row">
-                <b-btn size="sm" @click="deleteSiswa(row.item.uuid,row.item.nama)">Hapus</b-btn>
+              <template v-slot:cell(hapus)="row">
+                <b-btn size="sm" @click="deleteSiswa(row.item.uuid,row.item.nama)"><b-icon icon="trash"></b-icon></b-btn>
               </template>
             </b-table>
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
 <script>
-import logout from "../logout";
-import { user } from "../../api";
+import logout from "../../logout";
+import { user } from "../../../api";
 export default {
   name: "DaftarSiswaKelas",
   data() {
@@ -33,8 +31,8 @@ export default {
         "nama",
         { key: "created_at", label: "Dibuat" },
         { key: "updated_at", label: "Update terakhir" },
-        "actions",
-        "#"
+        "update",
+        "hapus"
       ],
       kelas: this.$route.params.kelas
     };

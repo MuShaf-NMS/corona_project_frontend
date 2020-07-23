@@ -24,6 +24,18 @@ const user = {
         }
         return axios.get(`${url}/daftar-materi/${store.getters.getUser.uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
+    getMateribyKelas: (kelas) => {
+        if (store.getters.getUser.superadmin) {
+            return axios.get(`${url}/daftar-materi/admin/${kelas}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        }
+        return axios.get(`${url}/daftar-materi/${store.getters.getUser.uuid}/${kelas}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    getMateribyMapel: (kelas,mapel) => {
+        if (store.getters.getUser.superadmin) {
+            return axios.get(`${url}/daftar-materi/admin/${kelas}/${mapel}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        }
+        return axios.get(`${url}/daftar-materi/${store.getters.getUser.uuid}${kelas}/${mapel}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
     getDaftarSkor: () => {
         if (store.getters.getUser.superadmin) {
             return axios.get(`${url}/skor/admin`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
@@ -95,6 +107,30 @@ const user = {
     },
     updateSoal: (kelas, mapel, materi, data) => {
         return axios.put(`${url}/ceksoal/${kelas}/${mapel}/${materi}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    getKelas: () => {
+        if (store.getters.getUser.superadmin) {
+            return axios.get(`${url}/kelas/admin`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        }
+        return axios.get(`${url}/kelas/${store.getters.getUser.uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    getDaftarKelas: () => {
+        return axios.get(`${url}/daftar-kelas`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    getDaftarKelasLabel: (kelas) => {
+        return axios.get(`${url}/daftar-kelas/${kelas}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    addKelas: (data) => {
+        return axios.post(`${url}/tambah-kelas`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    getOneKelas: (uuid) => {
+        return axios.get(`${url}/update-kelas/${uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    updateKelas: (uuid,data) => {
+        return axios.put(`${url}/update-kelas/${uuid}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    },
+    deleteKelas: (uuid) => {
+        return axios.delete(`${url}/delete-kelas/${uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     login: (data) => {
         return axios.post(`${url}/login`, data)

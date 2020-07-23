@@ -1,9 +1,8 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
-        <b-card :header="materi.mapel" :title="materi.materi" :sub-title="materi.submateri">
+      <b-col>
+        <b-card :header="materi.mapel" :title="materi.materi">
           <b-card-text>
             <b-row>
               <b-col>{{materi.isi}}</b-col>
@@ -48,16 +47,6 @@
                   <b-form-input type="text" placeholder="Materi" required v-model="materi.materi"></b-form-input>
                 </b-form-group>
               </b-col>
-              <b-col md="6" sm="12">
-                <b-form-group label="Submateri">
-                  <b-form-input
-                    type="text"
-                    placeholder="Submateri"
-                    required
-                    v-model="materi.submateri"
-                  ></b-form-input>
-                </b-form-group>
-              </b-col>
               <b-col>
                 <b-form-group label="Isi">
                   <b-form-textarea placeholder="Isi" rows="3" max-rows="5" v-model="materi.isi"></b-form-textarea>
@@ -82,13 +71,12 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
 <script>
-import logout from "../logout";
-import { user } from "../../api";
+import logout from "../../logout";
+import { user } from "../../../api";
 export default {
   name: "UpdateMateri",
   data() {
