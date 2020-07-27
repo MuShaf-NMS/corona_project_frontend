@@ -1,8 +1,7 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card :header="materi.mapel" :title="materi.materi" :sub-title="materi.submateri">
           <b-card-text>
             <b-row>
@@ -16,7 +15,6 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>

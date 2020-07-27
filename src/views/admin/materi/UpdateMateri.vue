@@ -23,23 +23,21 @@
           <b-card-text>
             <b-form>
               <b-col md="6" sm="12">
-                <b-form-group label="Guru">
-                  <b-form-input type="text" placeholder="Guru" required v-model="materi.guru"></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="6" sm="12">
                 <b-form-group label="Kelas">
-                  <b-form-input type="text" placeholder="Kelas" required v-model="materi.kelas"></b-form-input>
+                  <b-form-select v-model="materi.uuid_kelas" :options="kelas">
+                    <template v-slot:first>
+                      <b-form-select-option value disabled>-- Kelas --</b-form-select-option>
+                    </template>
+                  </b-form-select>
                 </b-form-group>
               </b-col>
               <b-col md="6" sm="12">
                 <b-form-group label="Mata Pelajaran">
-                  <b-form-input
-                    type="text"
-                    placeholder="Mata Pelajaran"
-                    required
-                    v-model="materi.mapel"
-                  ></b-form-input>
+                  <b-form-select v-model="materi.uuid_mapel" :options="studi">
+                    <template v-slot:first>
+                      <b-form-select-option value disabled>-- Mata Pelajaran --</b-form-select-option>
+                    </template>
+                  </b-form-select>
                 </b-form-group>
               </b-col>
               <b-col md="6" sm="12">
@@ -82,7 +80,9 @@ export default {
   data() {
     return {
       materi: {},
-      edit: false
+      edit: false,
+      kelas: [],
+      studi: []
     };
   },
   methods: {
@@ -90,6 +90,10 @@ export default {
       try {
         let data = await user.getDetailMateri(this.$route.params.id);
         this.materi = data.data;
+        let kelas = await user.getKelas()
+        this.kelas = kelas.data
+        let studi = await user.getMapel()
+        this.studi = studi.data
       } catch (err) {
         logout.clear();
       }
@@ -111,13 +115,13 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
-    }
+    },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>
 <style scoped>

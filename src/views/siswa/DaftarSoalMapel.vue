@@ -2,11 +2,11 @@
   <div>
     <b-row class="card-dest">
       <b-col>
-        <b-card title="Daftar Siswa">
+        <b-card :title="title">
           <b-card-text>
-            <b-row v-for="(i,index) in kelas" :key="index" class="card-dest">
+            <b-row v-for="(i,index) in items" :key="index" class="card-dest">
               <b-col v-for="(j,index) in i" :key="index" md="4">
-                <siswa-kelas :kelas="j.kelas" />
+                <soal-mapel :uuid="j.uuid" :materi="j.materi" />
               </b-col>
             </b-row>
           </b-card-text>
@@ -16,28 +16,27 @@
   </div>
 </template>
 <script>
-import SiswaKelas from "../../../components/admin/SiswaKelas"
-import logout from "../../logout";
-import { user } from "../../../api";
+import SoalMapel from "../../components/siswa/SoalMapel";
+import logout from "../logout";
+import { siswa } from "../../api";
 export default {
-  name: "DaftarSiswa",
-  components: { SiswaKelas },
+  name: "DaftarSoalKelas",
+  components: { SoalMapel },
   data() {
     return {
-      kelas: []
+      items: [],
+      title: ""
     };
   },
   methods: {
     async loadData() {
       try {
-        let data = await user.getDaftarKelas();
-        this.kelas = this.triple(data.data);
+        let data = await siswa.getSoalMapel(this.$route.params.uuid_mapel);
+        this.items = this.triple(data.data.materi);
+        this.title = `Daftar Soal ${data.data.mapel.mapel} Kelas ${data.data.kelas.kelas}`
       } catch (err) {
         logout.clear();
       }
-    },
-    Detail(kelas) {
-      this.$router.push(`/daftar-siswa/${kelas}`);
     },
     triple(list){
       let hasil = []
@@ -54,9 +53,9 @@ export default {
       return hasil
     }
   },
-  mounted() {
+  created() {
     this.loadData();
-  }
+  },
 };
 </script>
 <style scoped>

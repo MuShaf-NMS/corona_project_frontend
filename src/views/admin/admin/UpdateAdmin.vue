@@ -54,12 +54,11 @@
               <b-col>
                 <b-form-group label="Bidang studi / Kelas yang diampu">
                   <b-input-group v-for="(i,index) in form.ampu" :key="index">
-                    <b-form-input
-                      type="text"
-                      placeholder="Bidang studi"
-                      required
-                      v-model="i.bidang_studi"
-                    ></b-form-input>
+                    <b-form-select v-model="i.uuid_mapel" :options="mapel">
+                      <template v-slot:first>
+                        <b-form-select-option value="" disabled> --Bidang studi-- </b-form-select-option>
+                      </template>
+                    </b-form-select>
                     <b-form-select v-model="i.uuid_kelas" :options="kelas">
                       <template v-slot:first>
                         <b-form-select-option value="" disabled> --Kelas-- </b-form-select-option>
@@ -88,10 +87,11 @@ export default {
     return {
       form: {},
       options: [
-        { text: "Ya", value: 1 },
-        { text: "Tidak", value: 0 }
+        { text: "Ya", value: true },
+        { text: "Tidak", value: false }
       ],
-      kelas: []
+      kelas: [],
+      mapel: []
     };
   },
   methods: {
@@ -100,6 +100,8 @@ export default {
       this.form = data.data;
       let kelas = await user.getKelas()
       this.kelas = kelas.data
+      let mapel = await user.getMapel()
+      this.mapel = mapel.data
     },
     async update() {
       let data = await user.updateUser(this.$route.params.id, this.form);
@@ -119,7 +121,7 @@ export default {
       });
     },
     tambahAmpu() {
-      this.form.ampu.push({ bidang_studi: "", uuid_kelas: "" });
+      this.form.ampu.push({ uuid_mapel: "", uuid_kelas: "" });
     },
     hapusAmpu(index) {
       if (this.form.ampu.length) {

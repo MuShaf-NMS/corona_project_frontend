@@ -37,9 +37,44 @@ export default {
   },
   methods: {
     async tambahKelas() {
-      let data = await user.addKelas(this.form);
-      console.log(data.data);
+      if (this.form.kelas == "") {
+        this.showMessageCek("Kelas");
+      } else if (this.form.label == "") {
+        this.showMessageCek("Label");
+      } else {
+        let data = await user.addKelas(this.form);
+        if (data.status == 200) {
+          this.showMessageSukses()
+          this.clearForm()
+        }
+      }
     },
+    showMessageSukses() {
+      this.$bvModal.msgBoxOk("Berhasil menambahkan kelas baru", {
+        title: "Sukses",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      });
+    },
+    showMessageCek(form) {
+      this.$bvModal.msgBoxOk(`Form ${form} tidak boleh kosong`, {
+        title: "Maaf",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true,
+      });
+    },
+    clearForm(){
+      this.form.kelas == ""
+      this.form.label == ""
+    }
   },
 };
 </script>

@@ -59,15 +59,14 @@
               <b-col>
                 <b-form-group label="Bidang studi / Kelas yang diampu">
                   <b-input-group v-for="(i,index) in form.ampu" :key="index">
-                    <b-form-input
-                      type="text"
-                      placeholder="Bidang studi"
-                      required
-                      v-model="i.bidang_studi"
-                    ></b-form-input>
+                    <b-form-select v-model="i.uuid_mapel" :options="mapel">
+                      <template v-slot:first>
+                        <b-form-select-option value="" disabled> --Bidang studi-- </b-form-select-option>
+                      </template>
+                    </b-form-select>
                     <b-form-select v-model="i.uuid_kelas" :options="kelas">
                       <template v-slot:first>
-                        <b-form-select-option value="" disabled> --Kelas-- </b-form-select-option>
+                        <b-form-select-option value="" disabled> --Kelas yang diampu-- </b-form-select-option>
                       </template>
                     </b-form-select>
                     <b-btn size="sm" @click="hapusAmpu(index)"><b-icon icon="dash"></b-icon></b-btn>
@@ -130,13 +129,18 @@ export default {
         { text: "Ya", value: true },
         { text: "Tidak", value: false }
       ],
-      kelas: []
+      kelas: [],
+      mapel: []
     };
   },
   methods: {
     async loadKelas(){
       let data = await user.getKelas()
       this.kelas = data.data
+    },
+    async loadMapel(){
+      let data = await user.getMapel()
+      this.mapel = data.data
     },
     isConfirmed() {
       if (this.form.password == this.confirm_password) {
@@ -155,13 +159,34 @@ export default {
       this.form.email = "";
       this.form.password = "";
       this.form.superadmin = false;
+      this.form.ampu = []
       this.confirm_password = "";
-      this.bidang_studi = "";
-      this.kelas_ampu = "";
     },
     showMessageSukses() {
       this.$bvModal.msgBoxOk("Berhasil menambahkan admin baru", {
         title: "Sukses",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      });
+    },
+    showMessageCek(form) {
+      this.$bvModal.msgBoxOk(`Form ${form} tidak boleh kosong`, {
+        title: "Maaf",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      });
+    },
+    showMessageCekPassword() {
+      this.$bvModal.msgBoxOk(`Panjang Password minimal 8 karakter`, {
+        title: "Maaf",
         size: "sm",
         buttonSize: "sm",
         okVariant: "success",
@@ -196,7 +221,25 @@ export default {
       );
     },
     async registration() {
-      if (this.isConfirmed()) {
+      if (this.form.nama == "") {
+        this.showMessageCek("Nama")
+      } else if (this.form.username == "") {
+        this.showMessageCek("Username")
+      } else if (this.form.jk == "") {
+        this.showMessageCek("Jenis kelamin")
+      } else if (this.form.alamat == "") {
+        this.showMessageCek("Alamat")
+      } else if (this.form.tempat_lahir == "") {
+        this.showMessageCek("Tempat lahir")
+      } else if (this.form.tanggal_lahir == "") {
+        this.showMessageCek("Tanggal lahir")
+      } else if (this.form.hp == "") {
+        this.showMessageCek("Nomor Hp")
+      } else if (this.form.email == "") {
+        this.showMessageCek("Email")
+      } else if (this.form.password.length < 8) {
+        this.showMessageCekPassword()
+      } else if (this.isConfirmed()) {
         try {
           let data = await user.addUser(this.form);
           if (data.data.msg == "Sukses") {
@@ -213,8 +256,7 @@ export default {
       }
     },
     tambahAmpu() {
-      this.form.ampu.push({ bidang_studi: "", uuid_kelas: "" });
-      console.log(this.form.ampu)
+      this.form.ampu.push({ uuid_mapel: "", uuid_kelas: "" });
     },
     hapusAmpu(index) {
       if (this.form.ampu.length) {
@@ -224,6 +266,7 @@ export default {
   },
   mounted(){
     this.loadKelas()
+    this.loadMapel()
   }
 };
 </script>

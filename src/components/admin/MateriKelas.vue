@@ -6,7 +6,7 @@
           <b-card-text>
             <b-row>
               <b-col>
-                  <b-btn size="sm">Detail</b-btn>
+                  <b-btn size="sm" @click="detail">Detail</b-btn>
               </b-col>
             </b-row>
           </b-card-text>
@@ -18,15 +18,15 @@
 <script>
 export default {
   name: "MateriKelas",
-  props: { mapel: String },
+  props: { kelas: String, label: String },
   data() {
     return {
-      title: this.mapel
+      title: `Kelas ${this.kelas} ${this.label}`
     };
   },
   methods: {
-    klik(){
-        console.log("klik")
+    detail(){
+      this.$router.push(`/daftar-materi/${this.kelas}/${this.label}`)
     }
   }
 };

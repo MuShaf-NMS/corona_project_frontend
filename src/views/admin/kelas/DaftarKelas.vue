@@ -4,9 +4,9 @@
       <b-col>
         <b-card title="Daftar Kelas">
           <b-card-text>
-            <b-row>
-              <b-col v-for="(i,index) in kelas" :key="index">
-                <kelas :kelas="i.kelas" />
+            <b-row v-for="(i,index) in kelas" :key="index" class="card-dest">
+              <b-col v-for="(j,index) in i" :key="index" md="4">
+                <kelas :kelas="j.kelas" />
               </b-col>
             </b-row>
           </b-card-text>
@@ -29,8 +29,21 @@ export default {
   methods: {
     async loadData() {
       let data = await user.getDaftarKelas();
-      this.kelas = data.data;
-      console.log(this.kelas)
+      this.kelas = this.triple(data.data);
+    },
+    triple(list){
+      let hasil = []
+      let lis = []
+      for(let i = 0; i < list.length; i++){
+        lis.push(list[i])
+        if(lis.length == 3) {
+          hasil.push(lis)
+          lis = []
+        } else if (lis.length < 3 && i == list.length-1){
+          hasil.push(lis)
+        }
+      }
+      return hasil
     }
   },
   mounted() {

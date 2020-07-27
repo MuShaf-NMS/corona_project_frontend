@@ -14,6 +14,10 @@
           <b-dropdown-item to="/kelas">Daftar Kelas</b-dropdown-item>
           <b-dropdown-item to="/tambah-kelas">Tambah Kelas</b-dropdown-item>
         </b-nav-item-dropdown>
+        <b-nav-item-dropdown text="Mata Pelajaran" v-if="this.$store.getters.getUser.superadmin">
+          <b-dropdown-item to="/mapel">Daftar Mata Pelajaran</b-dropdown-item>
+          <b-dropdown-item to="/tambah-mapel">Tambah Mata Pelajaran</b-dropdown-item>
+        </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Materi">
           <b-dropdown-item to="/tambah-materi">Tambah Materi</b-dropdown-item>
           <b-dropdown-item to="/daftar-materi">Daftar Materi</b-dropdown-item>

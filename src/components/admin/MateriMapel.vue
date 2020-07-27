@@ -2,13 +2,11 @@
   <div>
     <b-row>
       <b-col>
-        <b-card :title="title">
+        <b-card :title="materi">
           <b-card-text>
             <b-row>
               <b-col>
-                <b-btn size="sm" @click="update">
-                  <b-icon icon="pencil-square"></b-icon> Update
-                </b-btn>
+                  <b-btn size="sm" @click="detail">Detail</b-btn>
               </b-col>
               <b-col>
                 <b-btn size="sm" @click="hapus" class="kiri">
@@ -23,23 +21,25 @@
   </div>
 </template>
 <script>
-import { user } from "../../api";
+import { user } from '../../api';
 export default {
-  name: "KelasCabang",
-  props: { uuid: String, label: String },
+  name: "MateriMapel",
+  props: { uuid: String, materi: String },
   data() {
     return {
-      title: `Kelas ${this.$route.params.kelas.concat(" ", this.label)}`,
     };
   },
   methods: {
+    detail(){
+      this.$router.push(`/detail-materi/${this.uuid}`)
+    },
     hapus() {
         this.showMessageWarning(this.uuid)
     },
     showMessageWarning(uuid) {
       this.$bvModal
         .msgBoxConfirm(
-          `Apakah anda yakin untuk menghapus kelas ini?`,
+          `Apakah anda yakin untuk menghapus materi ini?`,
           {
             title: "Perhatian!!!",
             size: "sm",
@@ -53,19 +53,11 @@ export default {
         )
         .then(value => {
           if (value) {
-            user.deleteKelas(uuid);
+            user.deleteMateri(uuid);
             this.$emit("deleted")
           }
         });
-    },
-    update() {
-      this.$router.push(`/update-kelas/${this.uuid}`);
-    },
-  },
+    }
+  }
 };
 </script>
-<style scoped>
-.kiri {
-  float: right;
-}
-</style>

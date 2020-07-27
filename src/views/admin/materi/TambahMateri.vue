@@ -6,40 +6,21 @@
           <b-card-text>
             <b-form>
               <b-col md="6" sm="12">
-                <b-form-group label="Guru">
-                  <b-form-input type="text" placeholder="Guru" required v-model="form.guru"></b-form-input>
-                </b-form-group>
-              </b-col>
-              <b-col md="6" sm="12">
                 <b-form-group label="Kelas">
-                  <b-form-select v-model="form.kelas" :options="kelas" v-if="kelas.length != 0">
+                  <b-form-select v-model="form.uuid_kelas" :options="kelas">
                     <template v-slot:first>
                       <b-form-select-option value disabled>-- Kelas --</b-form-select-option>
                     </template>
                   </b-form-select>
-                  <b-form-input
-                    type="text"
-                    placeholder="Kelas"
-                    required
-                    v-model="form.kelas"
-                    v-if="kelas.length == 0"
-                  ></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col md="6" sm="12">
                 <b-form-group label="Mata Pelajaran">
-                  <b-form-select v-model="form.mapel" :options="studi" v-if="studi.length != 0">
+                  <b-form-select v-model="form.uuid_mapel" :options="studi">
                     <template v-slot:first>
                       <b-form-select-option value disabled>-- Mata Pelajaran --</b-form-select-option>
                     </template>
                   </b-form-select>
-                  <b-form-input
-                    type="text"
-                    placeholder="Mata Pelajaran"
-                    required
-                    v-model="form.mapel"
-                    v-if="studi.length == 0"
-                  ></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col md="6" sm="12">
@@ -82,17 +63,36 @@ export default {
   data() {
     return {
       form: {
-        kelas: "",
-        mapel: "",
+        uuid_kelas: "",
+        uuid_mapel: "",
         materi: "",
         isi: "",
-        link: ""
+        link: "",
       },
-      kelas: this.$store.getters.getUser.kelas_ampu,
-      studi: this.$store.getters.getUser.bidang_studi
+      kelas: [],
+      studi: [],
     };
   },
   methods: {
+    async loadKelas() {
+      let data = await user.getKelas();
+      this.kelas = data.data;
+    },
+    async loadMapel() {
+      let data = await user.getMapel();
+      this.studi = data.data;
+    },
+    showMessageCek(form) {
+      this.$bvModal.msgBoxOk(`Form ${form} tidak boleh kosong`, {
+        title: "Maaf",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true,
+      });
+    },
     showMessage() {
       this.$bvModal.msgBoxOk("Berhasil menambahkan materi baru", {
         title: "Sukses",
@@ -101,29 +101,43 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     clearForm() {
       this.form.mapel = "";
       this.form.guru = "";
-      this.form.kelas = ""
+      this.form.kelas = "";
       this.form.materi = "";
       this.form.isi = "";
-      this.form.link = ""
+      this.form.link = "";
     },
     async tambahMateri() {
-      try {
-        let data = await user.addMateri(this.form);
-        if (data.status == 200) {
-          this.showMessage();
-          this.clearForm();
+      if (this.form.uuid_kelas == "") {
+        this.showMessageCek("Kelas");
+      } else if (this.form.uuid_mapel == "") {
+        this.showMessageCek("Mata Pelajaran");
+      } else if (this.form.materi == "") {
+        this.showMessageCek("Materi");
+      } else if (this.form.isi == "") {
+        this.showMessageCek("Isi");
+      } else {
+        try {
+          let data = await user.addMateri(this.form);
+          if (data.status == 200) {
+            this.showMessage();
+            this.clearForm();
+          }
+        } catch (err) {
+          logout.clear();
         }
-      } catch (err) {
-        logout.clear();
       }
-    }
-  }
+    },
+  },
+  mounted() {
+    this.loadKelas();
+    this.loadMapel();
+  },
 };
 </script>
 <style scoped>

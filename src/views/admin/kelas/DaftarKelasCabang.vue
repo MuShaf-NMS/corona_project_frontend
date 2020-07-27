@@ -2,11 +2,11 @@
   <div>
     <b-row class="card-dest">
       <b-col>
-        <b-card title="Daftar Kelas">
-          <b-card-text>
-            <b-row>
-              <b-col v-for="(i,index) in kelascabang" :key="index">
-                <kelas-cabang :uuid="i.uuid" :label="i.label" />
+        <b-card :title="title">
+          <b-card-text @deleted="loadData">
+            <b-row v-for="(i,index) in kelascabang" :key="index">
+              <b-col v-for="(j,index) in i" :key="index" md="4">
+                <kelas-cabang :uuid="j.uuid" :label="j.label" />
               </b-col>
             </b-row>
           </b-card-text>
@@ -24,12 +24,27 @@ export default {
   data() {
     return {
       kelascabang: [],
+      title: `Daftar Kelas ${this.$route.params.kelas}`
     };
   },
   methods: {
     async loadData() {
-      let data = await user.getDaftarKelasLabel(this.$route.params.kelas);
-      this.kelascabang = data.data;
+      let data = await user.getDaftarKelasCabang(this.$route.params.kelas);
+      this.kelascabang = this.triple(data.data);
+    },
+    triple(list){
+      let hasil = []
+      let lis = []
+      for(let i = 0; i < list.length; i++){
+        lis.push(list[i])
+        if(lis.length == 3) {
+          hasil.push(lis)
+          lis = []
+        } else if (lis.length < 3 && i == list.length-1){
+          hasil.push(lis)
+        }
+      }
+      return hasil
     },
     update(uuid){
         this.$router.push(`/update-kelas/${uuid}`)
@@ -38,7 +53,7 @@ export default {
         await user.deleteKelas(uuid)
     }
   },
-  mounted() {
+  created() {
     this.loadData();
   },
 };

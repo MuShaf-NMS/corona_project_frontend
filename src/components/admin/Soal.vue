@@ -17,7 +17,7 @@
 </template>
 <script>
 export default {
-  name: "Materi",
+  name: "Soal",
   props: { kelas: Number },
   data() {
     return {
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     detail(kelas){
-        this.$router.push(`/daftar-materi/${String(kelas)}`)
+        this.$router.push(`/daftar-soal/${kelas}`)
     }
   }
 };

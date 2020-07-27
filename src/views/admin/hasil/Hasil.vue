@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-import { user } from "../../api";
+import { user } from "../../../api";
 export default {
   name: "Hasil",
   data() {
@@ -22,8 +22,9 @@ export default {
   },
   methods: {
     async loadData() {
-      let data = await user.getSkor(this.$route.params.materi);
+      let data = await user.getSkor(this.$route.params.uuid_materi);
       this.items = data.data;
+      console.log(this.items)
     }
   },
   mounted() {

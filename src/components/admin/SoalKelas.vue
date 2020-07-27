@@ -6,7 +6,7 @@
           <b-card-text>
             <b-row>
               <b-col>
-                  <b-btn @click="detail(kelas)" size="sm">Detail</b-btn>
+                  <b-btn size="sm" @click="detail">Detail</b-btn>
               </b-col>
             </b-row>
           </b-card-text>
@@ -17,16 +17,16 @@
 </template>
 <script>
 export default {
-  name: "Materi",
-  props: { kelas: Number },
+  name: "SoalKelas",
+  props: { kelas: String, label: String },
   data() {
     return {
-      title: `Kelas ${this.kelas}`
+      title: `Kelas ${this.kelas} ${this.label}`
     };
   },
   methods: {
-    detail(kelas){
-        this.$router.push(`/daftar-materi/${String(kelas)}`)
+    detail(){
+      this.$router.push(`/daftar-soal/${this.kelas}/${this.label}`)
     }
   }
 };

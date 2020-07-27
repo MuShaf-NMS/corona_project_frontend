@@ -12,7 +12,11 @@
               </b-col>
               <b-col md="6" sm="12">
                 <b-form-group label="Kelas">
-                  <b-form-input type="text" placeholder="Kelas" required v-model="form.kelas"></b-form-input>
+                  <b-form-select v-model="form.uuid_kelas" :options="kelas">
+                    <template v-slot:first>
+                      <b-form-select-option value disabled>--Kelas--</b-form-select-option>
+                    </template>
+                  </b-form-select>
                 </b-form-group>
               </b-col>
               <b-col>
@@ -67,13 +71,18 @@ export default {
   name: "UpdateSiswa",
   data() {
     return {
-      form: {}
+      form: {},
+      kelas: []
     };
   },
   methods: {
     async loadData() {
       let data = await user.getOneSiswa(this.$route.params.id);
       this.form = data.data;
+    },
+    async loadKelas() {
+      let data = await user.getKelas();
+      this.kelas = data.data;
     },
     async update() {
       let data = await user.updateSiswa(this.$route.params.id, this.form);
@@ -95,6 +104,7 @@ export default {
   },
   created() {
     this.loadData();
+    this.loadKelas()
   }
 };
 </script>

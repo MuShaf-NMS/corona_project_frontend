@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import { user } from "../../api";
+import { user } from "../../../api";
 export default {
   name: "DaftarHasil",
   data() {

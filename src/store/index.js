@@ -13,11 +13,13 @@ export default new Vuex.Store({
   state: {
     user: null,
     soal: null,
+    uuidSoal: null,
     jawaban: []
   },
   getters: {
     getUser: state => state.user,
     getSoal: state => state.soal,
+    getUuidSoal: state => state.uuidSoal,
     getJawaban: state => state.jawaban
   },
   mutations: {
@@ -32,7 +34,9 @@ export default new Vuex.Store({
     },
     updateSoal: (state, data) => {
       state.soal = data
-      state.jawaban = data
+      state.jawaban = data.map((e) => {
+        return {uuid: e.uuid, jawaban: ""}
+      })
     },
     deleteSoal: (state) => {
       state.soal = null
@@ -42,7 +46,13 @@ export default new Vuex.Store({
     },
     deleteJawaban: (state) => {
       state.jawaban = []
-    }
+    },
+    updateUuidSoal: (state, data) => {
+      state.uuidSoal = data
+    },
+    deleteUuidSoal: (state) => [
+      state.uuidSoal = null
+    ]
   },
   actions: {
     saveUser: (contex, data) => {
@@ -65,6 +75,12 @@ export default new Vuex.Store({
     },
     clearJawaban: (contex) => {
       contex.commit("deleteJawaban")
+    },
+    saveUuidSoal: (contex,data) => {
+      contex.commit("updateUuidSoal", data)
+    },
+    clearUuidSoal: (contex) => {
+      contex.commit("deleteUuidSoal")
     }
   }
 })

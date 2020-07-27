@@ -2,19 +2,16 @@
   <div>
     <b-row class="card-dest">
       <b-col>
-        <b-card header="Update Kelas">
+        <b-card header="Update Mata Pelajaran">
           <b-card-text>
             <b-form>
               <b-col>
-                <b-form-group label="Kelas">
-                  <b-input-group>
-                    <b-form-input type="number" placeholder="Kelas" v-model="form.kelas" required></b-form-input>
-                    <b-form-input type="text" placeholder="Label" v-model="form.label" required></b-form-input>
-                  </b-input-group>
+                <b-form-group label="Mata pelajaran">
+                    <b-form-input type="text" placeholder="Mata Pelajaran" v-model="form.mapel" required></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col>
-                <b-btn @click="updateKelas" size="sm">Update</b-btn>
+                <b-btn @click="updateMapel" size="sm">Update</b-btn>
               </b-col>
             </b-form>
           </b-card-text>
@@ -35,11 +32,11 @@ export default {
   },
   methods: {
     async loadData() {
-      let data = await user.getOneKelas(this.$route.params.uuid);
+      let data = await user.getOneMapel(this.$route.params.uuid);
       this.form = data.data;
     },
-    async updateKelas() {
-      user.updateKelas(this.$route.params.uuid,this.form);
+    async updateMapel() {
+      user.updateMapel(this.$route.params.uuid,this.form);
     },
   },
   created() {

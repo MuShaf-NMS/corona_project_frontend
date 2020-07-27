@@ -4,14 +4,11 @@
       <b-col>
         <b-card title="Daftar Soal">
           <b-card-text>
-            <b-table striped hover :items="items" :fields="fields">
-              <template v-slot:cell(detail)="row">
-                <b-btn
-                  size="sm"
-                  @click="toSoal(row.item.kelas,row.item.mapel,row.item.materi)"
-                >Detail</b-btn>
-              </template>
-            </b-table>
+            <b-row v-for="(i,index) in items" :key="index" class="card-dest">
+              <b-col v-for="(j,index) in i" :key="index" md="4">
+                <soal :kelas="j.kelas" />
+              </b-col>
+            </b-row>
           </b-card-text>
         </b-card>
       </b-col>
@@ -19,33 +16,39 @@
   </div>
 </template>
 <script>
+import Soal from "../../../components/admin/Soal"
 import logout from "../../logout";
 import { user } from "../../../api";
 export default {
   name: "DaftarSoal",
+  components: { Soal },
   data() {
     return {
       items: [],
-      fields: [
-        { key: "kelas", label: "Kelas", sortable: true },
-        { key: "mapel", label: "Mata Pelajaran", sortable: true },
-        "materi",
-        "jumlah_soal",
-        "detail"
-      ]
     };
   },
   methods: {
     async loadData() {
       try {
         let data = await user.getSoal();
-        this.items = data.data;
+        this.items = this.triple(data.data);
       } catch (err) {
         logout.clear();
       }
     },
-    toSoal(kelas, mapel, materi) {
-      this.$router.push(`/soal/${kelas}/${mapel}/${materi}`);
+    triple(list){
+      let hasil = []
+      let lis = []
+      for(let i = 0; i < list.length; i++){
+        lis.push(list[i])
+        if(lis.length == 3) {
+          hasil.push(lis)
+          lis = []
+        } else if (lis.length < 3 && i == list.length-1){
+          hasil.push(lis)
+        }
+      }
+      return hasil
     }
   },
   mounted() {

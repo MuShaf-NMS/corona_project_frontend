@@ -3,10 +3,10 @@
     <b-navbar type="dark" variant="dark">
       <b-navbar-nav>
         <b-nav-item-dropdown text="Materi">
-          <b-dropdown-item to="/siswa/materi">Materi</b-dropdown-item>
+          <b-dropdown-item to="/siswa/daftar-materi">Materi</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Soal">
-          <b-dropdown-item @click="toSoal">Daftar Soal</b-dropdown-item>
+          <b-dropdown-item to="/siswa/daftar-soal">Daftar Soal</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
@@ -35,11 +35,6 @@ export default {
       this.$store.dispatch("clearSoal");
       this.$store.dispatch("clearJawaban");
       this.$router.push("/login");
-    },
-    toSoal() {
-      this.$router.push(
-        `/siswa/daftar-soal/${this.$store.getters.getUser.kelas}`
-      );
     },
     toProfile() {
       this.$router.push(`/siswa/profile/${this.$store.getters.getUser.uuid}`);

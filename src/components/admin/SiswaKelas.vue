@@ -5,7 +5,14 @@
         <b-card :title="title">
           <b-card-text>
             <b-row>
-              <b-col md="8">Cabang: {{cabang}}</b-col>
+              <b-col md="8">
+                  <b-row>
+                      <b-col>Jumlah siswa: {{jml_siswa}}</b-col>
+                  </b-row>
+                  <b-row>
+                      <b-col>Cabang kelas: {{cabang}}</b-col>
+                  </b-row>
+              </b-col>
               <b-col md="4">
                 <b-btn @click="detail(kelas)" size="sm">Detail</b-btn>
               </b-col>
@@ -24,16 +31,18 @@ export default {
   data() {
     return {
       title: `Kelas ${this.kelas}`,
-      cabang: null,
+      jml_siswa: 0,
+      cabang: 0
     };
   },
   methods: {
     async loadKelas() {
-      let data = await user.getDaftarKelasCabang(this.kelas);
-      this.cabang = data.data.length;
+      let data = await user.getSiswaKelas(this.kelas);
+      this.cabang = data.data.cabang;
+      this.jml_siswa = data.data.jml_siswa
     },
     detail(kelas) {
-      this.$router.push(`/kelas/${kelas}`);
+      this.$router.push(`/daftar-siswa/${kelas}`);
     },
   },
   mounted() {

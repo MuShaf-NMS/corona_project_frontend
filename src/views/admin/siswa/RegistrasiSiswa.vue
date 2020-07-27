@@ -135,6 +135,28 @@ export default {
         centered: true,
       });
     },
+    showMessageCek(form) {
+      this.$bvModal.msgBoxOk(`Form ${form} tidak boleh kosong`, {
+        title: "Maaf",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      });
+    },
+    showMessageCekPassword() {
+      this.$bvModal.msgBoxOk(`Panjang Password minimal 8 karakter`, {
+        title: "Maaf",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true
+      });
+    },
     showMessageKonfir() {
       this.$bvModal.msgBoxOk("Tolong konfirmasi password anda", {
         title: "Maaf",
@@ -160,7 +182,25 @@ export default {
       this.confirm_password = "";
     },
     async registration() {
-      if (this.isConfirmed()) {
+      if (this.form.nama == "") {
+        this.showMessageCek("Nama")
+      } else if (this.form.username == "") {
+        this.showMessageCek("Username")
+      } else if (this.form.jk == "") {
+        this.showMessageCek("Jenis kelamin")
+      } else if (this.form.alamat == "") {
+        this.showMessageCek("Alamat")
+      } else if (this.form.tempat_lahir == "") {
+        this.showMessageCek("Tempat lahir")
+      } else if (this.form.tanggal_lahir == "") {
+        this.showMessageCek("Tanggal lahir")
+      } else if (this.form.hp == "") {
+        this.showMessageCek("Nomor Hp")
+      } else if (this.form.email == "") {
+        this.showMessageCek("Email")
+      } else if (this.form.password.length < 8) {
+        this.showMessageCekPassword()
+      } else if (this.isConfirmed()) {
         try {
           let data = await user.addSiswa(this.form);
           if (data.status == 200) {

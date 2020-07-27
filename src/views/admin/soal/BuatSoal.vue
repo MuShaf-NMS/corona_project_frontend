@@ -6,22 +6,37 @@
           <b-row>
             <b-col md="2" sm="12">
               <b-form-group>
-                <b-form-input type="text" placeholder="Kelas" required v-model="lists[0].kelas"></b-form-input>
+                <!--<b-form-input type="text" placeholder="Kelas" required v-model="lists[0].kelas"></b-form-input>-->
+                <b-form-select v-model="lists[0].uuid_kelas" :options="kelas" @input="loadMapel">
+                  <template v-slot:first>
+                    <b-form-select-option value disabled>Kelas</b-form-select-option>
+                  </template>
+                </b-form-select>
               </b-form-group>
             </b-col>
             <b-col md="5" sm="12">
               <b-form-group>
-                <b-form-input
+                <!--<b-form-input
                   type="text"
                   placeholder="Mata Pelajaran"
                   required
                   v-model="lists[0].mapel"
-                ></b-form-input>
+                ></b-form-input>-->
+                <b-form-select v-model="lists[0].uuid_mapel" :options="studi" @input="loadMateri">
+                  <template v-slot:first>
+                    <b-form-select-option value disabled>Mata Pelajaran</b-form-select-option>
+                  </template>
+                </b-form-select>
               </b-form-group>
             </b-col>
             <b-col md="5" sm="12">
               <b-form-group>
-                <b-form-input type="text" placeholder="Materi" required v-model="lists[0].materi"></b-form-input>
+                <b-form-select v-model="lists[0].uuid_materi" :options="materi">
+                  <template v-slot:first>
+                    <b-form-select-option value disabled>Materi</b-form-select-option>
+                  </template>
+                </b-form-select>
+                <!--<b-form-input type="text" placeholder="Materi" required v-model="lists[0].materi"></b-form-input>-->
               </b-form-group>
             </b-col>
           </b-row>
@@ -88,11 +103,6 @@
                 </b-input-group>
               </b-form-group>
             </b-col>
-            <b-col>
-              <b-form-group label="Tampilkan soal ini?">
-                <b-form-radio-group :options="options" required v-model="list.tampil"></b-form-radio-group>
-              </b-form-group>
-            </b-col>
             <b-col class="text-center">
               <b-btn-group>
                 <b-btn size="sm" class="btn-danger" @click="hapusSoal(index)">Hapus Soal</b-btn>
@@ -114,22 +124,50 @@ export default {
     return {
       lists: [
         {
-          kelas: "",
-          mapel: "",
-          materi: "",
+          uuid_kelas: "",
+          uuid_mapel: "",
+          uuid_materi: "",
           soal: "",
           skor: "",
           opsi: ["", "", "", "", ""],
-          tampil: false
-        }
+        },
       ],
       options: [
         { text: "Ya", value: true },
-        { text: "Tidak", value: false }
-      ]
+        { text: "Tidak", value: false },
+      ],
+      kelas: [],
+      studi: [],
+      materi: [],
     };
   },
   methods: {
+    async loadKelas() {
+      let data = await user.getKelas();
+      this.kelas = data.data;
+    },
+    async loadMapel() {
+      let data = await user.getMapel();
+      this.studi = data.data;
+    },
+    async loadMateri() {
+      let data = await user.materi(
+        this.lists[0].uuid_kelas,
+        this.lists[0].uuid_mapel
+      );
+      this.materi = data.data;
+    },
+    showMessageCek(form) {
+      this.$bvModal.msgBoxOk(`Form ${form} tidak boleh kosong`, {
+        title: "Maaf",
+        size: "sm",
+        buttonSize: "sm",
+        okVariant: "success",
+        headerClass: "p-2 border-bottom-0",
+        footerClass: "p-2 border-top-0",
+        centered: true,
+      });
+    },
     showMessage() {
       this.$bvModal.msgBoxOk("Berhasil menambahkan soal baru", {
         title: "Sukses",
@@ -138,32 +176,43 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     async buatSoal() {
-      let data = await user.addSoal(this.lists);
-      if (data.status == 200) {
-        this.showMessage();
+      if (this.lists[0].uuid_kelas == "") {
+        this.showMessageCek("Kelas");
+      } else if (this.lists[0].uuid_mapel == "") {
+        this.showMessageCek("Mata Pelajaran");
+      } else if (this.lists[0].uuid_materi == "") {
+        this.showMessageCek("Materi");
+      } else {
+        let data = await user.addSoal(this.lists);
+        console.log(this.lists);
+        if (data.status == 200) {
+          this.showMessage();
+        }
       }
     },
     tambahSoal() {
       this.lists.push({
-        kelas: this.lists[0].kelas,
-        mapel: this.lists[0].mapel,
-        materi: this.lists[0].materi,
+        uuid_kelas: this.lists[0].uuid_kelas,
+        uuid_mapel: this.lists[0].uuid_mapel,
+        uuid_materi: this.lists[0].uuid_materi,
         soal: "",
         skor: "",
         opsi: ["", "", "", "", ""],
-        tampil: false
       });
     },
     hapusSoal(index) {
       if (this.lists.length > 1) {
         this.lists.splice(index, 1);
       }
-    }
-  }
+    },
+  },
+  mounted() {
+    this.loadKelas();
+  },
 };
 </script>
 <style scoped>

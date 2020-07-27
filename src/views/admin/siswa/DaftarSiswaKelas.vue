@@ -4,14 +4,11 @@
       <b-col>
         <b-card :title="title">
           <b-card-text>
-            <b-table striped hover :items="items" :fields="fields">
-              <template v-slot:cell(update)="row">
-                <b-btn size="sm" @click="update(row.item.uuid)">Update</b-btn>
-              </template>
-              <template v-slot:cell(hapus)="row">
-                <b-btn size="sm" @click="deleteSiswa(row.item.uuid,row.item.nama)"><b-icon icon="trash"></b-icon></b-btn>
-              </template>
-            </b-table>
+            <b-row v-for="(i,index) in kelas" :key="index" class="card-dest">
+              <b-col v-for="(j,index) in i" :key="index" md="4">
+                <siswa-kelas-cabang :cabang="j.label" />
+              </b-col>
+            </b-row>
           </b-card-text>
         </b-card>
       </b-col>
@@ -19,63 +16,46 @@
   </div>
 </template>
 <script>
+import SiswaKelasCabang from "../../../components/admin/SiswaKelasCabang"
 import logout from "../../logout";
 import { user } from "../../../api";
 export default {
-  name: "DaftarSiswaKelas",
+  name: "DaftarSiswa",
+  components: { SiswaKelasCabang },
   data() {
     return {
-      title: "Daftar Siswa Kelas " + this.$route.params.kelas,
-      items: [],
-      fields: [
-        "nama",
-        { key: "created_at", label: "Dibuat" },
-        { key: "updated_at", label: "Update terakhir" },
-        "update",
-        "hapus"
-      ],
-      kelas: this.$route.params.kelas
+      kelas: [],
+      title: `Daftar Siswa Kelas ${this.$route.params.kelas}`
     };
   },
   methods: {
     async loadData() {
       try {
-        let data = await user.getSiswaKelas(this.kelas);
-        this.items = data.data;
+        let data = await user.getDaftarKelasCabang(this.$route.params.kelas);
+        this.kelas = this.triple(data.data);
       } catch (err) {
         logout.clear();
       }
     },
-    update(uuid) {
-      this.$router.push(`/update-siswa/${uuid}`);
+    Detail(kelas) {
+      this.$router.push(`/daftar-siswa/${kelas}`);
     },
-    showMessageWarning(uuid, nama) {
-      this.$bvModal
-        .msgBoxConfirm(
-          `Apakah anda yakin untuk menghapus siswa dengan nama ${nama}?`,
-          {
-            title: "Perhatian!!!",
-            size: "sm",
-            buttonSize: "sm",
-            okVariant: "success",
-            cancelVariant: "danger",
-            headerClass: "p-2 border-bottom-0",
-            footerClass: "p-2 border-top-0",
-            centered: true
-          }
-        )
-        .then(value => {
-          if (value) {
-            user.deleteSiswa(uuid);
-            this.loadData();
-          }
-        });
-    },
-    async deleteSiswa(uuid, nama) {
-      this.showMessageWarning(uuid, nama);
+    triple(list){
+      let hasil = []
+      let lis = []
+      for(let i = 0; i < list.length; i++){
+        lis.push(list[i])
+        if(lis.length == 3) {
+          hasil.push(lis)
+          lis = []
+        } else if (lis.length < 3 && i == list.length-1){
+          hasil.push(lis)
+        }
+      }
+      return hasil
     }
   },
-  created() {
+  mounted() {
     this.loadData();
   }
 };
