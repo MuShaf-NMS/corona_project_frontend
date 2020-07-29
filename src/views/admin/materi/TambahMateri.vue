@@ -75,12 +75,20 @@ export default {
   },
   methods: {
     async loadKelas() {
-      let data = await user.getKelas();
-      this.kelas = data.data;
+      try {
+        let data = await user.getKelas();
+        this.kelas = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     async loadMapel() {
-      let data = await user.getMapel();
-      this.studi = data.data;
+      try {
+        let data = await user.getMapel();
+        this.studi = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     showMessageCek(form) {
       this.$bvModal.msgBoxOk(`Form ${form} tidak boleh kosong`, {

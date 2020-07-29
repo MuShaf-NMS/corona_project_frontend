@@ -33,30 +33,39 @@
 </template>
 <script>
 import { siswa } from "../../api";
+import logout from "../logout";
 export default {
   name: "UpadetUsernameSiswa",
   data() {
     return {
       form: {
         username: "",
-        password: ""
-      }
+        password: "",
+      },
     };
   },
   methods: {
     async loadData() {
-      let data = await siswa.getUsername(this.$store.getters.getUser.uuid);
-      this.form.username = data.data.username;
+      try {
+        let data = await siswa.getUsername(this.$store.getters.getUser.uuid);
+        this.form.username = data.data.username;
+      } catch (err) {
+        logout.clear();
+      }
     },
     async updateUsername() {
-      let data = await siswa.updateUsername(this.$route.params.id, this.form);
-      if (data.data.msg == "Sukses") {
-        this.$store.dispatch("saveUsername", this.form.username);
-        this.showMessageSukses();
-      } else if (data.data.msg == "Salah") {
-        this.showMessageSalah();
-      } else {
-        this.showMessageMaaf();
+      try {
+        let data = await siswa.updateUsername(this.$route.params.id, this.form);
+        if (data.data.msg == "Sukses") {
+          this.$store.dispatch("saveUsername", this.form.username);
+          this.showMessageSukses();
+        } else if (data.data.msg == "Salah") {
+          this.showMessageSalah();
+        } else {
+          this.showMessageMaaf();
+        }
+      } catch (err) {
+        logout.clear();
       }
     },
     showMessageSukses() {
@@ -67,7 +76,7 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     showMessageMaaf() {
@@ -80,7 +89,7 @@ export default {
           okVariant: "success",
           headerClass: "p-2 border-bottom-0",
           footerClass: "p-2 border-top-0",
-          centered: true
+          centered: true,
         }
       );
     },
@@ -92,13 +101,13 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
-    }
+    },
   },
   mounted() {
     this.loadData();
-  }
+  },
 };
 </script>
 <style scoped>

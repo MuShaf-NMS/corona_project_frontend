@@ -16,8 +16,9 @@
   </div>
 </template>
 <script>
-import Kelas from "../../../components/admin/Kelas"
+import Kelas from "../../../components/admin/Kelas";
 import { user } from "../../../api";
+import logout from "../../logout";
 export default {
   name: "DaftarKelas",
   components: { Kelas },
@@ -28,23 +29,27 @@ export default {
   },
   methods: {
     async loadData() {
-      let data = await user.getDaftarKelas();
-      this.kelas = this.triple(data.data);
+      try {
+        let data = await user.getDaftarKelas();
+        this.kelas = this.triple(data.data);
+      } catch (err) {
+        logout.clear();
+      }
     },
-    triple(list){
-      let hasil = []
-      let lis = []
-      for(let i = 0; i < list.length; i++){
-        lis.push(list[i])
-        if(lis.length == 3) {
-          hasil.push(lis)
-          lis = []
-        } else if (lis.length < 3 && i == list.length-1){
-          hasil.push(lis)
+    triple(list) {
+      let hasil = [];
+      let lis = [];
+      for (let i = 0; i < list.length; i++) {
+        lis.push(list[i]);
+        if (lis.length == 3) {
+          hasil.push(lis);
+          lis = [];
+        } else if (lis.length < 3 && i == list.length - 1) {
+          hasil.push(lis);
         }
       }
-      return hasil
-    }
+      return hasil;
+    },
   },
   mounted() {
     this.loadData();

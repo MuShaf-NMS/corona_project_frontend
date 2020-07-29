@@ -7,7 +7,12 @@
             <b-form>
               <b-col>
                 <b-form-group label="Mata pelajaran">
-                    <b-form-input type="text" placeholder="Mata Pelajaran" v-model="form.mapel" required></b-form-input>
+                  <b-form-input
+                    type="text"
+                    placeholder="Mata Pelajaran"
+                    v-model="form.mapel"
+                    required
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col>
@@ -22,6 +27,7 @@
 </template>
 <script>
 import { user } from "../../../api";
+import logout from "../../logout";
 
 export default {
   name: "UpdateKelas",
@@ -32,11 +38,19 @@ export default {
   },
   methods: {
     async loadData() {
-      let data = await user.getOneMapel(this.$route.params.uuid);
-      this.form = data.data;
+      try {
+        let data = await user.getOneMapel(this.$route.params.uuid);
+        this.form = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     async updateMapel() {
-      user.updateMapel(this.$route.params.uuid,this.form);
+      try {
+        await user.updateMapel(this.$route.params.uuid, this.form);
+      } catch (err) {
+        logout.clear();
+      }
     },
   },
   created() {

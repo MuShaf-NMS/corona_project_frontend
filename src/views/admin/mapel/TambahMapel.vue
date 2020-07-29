@@ -7,7 +7,12 @@
             <b-form>
               <b-col md="6">
                 <b-form-group label="Mata Pelajaran">
-                    <b-form-input type="text" placeholder="Mata Pelajaran" v-model="form.mapel" required></b-form-input>
+                  <b-form-input
+                    type="text"
+                    placeholder="Mata Pelajaran"
+                    v-model="form.mapel"
+                    required
+                  ></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col>
@@ -22,6 +27,7 @@
 </template>
 <script>
 import { user } from "../../../api";
+import logout from "../../logout";
 export default {
   name: "TambahMapel",
   data() {
@@ -33,8 +39,12 @@ export default {
   },
   methods: {
     async tambahMapel() {
-      let data = await user.addMapel(this.form);
-      console.log(data.data);
+      try {
+        let data = await user.addMapel(this.form);
+        console.log(data.data);
+      } catch (err) {
+        logout.clear();
+      }
     },
   },
 };

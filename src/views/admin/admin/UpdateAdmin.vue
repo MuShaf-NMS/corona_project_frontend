@@ -56,17 +56,21 @@
                   <b-input-group v-for="(i,index) in form.ampu" :key="index">
                     <b-form-select v-model="i.uuid_mapel" :options="mapel">
                       <template v-slot:first>
-                        <b-form-select-option value="" disabled> --Bidang studi-- </b-form-select-option>
+                        <b-form-select-option value disabled>--Bidang studi--</b-form-select-option>
                       </template>
                     </b-form-select>
                     <b-form-select v-model="i.uuid_kelas" :options="kelas">
                       <template v-slot:first>
-                        <b-form-select-option value="" disabled> --Kelas-- </b-form-select-option>
+                        <b-form-select-option value disabled>--Kelas--</b-form-select-option>
                       </template>
                     </b-form-select>
-                    <b-btn size="sm" @click="hapusAmpu(index)"><b-icon icon="dash"></b-icon></b-btn>
+                    <b-btn size="sm" @click="hapusAmpu(index)">
+                      <b-icon icon="dash"></b-icon>
+                    </b-btn>
                   </b-input-group>
-                  <b-btn size="sm" @click="tambahAmpu"><b-icon icon="plus"></b-icon></b-btn>
+                  <b-btn size="sm" @click="tambahAmpu">
+                    <b-icon icon="plus"></b-icon>
+                  </b-btn>
                 </b-form-group>
               </b-col>
               <b-col>
@@ -80,6 +84,7 @@
   </div>
 </template>
 <script>
+import logout from "../../logout";
 import { user } from "../../../api";
 export default {
   name: "UpdateSiswa",
@@ -88,25 +93,33 @@ export default {
       form: {},
       options: [
         { text: "Ya", value: true },
-        { text: "Tidak", value: false }
+        { text: "Tidak", value: false },
       ],
       kelas: [],
-      mapel: []
+      mapel: [],
     };
   },
   methods: {
     async loadData() {
-      let data = await user.getOneUser(this.$route.params.id);
-      this.form = data.data;
-      let kelas = await user.getKelas()
-      this.kelas = kelas.data
-      let mapel = await user.getMapel()
-      this.mapel = mapel.data
+      try {
+        let data = await user.getOneUser(this.$route.params.id);
+        this.form = data.data;
+        let kelas = await user.getKelas();
+        this.kelas = kelas.data;
+        let mapel = await user.getMapel();
+        this.mapel = mapel.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     async update() {
-      let data = await user.updateUser(this.$route.params.id, this.form);
-      if (data.status == 200) {
-        this.showMessage();
+      try {
+        let data = await user.updateUser(this.$route.params.id, this.form);
+        if (data.status == 200) {
+          this.showMessage();
+        }
+      } catch (err) {
+        logout.clear();
       }
     },
     showMessage() {
@@ -117,7 +130,7 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     tambahAmpu() {
@@ -127,11 +140,11 @@ export default {
       if (this.form.ampu.length) {
         this.form.ampu.splice(index, 1);
       }
-    }
+    },
   },
   created() {
     this.loadData();
-  }
+  },
 };
 </script>
 <style scoped>

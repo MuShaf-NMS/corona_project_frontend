@@ -67,27 +67,40 @@
 </template>
 <script>
 import { user } from "../../../api";
+import logout from "../../logout";
 export default {
   name: "UpdateSiswa",
   data() {
     return {
       form: {},
-      kelas: []
+      kelas: [],
     };
   },
   methods: {
     async loadData() {
-      let data = await user.getOneSiswa(this.$route.params.id);
-      this.form = data.data;
+      try {
+        let data = await user.getOneSiswa(this.$route.params.id);
+        this.form = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     async loadKelas() {
-      let data = await user.getKelas();
-      this.kelas = data.data;
+      try {
+        let data = await user.getKelas();
+        this.kelas = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     async update() {
-      let data = await user.updateSiswa(this.$route.params.id, this.form);
-      if (data.status == 200) {
-        this.showMessage();
+      try {
+        let data = await user.updateSiswa(this.$route.params.id, this.form);
+        if (data.status == 200) {
+          this.showMessage();
+        }
+      } catch (err) {
+        logout.clear();
       }
     },
     showMessage() {
@@ -98,14 +111,14 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
-    }
+    },
   },
   created() {
     this.loadData();
-    this.loadKelas()
-  }
+    this.loadKelas();
+  },
 };
 </script>
 <style scoped>

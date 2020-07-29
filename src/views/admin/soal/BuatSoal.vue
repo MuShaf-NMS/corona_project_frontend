@@ -118,6 +118,7 @@
 </template>
 <script>
 import { user } from "../../../api";
+import logout from "../../logout";
 export default {
   name: "BuatSoal",
   data() {
@@ -143,19 +144,31 @@ export default {
   },
   methods: {
     async loadKelas() {
-      let data = await user.getKelas();
-      this.kelas = data.data;
+      try {
+        let data = await user.getKelas();
+        this.kelas = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     async loadMapel() {
-      let data = await user.getMapel();
-      this.studi = data.data;
+      try {
+        let data = await user.getMapel();
+        this.studi = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     async loadMateri() {
-      let data = await user.materi(
-        this.lists[0].uuid_kelas,
-        this.lists[0].uuid_mapel
-      );
-      this.materi = data.data;
+      try {
+        let data = await user.materi(
+          this.lists[0].uuid_kelas,
+          this.lists[0].uuid_mapel
+        );
+        this.materi = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     showMessageCek(form) {
       this.$bvModal.msgBoxOk(`Form ${form} tidak boleh kosong`, {
@@ -187,10 +200,14 @@ export default {
       } else if (this.lists[0].uuid_materi == "") {
         this.showMessageCek("Materi");
       } else {
-        let data = await user.addSoal(this.lists);
-        console.log(this.lists);
-        if (data.status == 200) {
-          this.showMessage();
+        try {
+          let data = await user.addSoal(this.lists);
+          console.log(this.lists);
+          if (data.status == 200) {
+            this.showMessage();
+          }
+        } catch (err) {
+          logout.clear();
         }
       }
     },

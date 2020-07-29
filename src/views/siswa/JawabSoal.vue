@@ -87,9 +87,15 @@ export default {
           this.kelas = data.data.kelas;
           this.mapel = data.data.mapel;
           this.materi = data.data.materi;
-          if (this.$store.getters.getSoal == null || this.$store.getters.getUuidSoal != this.$route.params.uuid_materi) {
+          if (
+            this.$store.getters.getSoal == null ||
+            this.$store.getters.getUuidSoal != this.$route.params.uuid_materi
+          ) {
             this.$store.dispatch("saveSoal", data.data.soal);
-            this.$store.dispatch("saveUuidSoal", this.$route.params.uuid_materi)
+            this.$store.dispatch(
+              "saveUuidSoal",
+              this.$route.params.uuid_materi
+            );
           }
           this.soal = this.$store.getters.getSoal;
         }
@@ -122,14 +128,18 @@ export default {
         });
     },
     async submit() {
-      await siswa.postJawaban(this.$route.params.uuid_materi, {
-        uuid_siswa: this.$store.getters.getUser.uuid,
-        hasil: this.$store.getters.getJawaban,
-      });
-      this.$store.dispatch("clearSoal");
-      this.$store.dispatch("clearJawaban");
-      this.$store.dispatch("clearUuidSoal")
-      this.$router.push(`/siswa/daftar-soal`);
+      try {
+        await siswa.postJawaban(this.$route.params.uuid_materi, {
+          uuid_siswa: this.$store.getters.getUser.uuid,
+          hasil: this.$store.getters.getJawaban,
+        });
+        this.$store.dispatch("clearSoal");
+        this.$store.dispatch("clearJawaban");
+        this.$store.dispatch("clearUuidSoal");
+        this.$router.push(`/siswa/daftar-soal`);
+      } catch (err) {
+        logout.clear();
+      }
     },
   },
   created() {

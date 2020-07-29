@@ -25,6 +25,7 @@
 </template>
 <script>
 import { user } from "../../../api";
+import logout from "../../logout";
 
 export default {
   name: "UpdateKelas",
@@ -35,11 +36,19 @@ export default {
   },
   methods: {
     async loadData() {
-      let data = await user.getOneKelas(this.$route.params.uuid);
-      this.form = data.data;
+      try {
+        let data = await user.getOneKelas(this.$route.params.uuid);
+        this.form = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     async updateKelas() {
-      user.updateKelas(this.$route.params.uuid,this.form);
+      try {
+        user.updateKelas(this.$route.params.uuid, this.form);
+      } catch (err) {
+        logout.clear();
+      }
     },
   },
   created() {

@@ -135,6 +135,7 @@
 </template>
 <script>
 import { user } from "../../../api";
+import logout from "../../logout";
 export default {
   name: "DetailSoal",
   data() {
@@ -155,26 +156,34 @@ export default {
   },
   methods: {
     async loadData() {
-      let data = await user.getCekSoal(this.$route.params.uuid_materi);
-      this.kelas = data.data.kelas;
-      this.mapel = data.data.mapel;
-      this.materi = data.data.materi;
-      this.loaded = true;
-      this.soal = data.data.soal;
-      if (this.soal.length == 0) {
-        this.$router.push("/daftar-soal");
+      try {
+        let data = await user.getCekSoal(this.$route.params.uuid_materi);
+        this.kelas = data.data.kelas;
+        this.mapel = data.data.mapel;
+        this.materi = data.data.materi;
+        this.loaded = true;
+        this.soal = data.data.soal;
+        if (this.soal.length == 0) {
+          this.$router.push("/daftar-soal");
+        }
+        this.soalke = this.soal[this.idx];
+      } catch (err) {
+        logout.clear();
       }
-      this.soalke = this.soal[this.idx];
     },
     async updateSoal() {
-      let data = await user.updateSoal(
-        this.$route.params.kelas,
-        this.$route.params.mapel,
-        this.$route.params.materi,
-        this.soal
-      );
-      if (data.status == 200) {
-        this.showMessage();
+      try {
+        let data = await user.updateSoal(
+          this.$route.params.kelas,
+          this.$route.params.mapel,
+          this.$route.params.materi,
+          this.soal
+        );
+        if (data.status == 200) {
+          this.showMessage();
+        }
+      } catch (err) {
+        logout.clear();
       }
     },
     showMessage() {
@@ -219,7 +228,11 @@ export default {
         });
     },
     async deleteSoal(uuid) {
-      this.showMessageWarning(uuid);
+      try {
+        await this.showMessageWarning(uuid);
+      } catch (err) {
+        logout.clear();
+      }
     },
   },
   created() {

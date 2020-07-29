@@ -25,6 +25,7 @@
 </template>
 <script>
 import { user } from "../../../api";
+import logout from "../../logout";
 export default {
   name: "TambahKelas",
   data() {
@@ -37,16 +38,20 @@ export default {
   },
   methods: {
     async tambahKelas() {
-      if (this.form.kelas == "") {
-        this.showMessageCek("Kelas");
-      } else if (this.form.label == "") {
-        this.showMessageCek("Label");
-      } else {
-        let data = await user.addKelas(this.form);
-        if (data.status == 200) {
-          this.showMessageSukses()
-          this.clearForm()
+      try {
+        if (this.form.kelas == "") {
+          this.showMessageCek("Kelas");
+        } else if (this.form.label == "") {
+          this.showMessageCek("Label");
+        } else {
+          let data = await user.addKelas(this.form);
+          if (data.status == 200) {
+            this.showMessageSukses();
+            this.clearForm();
+          }
         }
+      } catch (err) {
+        logout.clear();
       }
     },
     showMessageSukses() {
@@ -57,7 +62,7 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     showMessageCek(form) {
@@ -71,10 +76,10 @@ export default {
         centered: true,
       });
     },
-    clearForm(){
-      this.form.kelas == ""
-      this.form.label == ""
-    }
+    clearForm() {
+      this.form.kelas == "";
+      this.form.label == "";
+    },
   },
 };
 </script>

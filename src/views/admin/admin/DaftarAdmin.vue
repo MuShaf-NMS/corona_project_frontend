@@ -5,20 +5,18 @@
         <b-card title="Daftar Admin">
           <b-card-text>
             <b-table striped hover :items="items" :fields="fields">
-              <template v-slot:cell(superadmin)="row">
-                {{boolIna(row.item.superadmin)}}
-              </template>
-              <template v-slot:cell(created_at)="row">
-                {{dateIna(row.item.created_at)}}
-              </template>
-              <template v-slot:cell(updated_at)="row">
-                {{dateIna(row.item.updated_at)}}
-              </template>
+              <template v-slot:cell(superadmin)="row">{{boolIna(row.item.superadmin)}}</template>
+              <template v-slot:cell(created_at)="row">{{dateIna(row.item.created_at)}}</template>
+              <template v-slot:cell(updated_at)="row">{{dateIna(row.item.updated_at)}}</template>
               <template v-slot:cell(Update)="row">
-                <b-btn size="sm" @click="update(row.item.uuid)"><b-icon icon="pencil-square"></b-icon></b-btn>
+                <b-btn size="sm" @click="update(row.item.uuid)">
+                  <b-icon icon="pencil-square"></b-icon>
+                </b-btn>
               </template>
               <template v-slot:cell(Hapus)="row">
-                <b-btn size="sm" @click="deleteAdmin(row.item.uuid,row.item.nama)"><b-icon icon="trash"></b-icon></b-btn>
+                <b-btn size="sm" @click="deleteAdmin(row.item.uuid,row.item.nama)">
+                  <b-icon icon="trash"></b-icon>
+                </b-btn>
               </template>
             </b-table>
           </b-card-text>
@@ -28,7 +26,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment'
+import moment from "moment";
 import logout from "../../logout";
 import { user } from "../../../api";
 export default {
@@ -42,8 +40,8 @@ export default {
         { key: "created_at", label: "Dibuat" },
         { key: "updated_at", label: "Update Terakhir" },
         "Update",
-        "Hapus"
-      ]
+        "Hapus",
+      ],
     };
   },
   methods: {
@@ -55,14 +53,14 @@ export default {
         logout.clear();
       }
     },
-    dateIna(value){
-      return moment(value).format('DD-MM-Y hh:mm:ss')
+    dateIna(value) {
+      return moment(value).format("DD-MM-Y hh:mm:ss");
     },
-    boolIna(value){
+    boolIna(value) {
       if (value) {
-        return "Ya"
+        return "Ya";
       } else {
-        return "Tidak"
+        return "Tidak";
       }
     },
     update(uuid) {
@@ -80,10 +78,10 @@ export default {
             cancelVariant: "danger",
             headerClass: "p-2 border-bottom-0",
             footerClass: "p-2 border-top-0",
-            centered: true
+            centered: true,
           }
         )
-        .then(value => {
+        .then((value) => {
           if (value) {
             user.deleteAdmin(uuid);
             this.loadData();
@@ -91,12 +89,16 @@ export default {
         });
     },
     async deleteAdmin(uuid, nama) {
-      this.showMessageWarning(uuid, nama);
-    }
+      try {
+        await this.showMessageWarning(uuid, nama);
+      } catch (err) {
+        logout.clear();
+      }
+    },
   },
   mounted() {
     this.loadData();
-  }
+  },
 };
 </script>
 <style scoped>

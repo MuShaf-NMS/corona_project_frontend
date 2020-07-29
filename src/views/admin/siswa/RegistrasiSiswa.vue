@@ -115,8 +115,12 @@ export default {
   },
   methods: {
     async loadKelas() {
-      let data = await user.getKelas();
-      this.kelas = data.data;
+      try {
+        let data = await user.getKelas();
+        this.kelas = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     isConfirmed() {
       if (this.form.password == this.confirm_password) {
@@ -143,7 +147,7 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     showMessageCekPassword() {
@@ -154,7 +158,7 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     showMessageKonfir() {
@@ -183,23 +187,23 @@ export default {
     },
     async registration() {
       if (this.form.nama == "") {
-        this.showMessageCek("Nama")
+        this.showMessageCek("Nama");
       } else if (this.form.username == "") {
-        this.showMessageCek("Username")
+        this.showMessageCek("Username");
       } else if (this.form.jk == "") {
-        this.showMessageCek("Jenis kelamin")
+        this.showMessageCek("Jenis kelamin");
       } else if (this.form.alamat == "") {
-        this.showMessageCek("Alamat")
+        this.showMessageCek("Alamat");
       } else if (this.form.tempat_lahir == "") {
-        this.showMessageCek("Tempat lahir")
+        this.showMessageCek("Tempat lahir");
       } else if (this.form.tanggal_lahir == "") {
-        this.showMessageCek("Tanggal lahir")
+        this.showMessageCek("Tanggal lahir");
       } else if (this.form.hp == "") {
-        this.showMessageCek("Nomor Hp")
+        this.showMessageCek("Nomor Hp");
       } else if (this.form.email == "") {
-        this.showMessageCek("Email")
+        this.showMessageCek("Email");
       } else if (this.form.password.length < 8) {
-        this.showMessageCekPassword()
+        this.showMessageCekPassword();
       } else if (this.isConfirmed()) {
         try {
           let data = await user.addSiswa(this.form);

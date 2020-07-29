@@ -4,7 +4,11 @@
       <b-col>
         <b-card title="Skor">
           <b-card-text>
-            <b-table striped hover :items="items"></b-table>
+            <b-table striped hover :items="items">
+              <template v-slot:cell(skor)="row">
+                {{isZero(row.item.skor)}}
+              </template>
+            </b-table>
           </b-card-text>
         </b-card>
       </b-col>
@@ -12,24 +16,36 @@
   </div>
 </template>
 <script>
+import logout from "../../logout";
 import { user } from "../../../api";
 export default {
   name: "Hasil",
   data() {
     return {
-      items: []
+      items: [],
     };
   },
   methods: {
     async loadData() {
-      let data = await user.getSkor(this.$route.params.uuid_materi);
-      this.items = data.data;
-      console.log(this.items)
-    }
+      try {
+        let data = await user.getSkor(this.$route.params.uuid_materi);
+        this.items = data.data;
+        console.log(this.items);
+      } catch (err) {
+        logout.clear();
+      }
+    },
+    isZero(skor) {
+      if (skor == null) {
+        return 0;
+      } else {
+        return skor;
+      }
+    },
   },
   mounted() {
     this.loadData();
-  }
+  },
 };
 </script>
 <style scoped>

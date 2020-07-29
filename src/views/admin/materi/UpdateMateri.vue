@@ -82,7 +82,7 @@ export default {
       materi: {},
       edit: false,
       kelas: [],
-      studi: []
+      studi: [],
     };
   },
   methods: {
@@ -90,10 +90,10 @@ export default {
       try {
         let data = await user.getDetailMateri(this.$route.params.id);
         this.materi = data.data;
-        let kelas = await user.getKelas()
-        this.kelas = kelas.data
-        let studi = await user.getMapel()
-        this.studi = studi.data
+        let kelas = await user.getKelas();
+        this.kelas = kelas.data;
+        let studi = await user.getMapel();
+        this.studi = studi.data;
       } catch (err) {
         logout.clear();
       }
@@ -102,9 +102,13 @@ export default {
       this.edit = !this.edit;
     },
     async updateMateri() {
-      let data = await user.updateMateri(this.$route.params.id, this.materi);
-      if (data.status == 200) {
-        this.showMessageSukses();
+      try {
+        let data = await user.updateMateri(this.$route.params.id, this.materi);
+        if (data.status == 200) {
+          this.showMessageSukses();
+        }
+      } catch (err) {
+        logout.clear();
       }
     },
     showMessageSukses() {

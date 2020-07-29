@@ -61,17 +61,21 @@
                   <b-input-group v-for="(i,index) in form.ampu" :key="index">
                     <b-form-select v-model="i.uuid_mapel" :options="mapel">
                       <template v-slot:first>
-                        <b-form-select-option value="" disabled> --Bidang studi-- </b-form-select-option>
+                        <b-form-select-option value disabled>--Bidang studi--</b-form-select-option>
                       </template>
                     </b-form-select>
                     <b-form-select v-model="i.uuid_kelas" :options="kelas">
                       <template v-slot:first>
-                        <b-form-select-option value="" disabled> --Kelas yang diampu-- </b-form-select-option>
+                        <b-form-select-option value disabled>--Kelas yang diampu--</b-form-select-option>
                       </template>
                     </b-form-select>
-                    <b-btn size="sm" @click="hapusAmpu(index)"><b-icon icon="dash"></b-icon></b-btn>
+                    <b-btn size="sm" @click="hapusAmpu(index)">
+                      <b-icon icon="dash"></b-icon>
+                    </b-btn>
                   </b-input-group>
-                  <b-btn size="sm" @click="tambahAmpu"><b-icon icon="plus"></b-icon></b-btn>
+                  <b-btn size="sm" @click="tambahAmpu">
+                    <b-icon icon="plus"></b-icon>
+                  </b-btn>
                 </b-form-group>
               </b-col>
               <b-col md="6" sm="12">
@@ -122,25 +126,33 @@ export default {
         email: "",
         password: "",
         superadmin: false,
-        ampu: []
+        ampu: [],
       },
       confirm_password: "",
       options: [
         { text: "Ya", value: true },
-        { text: "Tidak", value: false }
+        { text: "Tidak", value: false },
       ],
       kelas: [],
-      mapel: []
+      mapel: [],
     };
   },
   methods: {
-    async loadKelas(){
-      let data = await user.getKelas()
-      this.kelas = data.data
+    async loadKelas() {
+      try {
+        let data = await user.getKelas();
+        this.kelas = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
-    async loadMapel(){
-      let data = await user.getMapel()
-      this.mapel = data.data
+    async loadMapel() {
+      try {
+        let data = await user.getMapel();
+        this.mapel = data.data;
+      } catch (err) {
+        logout.clear();
+      }
     },
     isConfirmed() {
       if (this.form.password == this.confirm_password) {
@@ -159,7 +171,7 @@ export default {
       this.form.email = "";
       this.form.password = "";
       this.form.superadmin = false;
-      this.form.ampu = []
+      this.form.ampu = [];
       this.confirm_password = "";
     },
     showMessageSukses() {
@@ -170,7 +182,7 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     showMessageCek(form) {
@@ -181,7 +193,7 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     showMessageCekPassword() {
@@ -192,7 +204,7 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     showMessageKonfir() {
@@ -203,7 +215,7 @@ export default {
         okVariant: "success",
         headerClass: "p-2 border-bottom-0",
         footerClass: "p-2 border-top-0",
-        centered: true
+        centered: true,
       });
     },
     showMessageMaaf() {
@@ -216,29 +228,29 @@ export default {
           okVariant: "success",
           headerClass: "p-2 border-bottom-0",
           footerClass: "p-2 border-top-0",
-          centered: true
+          centered: true,
         }
       );
     },
     async registration() {
       if (this.form.nama == "") {
-        this.showMessageCek("Nama")
+        this.showMessageCek("Nama");
       } else if (this.form.username == "") {
-        this.showMessageCek("Username")
+        this.showMessageCek("Username");
       } else if (this.form.jk == "") {
-        this.showMessageCek("Jenis kelamin")
+        this.showMessageCek("Jenis kelamin");
       } else if (this.form.alamat == "") {
-        this.showMessageCek("Alamat")
+        this.showMessageCek("Alamat");
       } else if (this.form.tempat_lahir == "") {
-        this.showMessageCek("Tempat lahir")
+        this.showMessageCek("Tempat lahir");
       } else if (this.form.tanggal_lahir == "") {
-        this.showMessageCek("Tanggal lahir")
+        this.showMessageCek("Tanggal lahir");
       } else if (this.form.hp == "") {
-        this.showMessageCek("Nomor Hp")
+        this.showMessageCek("Nomor Hp");
       } else if (this.form.email == "") {
-        this.showMessageCek("Email")
+        this.showMessageCek("Email");
       } else if (this.form.password.length < 8) {
-        this.showMessageCekPassword()
+        this.showMessageCekPassword();
       } else if (this.isConfirmed()) {
         try {
           let data = await user.addUser(this.form);
@@ -262,12 +274,12 @@ export default {
       if (this.form.ampu.length) {
         this.form.ampu.splice(index, 1);
       }
-    }
+    },
   },
-  mounted(){
-    this.loadKelas()
-    this.loadMapel()
-  }
+  mounted() {
+    this.loadKelas();
+    this.loadMapel();
+  },
 };
 </script>
 
