@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
       if (store.getters.getUser.status == 'siswa') {
         next()
       } else {
-        next('/admin')
+        next('/')
       }
     } else {
       next('/login')
@@ -36,7 +36,7 @@ router.beforeEach((to, from, next) => {
   else if (to.matched.some(record => record.meta.guest)) {
     if (store.getters.getUser != null) {
       if (store.getters.getUser.status == 'admin') {
-        next('admin')
+        next('/')
       } else {
         next('/siswa')
       }

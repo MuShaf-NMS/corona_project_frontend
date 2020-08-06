@@ -1,8 +1,7 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card header="Update password">
           <b-card-text>
             <b-col>
@@ -38,7 +37,6 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>

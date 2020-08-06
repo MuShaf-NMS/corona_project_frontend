@@ -4,7 +4,10 @@
       <b-col>
         <b-card title="Skor">
           <b-card-text>
-            <b-table striped hover :items="items">
+            <b-table striped hover :items="items" :fields="fields">
+              <template v-slot:cell(created_at)="row">
+                {{dateIna(row.item.created_at)}}
+              </template>
               <template v-slot:cell(skor)="row">
                 {{isZero(row.item.skor)}}
               </template>
@@ -16,6 +19,7 @@
   </div>
 </template>
 <script>
+import moment from "moment"
 import logout from "../../logout";
 import { user } from "../../../api";
 export default {
@@ -23,6 +27,7 @@ export default {
   data() {
     return {
       items: [],
+      fields: [{key: "nama", label: "Nama Siswa"}, "skor", {key: "created_at", label: "Dijawab pada"}]
     };
   },
   methods: {
@@ -30,10 +35,15 @@ export default {
       try {
         let data = await user.getSkor(this.$route.params.uuid_materi);
         this.items = data.data;
-        console.log(this.items);
       } catch (err) {
         logout.clear();
       }
+    },
+    dateIna(value) {
+      if (value == null) {
+        return "-"
+      }
+      return moment(value).format("DD-MM-Y hh:mm:ss");
     },
     isZero(skor) {
       if (skor == null) {

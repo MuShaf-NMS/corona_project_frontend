@@ -35,12 +35,11 @@ import DaftarSoalKelas from '../views/admin/soal/DaftarSoalKelas'
 import DaftarSoalKelasCabang from '../views/admin/soal/DaftarSoalKelasCabang'
 import DaftarSoalMapel from '../views/admin/soal/DaftarSoalMapel'
 //hasil
-import DaftarHasil from '../views/admin/hasil/DaftarHasil'
 import Hasil from '../views/admin/hasil/Hasil'
 import LayoutAdmin from '../container/admin/LayoutAdmin'
 
 const admin = {
-    path: '/admin',
+    path: '/',
     redirect: '/daftar-soal',
     name: 'Home',
     component: LayoutAdmin,
@@ -225,14 +224,6 @@ const admin = {
             path: '/update-siswa/:id',
             name: 'Update Siswa',
             component: UpdateSiswa,
-            meta: {
-                adminAuthenticated: true
-            }
-        },
-        {
-            path: '/skor',
-            name: 'Daftar Skor',
-            component: DaftarHasil,
             meta: {
                 adminAuthenticated: true
             }

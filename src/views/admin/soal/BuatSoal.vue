@@ -202,7 +202,6 @@ export default {
       } else {
         try {
           let data = await user.addSoal(this.lists);
-          console.log(this.lists);
           if (data.status == 200) {
             this.showMessage();
           }

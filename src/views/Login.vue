@@ -1,44 +1,42 @@
 <template>
   <div>
-    <b-card overlay :img-src="require('../assets/diya.jpg')">
-      <b-row class="justify-content-center align-items-center card-dest">
-        <b-col md="4" sm="12">
-          <b-card title="Login" class="bg-transparent">
-            <b-card-text>
-              <b-form>
-                <b-col>
-                  <b-form-group>
-                    <b-input-group>
-                      <template v-slot:prepend>
-                        <b-input-group-text>
-                          <b-icon icon="person-fill" shift-v scale="1"></b-icon>
-                        </b-input-group-text>
-                      </template>
-                      <b-form-input type="text" v-model="form.username" placeholder="Username"></b-form-input>
-                    </b-input-group>
-                  </b-form-group>
-                </b-col>
-                <b-col>
-                  <b-form-group>
-                    <b-input-group>
-                      <template v-slot:prepend>
-                        <b-input-group-text>
-                          <b-icon icon="lock-fill" shift-v scale="1"></b-icon>
-                        </b-input-group-text>
-                      </template>
-                      <b-form-input type="password" v-model="form.password" placeholder="Password"></b-form-input>
-                    </b-input-group>
-                  </b-form-group>
-                </b-col>
-                <b-col>
-                  <b-btn size="sm" class="btn-info" @click="login">Login</b-btn>
-                </b-col>
-              </b-form>
-            </b-card-text>
-          </b-card>
-        </b-col>
-      </b-row>
-    </b-card>
+    <b-row class="justify-content-center align-items-center card-dest">
+      <b-col md="4" sm="12">
+        <b-card title="Login" class="bg-transparent">
+          <b-card-text>
+            <b-form>
+              <b-col>
+                <b-form-group>
+                  <b-input-group>
+                    <template v-slot:prepend>
+                      <b-input-group-text>
+                        <b-icon icon="person-fill" shift-v scale="1"></b-icon>
+                      </b-input-group-text>
+                    </template>
+                    <b-form-input type="text" v-model="form.username" placeholder="Username"></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col>
+                <b-form-group>
+                  <b-input-group>
+                    <template v-slot:prepend>
+                      <b-input-group-text>
+                        <b-icon icon="lock-fill" shift-v scale="1"></b-icon>
+                      </b-input-group-text>
+                    </template>
+                    <b-form-input type="password" v-model="form.password" placeholder="Password"></b-form-input>
+                  </b-input-group>
+                </b-form-group>
+              </b-col>
+              <b-col>
+                <b-btn size="sm" class="btn-info" @click="login">Login</b-btn>
+              </b-col>
+            </b-form>
+          </b-card-text>
+        </b-card>
+      </b-col>
+    </b-row>
   </div>
 </template>
 <script>
@@ -70,7 +68,7 @@ export default {
         let data = await user.login(this.form);
         this.$store.dispatch("saveUser", data.data);
         if (this.$store.getters.getUser.status == "admin") {
-          this.$router.push("/admin");
+          this.$router.push("/");
         } else {
           this.$router.push("/siswa");
         }

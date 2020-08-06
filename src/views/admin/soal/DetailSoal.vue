@@ -174,9 +174,7 @@ export default {
     async updateSoal() {
       try {
         let data = await user.updateSoal(
-          this.$route.params.kelas,
-          this.$route.params.mapel,
-          this.$route.params.materi,
+          this.$route.params.uuid_materi,
           this.soal
         );
         if (data.status == 200) {

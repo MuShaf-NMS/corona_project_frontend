@@ -19,13 +19,12 @@
           <b-dropdown-item to="/tambah-mapel">Tambah Mata Pelajaran</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Materi">
-          <b-dropdown-item to="/tambah-materi">Tambah Materi</b-dropdown-item>
           <b-dropdown-item to="/daftar-materi">Daftar Materi</b-dropdown-item>
+          <b-dropdown-item to="/tambah-materi">Tambah Materi</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item-dropdown text="Soal">
-          <b-dropdown-item to="/buat-soal">Tambah Soal</b-dropdown-item>
           <b-dropdown-item to="/daftar-soal">Daftar Soal</b-dropdown-item>
-          <b-dropdown-item to="/skor">Skor</b-dropdown-item>
+          <b-dropdown-item to="/buat-soal">Tambah Soal</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
@@ -55,7 +54,7 @@ export default {
     },
     toProfile() {
       this.$router.push(`/admin/profile/${this.$store.getters.getUser.uuid}`);
-    }
-  }
+    },
+  },
 };
 </script>

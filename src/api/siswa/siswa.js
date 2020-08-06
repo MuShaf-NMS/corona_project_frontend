@@ -46,7 +46,7 @@ const siswa = {
         return axios.post(`${url}/jawab-soal/${uuid_materi}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     cekSiswa: (uuid_materi) => {
-        return axios.get(`${url}/cek-siswa/${uuid_materi}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+        return axios.get(`${url}/cek-siswa/${uuid_materi}/${store.getters.getUser.uuid}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     }
 }
 

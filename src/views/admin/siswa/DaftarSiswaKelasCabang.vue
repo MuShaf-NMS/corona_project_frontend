@@ -52,6 +52,7 @@ export default {
           this.$route.params.cabang
         );
         this.siswa = data.data;
+        console.log(this.siswa)
       } catch (err) {
         logout.clear();
       }

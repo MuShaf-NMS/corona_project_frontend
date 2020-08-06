@@ -1,8 +1,7 @@
 <template>
   <div>
     <b-row class="card-dest">
-      <b-col></b-col>
-      <b-col md="6" sm="12">
+      <b-col>
         <b-card header="Profile">
           <b-card-text>
             <b-row>
@@ -33,7 +32,7 @@
             <b-row>
               <b-col md="3">Tanggal lahir</b-col>
               <b-col md="1">:</b-col>
-              <b-col md="8">{{profile.tanggal_lahir}}</b-col>
+              <b-col md="8">{{dateIna(profile.tanggal_lahir)}}</b-col>
             </b-row>
             <b-row>
               <b-col md="3">Hp</b-col>
@@ -56,11 +55,11 @@
           </b-card-text>
         </b-card>
       </b-col>
-      <b-col></b-col>
     </b-row>
   </div>
 </template>
 <script>
+import moment from "moment"
 import logout from "../logout";
 import { siswa } from "../../api";
 export default {
@@ -78,6 +77,9 @@ export default {
       } catch (err) {
         logout.clear();
       }
+    },
+    dateIna(value) {
+      return moment(value).format("DD-MM-Y");
     },
     updateUsername() {
       this.$router.push(

@@ -144,8 +144,8 @@ const user = {
     getCekSoal: (uuid_materi) => {
         return axios.get(`${url}/ceksoal/${uuid_materi}`, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
-    updateSoal: (kelas, mapel, materi, data) => {
-        return axios.put(`${url}/ceksoal/${kelas}/${mapel}/${materi}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
+    updateSoal: (uuid_materi, data) => {
+        return axios.put(`${url}/ceksoal/${uuid_materi}`, data, { headers: { Authorization: `Bearer ${store.getters.getUser.accessToken}` } })
     },
     getKelas: () => {
         if (store.getters.getUser.superadmin) {

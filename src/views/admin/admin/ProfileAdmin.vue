@@ -33,7 +33,7 @@
               <b-row>
                 <b-col md="3" sm="12">Tanggal lahir</b-col>
                 <b-col md="1" sm="12">:</b-col>
-                <b-col md="8" sm="12">{{profile.tanggal_lahir}}</b-col>
+                <b-col md="8" sm="12">{{dateIna(profile.tanggal_lahir)}}</b-col>
               </b-row>
               <b-row>
                 <b-col md="3" sm="12">Hp</b-col>
@@ -61,6 +61,7 @@
   </div>
 </template>
 <script>
+import moment from "moment"
 import logout from "../../logout";
 import { user } from "../../../api";
 export default {
@@ -78,6 +79,9 @@ export default {
       } catch (err) {
         logout.clear();
       }
+    },
+    dateIna(value) {
+      return moment(value).format("DD-MM-Y");
     },
     updateUsername() {
       this.$router.push(
