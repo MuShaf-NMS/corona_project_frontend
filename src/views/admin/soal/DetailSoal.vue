@@ -27,7 +27,7 @@
                 <b-row>{{soalke.soal}}</b-row>
                 <b-row>
                   <ul>
-                    <li v-for="(i,index) in soalke.opsi" :key="index">{{i.nilai}}</li>
+                    <li v-for="(i,index) in soalke.opsi" :key="index">{{i.value}}</li>
                   </ul>
                 </b-row>
                 <b-row>Kunci jawaban: {{soalke.kunci_jawaban}}</b-row>
@@ -65,20 +65,20 @@
                       type="text"
                       placeholder="Opsi pertama (Kunci jawaban)"
                       required
-                      v-model="soal[idx].opsi[0].nilai"
+                      v-model="soal[idx].opsi[0].value"
                     ></b-form-input>
                     <b-input-group>
                       <b-form-input
                         type="text"
                         placeholder="Opsi kedua"
                         required
-                        v-model="soal[idx].opsi[1].nilai"
+                        v-model="soal[idx].opsi[1].value"
                       ></b-form-input>
                       <b-form-input
                         type="text"
                         placeholder="Opsi ketiga"
                         required
-                        v-model="soal[idx].opsi[2].nilai"
+                        v-model="soal[idx].opsi[2].value"
                       ></b-form-input>
                     </b-input-group>
                     <b-input-group>
@@ -86,13 +86,13 @@
                         type="text"
                         placeholder="Opsi keempat"
                         required
-                        v-model="soal[idx].opsi[3].nilai"
+                        v-model="soal[idx].opsi[3].value"
                       ></b-form-input>
                       <b-form-input
                         type="text"
                         placeholder="Opsi kelima"
                         required
-                        v-model="soal[idx].opsi[4].nilai"
+                        v-model="soal[idx].opsi[4].value"
                       ></b-form-input>
                     </b-input-group>
                   </b-form-group>
