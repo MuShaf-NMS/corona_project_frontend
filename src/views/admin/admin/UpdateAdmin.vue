@@ -104,6 +104,7 @@ export default {
       try {
         let data = await user.getOneUser(this.$route.params.id);
         this.form = data.data;
+        console.log(data.data)
         let kelas = await user.getKelas();
         this.kelas = kelas.data;
         let mapel = await user.getMapel();
@@ -116,6 +117,7 @@ export default {
       try {
         let data = await user.updateUser(this.$route.params.id, this.form);
         if (data.status == 200) {
+          console.log(this.form.ampu)
           this.showMessage();
         }
       } catch (err) {
